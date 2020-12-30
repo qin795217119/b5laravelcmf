@@ -1,7 +1,7 @@
 /**
  * 通用js方法封装处理
  */
-var layerObj;
+var layer;
 
 // 当前table相关信息
 var table = {
@@ -38,10 +38,16 @@ var table = {
                 var defaults = {
                     id: "bootstrap-table",
                     type: 0, // 0 代表bootstrapTable 1代表bootstrapTreeTable
+                    url: cUrl + "/index",
+                    createUrl: cUrl + "/add?id={id}",
+                    updateUrl: cUrl + "/edit?id={id}",
+                    removeUrl: cUrl + "/drop",
+                    clearCacheUrl: cUrl + '/clearcache',
+                    cleanUrl: cUrl + "/dropall",
                     method: 'post',
                     height: undefined,
                     sidePagination: "server",
-                    sortName: undefined,
+                    sortName: 'id',
                     sortOrder: "asc",
                     pagination: true,
                     paginationLoop: false,
@@ -367,7 +373,7 @@ var table = {
                     $.modal.loading("正在导出数据，请稍后...");
                     $.post(table.options.exportUrl, dataParam, function(result) {
                         if (result.code == web_status.SUCCESS) {
-                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                            window.location.href = mUrl + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                         } else if (result.code == web_status.WARNING) {
                             $.modal.alertWarning(result.msg)
                         } else {
@@ -382,7 +388,7 @@ var table = {
                 table.set();
                 $.get(table.options.importTemplateUrl, function(result) {
                     if (result.code == web_status.SUCCESS) {
-                        window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                        window.location.href = mUrl + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                     } else if (result.code == web_status.WARNING) {
                         $.modal.alertWarning(result.msg)
                     } else {
@@ -557,6 +563,15 @@ var table = {
                     id: "bootstrap-tree-table",
                     type: 1, // 0 代表bootstrapTable 1代表bootstrapTreeTable
                     height: 0,
+                    url: cUrl + "/index",
+                    createUrl: cUrl + "/add?id={id}",
+                    updateUrl: cUrl + "/edit?id={id}",
+                    removeUrl: cUrl + "/drop",
+                    code: "id",
+                    parentCode: "parent_id",
+                    uniqueId: "id",
+                    expandAll: false,
+                    expandFirst: false,
                     rootIdValue: null,
                     ajaxParams: {},
                     toolbar: "toolbar",
@@ -564,9 +579,7 @@ var table = {
                     expandColumn: 1,
                     showSearch: true,
                     showRefresh: true,
-                    showColumns: true,
-                    expandAll: true,
-                    expandFirst: true
+                    showColumns: true
                 };
                 var options = $.extend(defaults, options);
                 table.options = options;
@@ -621,7 +634,7 @@ var table = {
                     $.modal.alertWarning(res.msg);
                     return [];
                 } else {
-                    return res;
+                    return res.data;
                 }
             },
             // 当所有数据被加载时触发
@@ -631,6 +644,40 @@ var table = {
                 }
                 $(".table [data-toggle='tooltip']").tooltip();
             },
+
+        },
+        // 表单常用展示效果
+        view:{
+            //开关状态显示
+            statusTools:function(row,click,statusArr) {
+                if($.common.isEmpty(statusArr)) {
+                    statusArr=['停用','正常'];
+                }
+                var clickHtml = '';
+                if(click){
+                    var dataval = row.status == 1 ? 0 : 1;
+                    var datatitle = row.status == 1 ? statusArr[0]:statusArr[1];
+                    datatitle=datatitle==='正常'?'启用':datatitle;
+                    clickHtml = 'b5-event="tablestatus" data-id="' + row.id + '" data-val="' + dataval + '" data-name="'+datatitle+'"';
+                }
+                var classs = row.status == 1 ? 'fa-toggle-on' : 'fa-toggle-off';
+                return '<i class="fa '+classs+' text-info fa-2x" '+clickHtml+'></i> ';
+            },
+            //lable状态显示
+            statusShow:function (row,click,statusArr) {
+                if($.common.isEmpty(statusArr)) {
+                    statusArr=['停用','正常'];
+                }
+                var clickHtml = '';
+                if(click){
+                    var dataval = row.status == 1 ? 0 : 1;
+                    var datatitle = row.status == 1 ? statusArr[0]:statusArr[1];
+                    datatitle=datatitle==='正常'?'启用':datatitle;
+                    clickHtml = 'b5-event="tablestatus" data-id="' + row.id + '" data-val="' + dataval + '" data-name="'+datatitle+'"';
+                }
+                var classs = row.status == 1 ? 'badge-primary' : 'badge-warning';
+                return '<span class="badge '+classs+'" '+clickHtml+'>'+statusArr[row.status]+'</span>';
+            }
         },
         // 表单封装处理
         form: {
@@ -682,26 +729,26 @@ var table = {
         modal: {
             //layer初始化
             layerinit:function(callback) {
-                if(layerObj){
+                if(layer){
                     if($.common.isFunction(callback)) {
                         if (typeof callback === 'string') {
-                            eval(callback + "(layerObj)")
+                            eval(callback + "(layer)")
                         } else {
-                            callback(layerObj)
+                            callback(layer)
                         }
                     }
                 }else{
                     layui.use(['layer'],function () {
-                        layerObj=layui.layer;
-                        layerObj.config({
+                        layer=layui.layer;
+                        layer.config({
                             extend: 'moon/style.css',
                             skin: 'layer-ext-moon'
                         });
                         if($.common.isFunction(callback)) {
                             if (typeof callback === 'string') {
-                                eval(callback + "(layerObj)")
+                                eval(callback + "(layer)")
                             } else {
-                                callback(layerObj)
+                                callback(layer)
                             }
                         }
                     })
@@ -849,6 +896,7 @@ var table = {
                         iframeWin.contentWindow.submitHandler(index, layero);
                     }
                 }
+
                 var area=[width + 'px', height + 'px'];
                 var docW=$(document).width();
                 var scrollbar=true;
@@ -885,26 +933,26 @@ var table = {
             },
             // 弹出层指定参数选项
             openOptions: function (options) {
-                var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
-                var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
-                var _width = $.common.isEmpty(options.width) ? "800" : options.width;
-                var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
-                var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
-                if ($.common.isEmpty(options.yes)) {
-                    options.yes = function(index, layero) {
-                        options.callBack(index, layero);
-                    }
-                }
-                var btnCallback = {};
-                if(options.btn instanceof Array){
-                    for (var i = 1, len = options.btn.length; i < len; i++) {
-                        var btn = options["btn" + (i + 1)];
-                        if (btn) {
-                            btnCallback["btn" + (i + 1)] = btn;
+                $.modal.layerinit(function (layer) {
+                    var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
+                    var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
+                    var _width = $.common.isEmpty(options.width) ? "800" : options.width;
+                    var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
+                    var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
+                    if ($.common.isEmpty(options.yes)) {
+                        options.yes = function(index, layero) {
+                            options.callBack(index, layero);
                         }
                     }
-                }
-                $.modal.layerinit(function (layer) {
+                    var btnCallback = {};
+                    if(options.btn instanceof Array){
+                        for (var i = 1, len = options.btn.length; i < len; i++) {
+                            var btn = options["btn" + (i + 1)];
+                            if (btn) {
+                                btnCallback["btn" + (i + 1)] = btn;
+                            }
+                        }
+                    }
                     var index = layer.open($.extend({
                         type: 2,
                         maxmin: $.common.isEmpty(options.maxmin) ? true : options.maxmin,
@@ -1078,6 +1126,21 @@ var table = {
             get: function(url, callback) {
                 $.operate.submit(url, "get", "json", "", callback);
             },
+            //状态修改请求
+            statusChange:function(obj){
+                table.set();
+                var id = obj.data("id");
+                var status = obj.data('val');
+                var title = table.options.modalName;
+                title = title ? title : '信息';
+                var name = obj.data('name');
+                if (!name) {
+                    name = status == '1' ? '启用' : '停用';
+                }
+                $.modal.confirm("确认要" + name + "该" + title + "吗？", function() {
+                    $.operate.post(cUrl + "/status", { "id": id, "status": status });
+                });
+            },
             // 详细信息
             detail: function(id, width, height) {
                 table.set();
@@ -1117,23 +1180,32 @@ var table = {
                 }
                 return url;
             },
+            //清除缓存
+            clearcache:function(){
+                table.set();
+                var url=table.options.clearCacheUrl;
+                $.operate.submit(url, "post");
+            },
             // 删除信息
             remove: function(id) {
                 table.set();
                 $.modal.confirm("确定删除该条" + table.options.modalName + "信息吗？", function() {
-                    var url = $.common.isEmpty(id) ? table.options.removeUrl : table.options.removeUrl.replace("{id}", id);
-                    if(table.options.type == table_type.bootstrapTreeTable) {
-                        $.operate.get(url);
-                    } else {
-                        var data = { "ids": id };
-                        $.operate.submit(url, "post", "json", data);
-                    }
+                    var url = table.options.removeUrl;
+                    var data = { "ids": id };
+                    $.operate.submit(url, "post", "json", data);
                 });
             },
             // 批量删除信息
-            removeAll: function() {
+            removeAll: function(obj) {
                 table.set();
+                var column='';
+                if(obj){
+                    column=$(obj).data('column');
+                }
                 var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                if($.common.isNotEmpty(column)){
+                    rows = $.table.selectColumns(column);
+                }
                 if (rows.length == 0) {
                     $.modal.alertWarning("请至少选择一条记录");
                     return;
@@ -1153,9 +1225,21 @@ var table = {
                 });
             },
             // 添加信息
-            add: function(id) {
+            add: function(id,obj) {
                 table.set();
-                $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
+                var width='';
+                var height='';
+                if(obj){
+                    width=$(obj).data('width');
+                    height=$(obj).data('height');
+                }
+                if($.common.isEmpty(id)){
+                    var dataid=$(obj).data('id');
+                    if($.common.isNotEmpty(dataid)){
+                        id=dataid;
+                    }
+                }
+                $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id),width,height);
             },
             // 添加信息，以tab页展现
             addTab: function (id) {
@@ -1296,13 +1380,13 @@ var table = {
             // 保存结果弹出msg刷新table表格
             ajaxSuccess: function (result) {
                 if (result.code == web_status.SUCCESS && table.options.type == table_type.bootstrapTable) {
-                    $.modal.msgSuccess(result.msg);
+                    result.msg && $.modal.msgSuccess(result.msg);
                     $.table.refresh();
                 } else if (result.code == web_status.SUCCESS && table.options.type == table_type.bootstrapTreeTable) {
-                    $.modal.msgSuccess(result.msg);
+                    result.msg && $.modal.msgSuccess(result.msg);
                     $.treeTable.refresh();
                 } else if (result.code == web_status.SUCCESS && $.common.isEmpty(table.options.type)) {
-                    $.modal.msgSuccess(result.msg)
+                    result.msg && $.modal.msgSuccess(result.msg)
                 }  else if (result.code == web_status.WARNING) {
                     $.modal.alertWarning(result.msg)
                 }  else {
@@ -1410,7 +1494,8 @@ var table = {
                             title: "title"         // 节点数据保存节点提示信息的属性名称
                         },
                         simpleData: {
-                            enable: true           // true / false 分别表示 使用 / 不使用 简单数据模式
+                            enable: true,           // true / false 分别表示 使用 / 不使用 简单数据模式
+                            pIdKey: 'parent_id'
                         }
                     },
                 };
@@ -1427,22 +1512,31 @@ var table = {
                     view: options.view,
                     data: options.data
                 };
-                $.get(options.url, function(data) {
-                    var treeId = $("#treeId").val();
-                    tree = $.fn.zTree.init($("#" + options.id), setting, data);
-                    $._tree = tree;
-                    for (var i = 0; i < options.expandLevel; i++) {
-                        var nodes = tree.getNodesByParam("level", i);
-                        for (var j = 0; j < nodes.length; j++) {
-                            tree.expandNode(nodes[j], true, false, false);
+                $.post(options.url, function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        var data=result.data;
+                        var treeId = $("#treeId").val();
+                        tree = $.fn.zTree.init($("#" + options.id), setting, data);
+                        $._tree = tree;
+                        for (var i = 0; i < options.expandLevel; i++) {
+                            var nodes = tree.getNodesByParam("level", i);
+                            for (var j = 0; j < nodes.length; j++) {
+                                tree.expandNode(nodes[j], true, false, false);
+                            }
                         }
+                        var node = tree.getNodesByParam("id", treeId, null)[0];
+                        $.tree.selectByIdName(treeId, node);
+                        // 回调tree方法
+                        if(typeof(options.callBack) === "function"){
+                            options.callBack(tree);
+                        }
+                    } else if (result.code == web_status.WARNING) {
+                        $.modal.alertWarning(result.msg)
+                    } else {
+                        $.modal.alertError(result.msg);
                     }
-                    var node = tree.getNodesByParam("id", treeId, null)[0];
-                    $.tree.selectByIdName(treeId, node);
-                    // 回调tree方法
-                    if(typeof(options.callBack) === "function"){
-                        options.callBack(tree);
-                    }
+                    $.modal.closeLoading();
+
                 });
             },
             // 搜索节点
@@ -1468,6 +1562,11 @@ var table = {
             selectByIdName: function(treeId, node) {
                 if ($.common.isNotEmpty(treeId) && treeId == node.id) {
                     $._tree.selectNode(node, true);
+                    var selectedNodes = $._tree.getSelectedNodes();
+                    if(selectedNodes && selectedNodes.length>0){
+                        $("#treeId").val(selectedNodes[0].id);
+                        $("#treeName").val(selectedNodes[0].name);
+                    }
                 }
             },
             // 显示所有节点

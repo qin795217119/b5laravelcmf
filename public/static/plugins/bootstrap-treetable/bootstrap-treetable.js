@@ -200,6 +200,7 @@
                 });
             }
             // 下边的操作主要是为了查询时让一些没有根节点的节点显示
+
             $.each(data, function(i, item) {
                 if (!item.isShow) {
                     var tr = renderRow(item, false, 1, "", "");
@@ -219,7 +220,7 @@
                 var $thead = target.find("thead");
                 var $tbody = target.find("tbody");
                 var borderWidth = parseInt(target.css("border-left-width")) + parseInt(target.css("border-right-width"))
-                
+
                 $thead.css("width", $tbody.children(":first").width());
                 if(initFlag){
                     var resizeWaiter = false;
@@ -237,7 +238,7 @@
                     });
                 }
             }
-        
+
         }
         // 缓存并格式化数据
         var formatData = function(data) {

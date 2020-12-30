@@ -2,42 +2,20 @@
 
 @section('content')
     <form class="form-horizontal m" id="form-admin-add">
-        <div class="form-group">
-            <label class="col-sm-3 control-label is-required">登录名称：</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="postName" id="postName" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label is-required">岗位编码：</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="postCode" id="postCode" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label is-required">显示顺序：</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="postSort" id="postSort" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">岗位状态：</label>
-            <div class="col-sm-8">
-                <div class="radio-box">
-                    <input type="radio" id="s1" name="status" value="11" checked="true">
-                    <label for="s1" >啊实打实</label>
-                </div>
-                <div class="radio-box">
-                    <input type="radio" id="s2" name="status" value="22" checked="false">
-                    <label for="s2" ></label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">备注：</label>
-            <div class="col-sm-8">
-                <textarea id="remark" name="remark" class="form-control"></textarea>
-            </div>
-        </div>
+        @render('iframe',['name'=>'forminput|登录名称','extend'=>['name'=>'username','required'=>1]])
+        @render('iframe',['name'=>'forminput|登录密码','extend'=>['name'=>'password','type'=>'password','value'=>'','tips'=>'可不填写，默认为123456']])
+        @render('iframe',['name'=>'forminput|人员名称','extend'=>['name'=>'realname','tips'=>'可不填写，默认为登录名称']])
+        @render('iframe',['name'=>'formradio|人员状态','extend'=>['name'=>'status','required'=>1,'value'=>1]])
+        @render('iframe',['name'=>'formtextarea|备注','extend'=>['name'=>'note']])
     </form>
-@endsection
+@stop
+
+@section('script')
+    <script>
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(oasUrl, $('#form-admin-add').serialize());
+            }
+        }
+    </script>
+@stop

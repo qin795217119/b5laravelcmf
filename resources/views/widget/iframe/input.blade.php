@@ -1,19 +1,28 @@
-<input
-    type="@if (isset($type) && $type) {{$type}} @else text @endif"
-    name="{{$name}}"
-    value="@if (isset($value) && $value) {{$value}} @endif"
-    @if (isset($id) && $id) id="{{$id}}" @endif
-    @if (isset($class) && $class) class="{{$class}}" @endif
-    @if(isset($place) && $place)
-    @if($place!='false')
-        placeholder="{{$place}}"
-    @endif
-    @else
-        placeholder="请输入{{$place}}"
-    @endif
-    @if (isset($maxlen) && $maxlen) maxlength="{{$maxlen}}" @endif
-    @if (isset($required)) required @endif
-/>
-@if(isset($addon) && $addon)
-    <span class="input-group-addon"><i class="fa {{$addon}}"></i></span>
+@if($widget_data['title'])
+    {{$widget_data['title']}}：
 @endif
+<input
+    type="@if (isset($widget_data['type']) && $widget_data['type']){{$widget_data['type']}}@else text @endif"
+    name="{{$widget_data['name']}}"
+    @if(isset($widget_data['value']))
+        value="{{$widget_data['value']}}"
+    @elseif(isset($widget_data['info']) && isset($widget_data['info'][$widget_data['name']]))
+        value="{{$widget_data['info'][$widget_data['name']]}}"
+    @else
+        value=""
+    @endif
+    @if ($widget_data['id']) id="{{$widget_data['id']}}" @endif
+    @if ($widget_data['class']) class="{{$widget_data['class']}}" @endif
+    @if(isset($widget_data['place']) && $widget_data['place'])
+        placeholder="{{$widget_data['place']}}"
+    @endif
+    @if (isset($widget_data['maxlen']) && $widget_data['maxlen']) maxlength="{{$widget_data['maxlen']}}" @endif
+    @if (isset($widget_data['required'])) required @endif
+    @if (isset($widget_data['readonly'])) readonly="true" @endif
+    autocomplete="off"
+/>
+@if(isset($widget_data['addon']) && $widget_data['addon'])
+    <span class="input-group-addon"><i class="fa {{$widget_data['addon']}}"></i></span>
+@endif
+
+

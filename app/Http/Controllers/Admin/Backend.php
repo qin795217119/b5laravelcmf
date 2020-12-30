@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 
+/**
+ * 后台基类
+ * Class Backend
+ * @package App\Http\Controllers\Admin
+ */
 class Backend extends BaseController
 {
     // 服务
@@ -34,6 +39,8 @@ class Backend extends BaseController
         defined('MODULES_NAME') or define('MODULES_NAME', 'admin');
 
         defined('PAGE_LIMIT') or define('PAGE_LIMIT',10);
+
+        view()->share('group',strtolower(MODULES_NAME));
     }
 
     public function initLogin()
@@ -50,14 +57,10 @@ class Backend extends BaseController
         if (IS_POST) {
             return $this->service->getList();
         }
-
-        // 默认参数
         $data = request()->input();
         if ($data) {
-            view()->share('input_json', json_encode($data));
             view()->share('input', $data);
         }
-
         return $this->render();
     }
 
@@ -67,16 +70,13 @@ class Backend extends BaseController
      */
     public function add(){
         if(IS_POST){
-            // 获取参数
             $argList = func_get_args();
-            // 查询条件
             $data = isset($argList[0]) ? $argList[0] : [];
-            $result = $this->service->add($data);
-            return $result;
+            return $this->service->add($data);
         }
         $data = request()->input();
         if ($data) {
-            view()->share('data', $data);
+            view()->share('input', $data);
         }
         return $this->render();
     }
@@ -87,21 +87,17 @@ class Backend extends BaseController
     public function edit()
     {
         if (IS_POST) {
-            // 获取参数
             $argList = func_get_args();
-            // 查询条件
             $data = isset($argList[0]) ? $argList[0] : [];
-            $result = $this->service->edit($data);
-            return $result;
+            return $this->service->edit($data);
         }
         $info = [];
         $id = request()->input('id', 0);
         if ($id) {
-            $info = $this->service->getInfo($id);
+            $info = $this->service->info($id);
         } else {
             $data = request()->input();
             if ($data) {
-                view()->share('input_json', json_encode($data));
                 view()->share('input', $data);
             }
         }
@@ -114,21 +110,15 @@ class Backend extends BaseController
      * @return mixed
      */
     public function drop(){
-        if (IS_POST) {
-            $result = $this->service->drop();
-            return $result;
-        }
+        return $this->service->drop();
     }
 
     /**
      * 修改状态
      * @return mixed
      */
-    public function setStatus(){
-        if (IS_POST) {
-            $result = $this->service->setStatus();
-            return $result;
-        }
+    public function setstatus(){
+        return $this->service->setStatus();
     }
 
     /**

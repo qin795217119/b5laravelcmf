@@ -2,7 +2,6 @@
  * 通用方法封装处理
  */
 $(function() {
-
     $(document).on("click","*[b5-event]",function () {
         b5event($(this));
     });
@@ -15,7 +14,7 @@ $(function() {
     // select2复选框事件绑定
     if ($.fn.select2 !== undefined) {
         $.fn.select2.defaults.set( "theme", "bootstrap" );
-        $("select.form-control:not(.noselect2)").each(function () {
+        $("select.select2").each(function () {
             $(this).select2().on("change", function () {
                 $(this).valid();
             })
@@ -31,12 +30,10 @@ $(function() {
             })
         })
     }
-
     // 气泡弹出框特效
     $(document).on("click", '.table [data-toggle="popover"]', function() {
         $(this).popover("toggle")
     });
-
     // 取消回车自动提交表单
     $(document).on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
         if (event.keyCode == 13) {
@@ -148,7 +145,7 @@ $(function() {
 
     // tree表格树 展开/折叠
     var expandFlag;
-    $("#expandAllBtn").click(function() {
+    $("#expendinfobtn").click(function() {
         var dataExpand = $.common.isEmpty(table.options.expandAll) ? true : table.options.expandAll;
         expandFlag = $.common.isEmpty(expandFlag) ? dataExpand : expandFlag;
         if (!expandFlag) {
@@ -166,7 +163,9 @@ $(function() {
         }
     });
 });
-
+function dropdownfunc() {
+    console.log('bbbcc')
+}
 (function ($) {
     'use strict';
     $.fn.toTop = function(opt) {
@@ -213,6 +212,9 @@ $(function() {
 function b5event(obj) {
     var type=obj.attr("b5-event");
     switch (type) {
+        case "tablestatus"://停用启用表格中的状态
+            $.operate.statusChange(obj);
+            break;
         case "closeDialog":
             closeDialog();
             break;

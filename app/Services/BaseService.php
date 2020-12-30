@@ -2,7 +2,9 @@
 namespace App\Services;
 
 
+use App\Validates\ValidateBase;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * 服务类-基类
@@ -14,8 +16,7 @@ class BaseService
     // 模型
     protected $model;
     // 验证类
-    protected $validate;
-
+    protected $validate=null;
 
     public function getModel(){
         return $this->model;
@@ -23,79 +24,90 @@ class BaseService
     public function setModel(Model $model){
         $this->model=$model;
     }
+    public function setValidate(ValidateBase $validate){
+        $this->validate=$validate;
+    }
     /**
      * 获取数据列表
      * @return array
      */
-    public function getList()
+    public function getList($all=false)
     {
-        // 初始化变量
         $map = [];
-        $sort = [['id', 'desc']];
+        $sort = [];
+        $order_column = 'id';
+        $order_sort = 'asc';
+        $page = 1;
+        $limit = PAGE_LIMIT;
 
+        $param = request()->input();
+        if ($param){
+            //表单的条件 where 的条件
+            if(!empty($param['where']) && is_array($param['where'])){
+                foreach ($param['where'] as $wname=>$wvalue){
+                    $wvalue=trim($wvalue);
+                    if($wvalue!==''){
+                        $map[] = [$wname, '=', $wvalue];
+                    }
+                }
+            }
+            //表单的条件 like 的条件
+            if(!empty($param['like']) && is_array($param['like'])){
+                foreach ($param['like'] as $wname=>$wvalue){
+                    $wvalue=trim($wvalue);
+                    if($wvalue!==''){
+                        $map[] = [$wname, 'like', "%{$wvalue}%"];
+                    }
+                }
+            }
+            //表单的条件 between 的条件
+            if(!empty($param['between']) && is_array($param['between'])){
+                foreach ($param['between'] as $wname=>$wvalue){
+                    if(is_array($wvalue) && count($wvalue)>1){
+                        $map[] = [$wname, 'between', [$wvalue['start'],$wvalue['end']]];
+                    }
+                }
+            }
+            //排序条件
+            if (!empty($param['orderByColumn'])) {
+                $order_column = trim($param['orderByColumn']);
+            }
+            if (!empty($param['isAsc'])) {
+                $order_sort = trim($param['isAsc']);
+            }
+            // 分页条件
+            if (!empty($param['pageNum'])) $page = intval($param['pageNum']);
+            if (!empty($param['pageSize'])) $limit = intval($param['pageSize']);
+        }
         // 获取参数
         $argList = func_get_args();
-
         if (!empty($argList)) {
-            // 查询条件
-            $map = (isset($argList[0]) && !empty($argList[0])) ? $argList[0] : [];
+            // 查询条件合并
+            $map_arg = (isset($argList[1]) && !empty($argList[1])) ? $argList[1] : [];
+            if($map_arg) {
+                $map=array_merge($map,$map_arg);
+            }
             // 排序
-            $sort = (isset($argList[1]) && !empty($argList[1])) ? $argList[1] : [['id', 'desc']];
+            $sort = (isset($argList[1]) && !empty($argList[1])) ? $argList[1] : [];
         }
-
-        // 常规查询条件
-        $param = request()->input();
-        if ($param) {
-            // 筛选名称
-            if (isset($param['name']) && $param['name']) {
-                $map[] = ['name', 'like', "%{$param['name']}%"];
-            }
-
-            // 筛选标题
-            if (isset($param['title']) && $param['title']) {
-                $map[] = ['title', 'like', "%{$param['title']}%"];
-            }
-
-            // 筛选类型
-            if (isset($param['type']) && $param['type']) {
-                $map[] = ['type', '=', $param['type']];
-            }
-
-            // 筛选状态
-            if (isset($param['status']) && $param['status']) {
-                $map[] = ['status', '=', $param['status']];
-            }
-
-            // 手机号码
-            if (isset($param['mobile']) && $param['mobile']) {
-                $map[] = ['mobile', '=', $param['mobile']];
-            }
-        }
-        // 排序(支持多重排序)
-        $query = $this->model->where($map)->when($sort, function ($query, $sort) {
-            foreach ($sort as $v) {
-                $query->orderBy($v[0], $v[1]);
-            }
-        });
-        // 分页条件
-        $page=$param['page']?? 1;
-        $perpage=$param['limit']?? PAGE_LIMIT;
-        $offset = ($page - 1) * $perpage;
-        $result = $query->offset($offset)->limit($perpage)->select('id')->get();
-        $result = $result ? $result->toArray() : [];
+        $sort || $sort=[[$order_column,$order_sort]];
 
         $list = [];
-        if (is_array($result)) {
-            foreach ($result as $val) {
-                $info = $this->info($val['id'],true);
-                $list[] = $info;
+        if($all){
+            $list=$this->model->getList($map,[],[],'',$sort);
+            $count=count($list);
+        }else{
+            //只获取主键的列表
+            $offset = ($page - 1) * $limit;
+            $result=$this->model->getList($map,[$this->model->getprimaryKey()],[$offset,$limit],'',$sort);
+            if ($result) {
+                foreach ($result as $val) {
+                    $info = $this->info($val[$this->model->getprimaryKey()],true);
+                    $list[] = $info;
+                }
             }
+            $count = $this->model->where($map)->count();
         }
-
-        //获取数据总数
-        $count = $this->model->where($map)->count();
-
-        //返回结果
         return message('操作成功',true,$list,0,'',['total'=>$count]);
     }
 
@@ -114,83 +126,140 @@ class BaseService
     }
 
     /**
-     * 删除
-     * @return array
+     * 判断唯一
+     * @param array $map
+     * @param array $except
+     * @param string $excetField
+     * @return bool
      */
-    public function drop(){
-        // 获取参数
-        $data = request()->all();
-        if (!$data[$this->model->getprimaryKey()]) {
-            return message('记录ID不能为空', false);
+    public function exist(array $map=[],array $except=[],string $excetField=''){
+        if(!$map) return false;
+        $where=[];
+        foreach ($map as $key=>$val){
+            if(is_array($val)){
+                if(count($val)<1){
+                    continue;
+                }elseif (count($val)==1){
+                    $where[]=[$key,'in',$val[0]];
+                }elseif (count($val)==2){
+                    $where[]=[$val[0],'=',$val[1]];
+                }else{
+                    $where[]=$val;
+                }
+            }else{
+                $where[]=[$key,'=',$val];
+            }
         }
-        $result = $this->model->drop($data[$this->model->getprimaryKey()]);
-        if ($result) {
-            return message('删除成功', true,[],null,'reload');
+        $info=$this->info($where);
+        $field=$excetField?:$this->model->getprimaryKey();
+        if($info && !in_array($info[$field],$except)){
+            return true;
         }
-        return message('删除失败', false);
+        return false;
     }
-    /**
-     * 编辑
-     * @return mixed
-     */
-    public function edit()
-    {
-        // 获取参数
-        $argList = func_get_args();
-        // 查询条件
-        $data = isset($argList[0]) ? $argList[0] : [];
-
-        if (!$data) {
-            $data = request()->all();
-        }
-
-        $result = $this->model->edit($data);
-        if($result!==false){
-            return message('保存成功', true,[],null,'closeopen_refresh');
-        }
-        return message('操作失败',false);
-    }
-
     /**
      * 添加
      * @return array
      */
     public function add()
     {
-        // 获取参数
         $argList = func_get_args();
-        // 查询条件
         $data = isset($argList[0]) ? $argList[0] : [];
-
-        if (!$data) {
-            $data = request()->all();
+        if(!$data) {
+            $data=request()->all();
         }
-
-        $result = $this->model->add($data);
-        if($result!==false){
-            return message('保存成功', true,[],null,'closeopen_refresh');
+        if($data){
+            if($this->validate){
+                $validate=$this->validate->data($data)->type('add')->run();
+                if($validate->error){
+                    return message($validate->error,false);
+                }
+                $data=$validate->get();
+            }
+            $result = $this->model->add($data);
+            if($result!==false){
+                return message('保存成功', true,[],null,'closeopen_refresh');
+            }
         }
         return message('操作失败',false);
     }
+
+    /**
+     * 编辑
+     * @return mixed
+     */
+    public function edit()
+    {
+        $argList = func_get_args();
+        $data = isset($argList[0]) ? $argList[0] : [];
+        if (!$data) {
+            $data = request()->all();
+        }
+        if($data){
+            if($this->validate){
+                $validate=$this->validate->data($data)->type('edit')->run();
+                if($validate->error){
+                    return message($validate->error,false);
+                }
+                $data=$validate->get();
+            }
+            $result = $this->model->edit($data);
+            if($result!==false){
+                return message('保存成功', true,[],null,'closeopen_refresh');
+            }
+        }
+        return message('操作失败',false);
+    }
+    public function after_drop($data){
+        return true;
+    }
+    /**
+     * 删除
+     * @return array
+     */
+    public function drop(){
+        $argList = func_get_args();
+        $data = isset($argList[0]) ? $argList[0] : [];
+        if (!$data) {
+            $data = request()->all();
+        }
+        if(!$data) return message('未获取到数据',false);
+
+        if (!isset($data['ids']) || !$data['ids']) {
+            return message('未选择数据', false);
+        }
+        $field=isset($argList[1]) ? $argList[1] : '';
+        $result = $this->model->drop($data['ids'],$field);
+        if ($result) {
+            $this->after_drop($data);
+            return message('删除成功', true, [], null, 'reload');
+        }
+        return message('删除失败', false);
+    }
+
     /**
      * 设置记录状态
      * @return mixed
      */
     public function setStatus()
     {
-        $data = request()->all();
-        if (!$data[$this->model->getprimaryKey()]) {
-            return message('记录ID不能为空', false);
+        $argList = func_get_args();
+        $data = isset($argList[0]) ? $argList[0] : [];
+        if (!$data) {
+            $data = request()->all();
+        }
+        if(!$data) return message('为获取到数据',false);
+        if (!isset($data['id']) || !$data['id']) {
+            return message('未选择数据', false);
         }
         if (!isset($data['status'])) {
-            return message('记录状态不能为空', false);
+            return message('状态参数错误', false);
         }
-        $update=[$this->model->getprimaryKey()=>$data[$this->model->getprimaryKey()],'status'=>$data['status']];
-
+        $update=[$this->model->getprimaryKey()=>$data['id'],'status'=>$data['status']];
         $result = $this->model->edit($update);
-        $title=$data[$this->model->getprimaryKey()]?'启用':'禁用';
+        $title=$data['status']?'启用':'停用';
         if ($result) {
-            return message($title.'成功', true,[],null,'reload');
+            return message('', true,[],null,'reload');
         }
         return message($title.'失败',false);
     }

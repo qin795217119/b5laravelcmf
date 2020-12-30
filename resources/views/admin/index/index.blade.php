@@ -48,15 +48,25 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- 一级菜单 -->
+                <!--- 菜单 -->
                 <li>
                     <a class="menuItem" href="/admin/home"><i class="fa fa-home"></i> <span class="nav-label">首页</span> </a>
                 </li>
                 <li>
-                    <a class="menuItem" href="/admin/test"><i class="fa fa-home"></i> <span class="nav-label">用户列表</span> </a>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span class="nav-label">系统管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="menuItem" href="/admin/config/index">系统配置</a></li>
+                        <li><a class="menuItem" href="/admin/dict/index">字典管理</a></li>
+                        <li><a class="menuItem" href="/admin/notice/index">通知公告</a></li>
+                        <li><a class="menuItem" href="/admin/adlist/index">推荐信息</a></li>
+                        <li><a class="menuItem" href="/admin/adpos/index">推荐位置</a></li>
+                        <li><a class="menuItem" href="/admin/adtype/index">跳转管理</a></li>
+                    </ul>
                 </li>
-                <!-- 二级 -->
                 <li>
                     <a href="#">
                         <i class="fa fa-cog"></i>
@@ -65,19 +75,10 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li><a class="menuItem" href="/admin/admin/index">人员管理</a></li>
-                        <li><a class="menuItem" href="/admin/authgroup/index">角色管理</a></li>
-                    </ul>
-                </li>
-                <!-- 二级 -->
-                <li>
-                    <a href="#">
-                        <i class="fa fa-cog"></i>
-                        <span class="nav-label">实例演示2</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="menuItem" href="/11aaa">按钮2</a></li>
-                        <li><a class="menuItem" href="/11bbbb">表格2</a></li>
+                        <li><a class="menuItem" href="/admin/role/index">角色管理</a></li>
+                        <li><a class="menuItem" href="/admin/menu/index">菜单管理</a></li>
+                        <li><a class="menuItem" href="/admin/opertlog/index">操作日志</a></li>
+                        <li><a class="menuItem" href="/admin/loginlog/index">登录日志</a></li>
                     </ul>
                 </li>
             </ul>

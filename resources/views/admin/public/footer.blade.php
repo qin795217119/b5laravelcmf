@@ -1,5 +1,5 @@
-<script src="{{asset('static/plugins/jquery/jquery-1.12.4.min.js')}}"></script>
-<script src="{{asset('static/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('static/plugins/jquery/jquery-1.12.4.min.js')}}"></script>
+    <script src="{{asset('static/plugins/bootstrap/js/bootstrap.min.js?v=asdasd')}}"></script>
 @section('js_common')
     <!-- bootstrap-table 表格插件 -->
     <script src="{{asset('static/plugins/bootstrap-table/bootstrap-table.min.js')}}"></script>
@@ -9,13 +9,11 @@
     <script src="{{asset('static/plugins/validate/jquery.validate.min.js')}}"></script>
     <script src="{{asset('static/plugins/validate/messages_zh.min.js')}}"></script>
     <script src="{{asset('static/plugins/validate/jquery.validate.extend.js')}}"></script>
-    <!-- jquery-validate 表单树插件 -->
-    <script src="{{asset('static/plugins/bootstrap-treetable/bootstrap-treetable.js')}}"></script>
 @show
-<script src="{{asset('static/plugins/blockUI/jquery.blockUI.js')}}"></script>
-<script src="{{asset('static/plugins/iCheck/icheck.min.js')}}"></script>
-<script src="{{asset('static/plugins/layui/layui.js')}}"></script>
-<script src="{{asset('static/admin/js/iframe-ui.js')}}"></script>
-<script src="{{asset('static/admin/js/common.js')}}"></script>
+    <script src="{{asset('static/plugins/blockUI/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('static/plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{asset('static/plugins/layui/layui.js')}}"></script>
+    <script src="{{asset('static/admin/js/iframe-ui.js')}}"></script>
+    <script src="{{asset('static/admin/js/common.js')}}"></script>
 @section('script')
 @show

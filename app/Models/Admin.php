@@ -16,7 +16,17 @@ class Admin extends BaseModel
         'realname'=>'',
         'password'=>'',
         'group_id'=>0,
-        'status'=>0,
-        'note'=>''
+        'status'=>1,
+        'note'=>'',
     ];
+
+    /**
+     * 根据用户名查询信息
+     * @param $username
+     * @return mixed
+     */
+    public function getUserByName($username)
+    {
+        return parent::info([['username','=',$username]]);
+    }
 }

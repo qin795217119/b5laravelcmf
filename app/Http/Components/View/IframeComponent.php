@@ -1,16 +1,18 @@
 <?php
 namespace App\Http\Components\View;
-
-
 use Illuminate\Contracts\Support\Htmlable;
 
+/**
+ * 自定义后台快速生成html
+ * Class IframeComponent
+ * @package App\Http\Components\View
+ */
 class IframeComponent implements Htmlable
 {
     private $params;
 
     public function init($params)
     {
-
         $this->params = $params;
         return $this->toHtml();
     }
@@ -32,7 +34,8 @@ class IframeComponent implements Htmlable
                     $extend['title']=$extend['title']??$title;
                     $extend['id']=$extend['id']??'';
                     $extend['class']=$extend['class']??'';
-                    return view('widget.iframe.' . trim($type),$extend);
+                    $extend['name']=$extend['name']??'';
+                    return view('widget.iframe.' . trim($type),['widget_data'=>$extend]);
                 }
             }
         }
