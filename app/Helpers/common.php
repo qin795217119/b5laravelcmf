@@ -55,39 +55,6 @@ if (!function_exists('get_image_url')) {
         return IMG_URL . $image_url;
     }
 }
-if (!function_exists('is_empty')) {
-
-    /**
-     * 判断是否为空
-     * @param $value 参数值
-     * @return bool 返回结果true或false
-     */
-    function is_empty($value)
-    {
-        // 判断是否存在该值
-        if (!isset($value)) {
-            return true;
-        }
-
-        // 判断是否为empty
-        if (empty($value)) {
-            return true;
-        }
-
-        // 判断是否为null
-        if ($value === null) {
-            return true;
-        }
-
-        // 判断是否为空字符串
-        if (trim($value) === '') {
-            return true;
-        }
-
-        // 默认返回false
-        return false;
-    }
-}
 
 
 if (!function_exists('sub_str')) {
@@ -118,6 +85,41 @@ if (!function_exists('sub_str')) {
         }
         $omit = mb_strlen($str) >= $length ? '...' : '';
         return $suffix ? $slice . $omit : $slice;
+    }
+
+}
+
+if (!function_exists('strline_array')) {
+    /**
+     * 将字符串根据换行、分号、逗号转为数组，并可以再次根据设置分数组
+     * @param $value
+     * @param string $sediff
+     * @return array|false|string[]
+     */
+    function strline_array($value, $sediff = '')
+    {
+        if ($value) {
+            $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
+            if ($sediff && strpos($value, $sediff)) {
+                $value = [];
+                foreach ($array as $val) {
+                    list($k, $v) = explode($sediff, $val);
+                    $value[$k] = $v;
+                }
+            } else {
+                $value = $array;
+            }
+        } else {
+            $value = [];
+        }
+        return $value;
+    }
+}
+
+
+function is_set($data){
+    if(isset($data)){
+        return true;
     }
 
 }

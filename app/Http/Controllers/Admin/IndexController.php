@@ -7,6 +7,7 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Services\AdminService;
 use Illuminate\Http\Request;
 
 class IndexController extends Backend

@@ -7,7 +7,7 @@
                 <ul>
                     <li>@render('iframe',['name'=>'input|配置名称','extend'=>['name'=>'like[title]']])</li>
                     <li>@render('iframe',['name'=>'input|配置标识','extend'=>['name'=>'where[type]']])</li>
-                    <li>@render('iframe',['name'=>'select|系统内置','extend'=>['name'=>'where[is_sys]','value'=>'','place'=>'所有','data'=>['否','是']]])</li>
+                    <li>@render('iframe',['name'=>'select|配置分组','extend'=>['name'=>'where[groups]','value'=>'','place'=>'所有','data'=>$grouplist]])</li>
                     <li>
                         @render('iframe',['name'=>'searchbtn|搜索'])
                         @render('iframe',['name'=>'resetbtn|重置'])
@@ -27,6 +27,8 @@
 
 @section('script')
     <script>
+        var stylelist={!! json_encode($stylelist) !!};
+        var grouplist={!! json_encode($grouplist) !!};
         $(function () {
             var options = {
                 modalName: "配置",
@@ -36,16 +38,39 @@
                     {field: 'id', title: '配置ID',  sortable: true},
                     {field: 'title', title: '配置标题'},
                     {field: 'type', title: '配置标识', sortable: true},
-                    {field: 'listsort', title: '显示顺序',align: 'center', sortable: true},
+                    {
+                        field: 'value',
+                        title: '配置值',
+                        formatter: function(value, row, index) {
+                            return $.table.tooltip(value,15);
+                        }
+                    },
+                    {
+                        field: 'extra',
+                        title: '配置项',
+                        formatter: function(value, row, index) {
+                            if(value=='') return '-';
+                            return $.table.tooltip(value);
+                        }
+                    },
                     {
                         title: '类型',
                         field: 'style',
-                        align: 'center',
                         sortable: true,
                         formatter: function (value, row, index) {
-                            return '-';
+                            return stylelist.hasOwnProperty(value)?stylelist[value]:'-';
                         }
                     },
+                    {
+                        title: '分组',
+                        field: 'groups',
+                        sortable: true,
+                        visible: false,
+                        formatter: function (value, row, index) {
+                            return grouplist.hasOwnProperty(value)?grouplist[value]:'-';
+                        }
+                    },
+                    {field: 'listsort', title: '显示顺序',align: 'center', sortable: true},
                     {field: 'create_time', title: '创建时间', align: 'center', sortable: true},
                     {field: 'update_time', title: '更新时间', align: 'center', sortable: true,visible: false},
                     {field: 'note', title: '备注',visible: false},

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\DictData;
-use App\Validates\DictDataValidate;
+use App\Models\Notice;
+use App\Validates\NoticeValidate;
 
 
 /**
@@ -13,12 +13,9 @@ use App\Validates\DictDataValidate;
  */
 class NoticeService extends BaseService
 {
-    /**
-     * 构造方法
-     */
-    public function __construct()
+    public function __construct(bool $loadValidate = true)
     {
-        $this->setModel(new DictData());
-        $this->setValidate(new DictDataValidate());
+        $this->setModel(new Notice());
+        $loadValidate && $this->setValidate(new NoticeValidate());
     }
 }

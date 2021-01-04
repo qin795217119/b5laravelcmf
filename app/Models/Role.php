@@ -17,23 +17,4 @@ class Role extends BaseModel
         'permission'=>'',
         'status'=>1
     ];
-
-    /**
-     * 根据权限字符查询角色
-     * @param $roleKey
-     * @return mixed
-     */
-    public function getRoleByKey($roleKey)
-    {
-        return parent::info([['rolekey','=',$roleKey]]);
-    }
-    /**
-     * 获取分组列表用于选择
-     * @return array
-     */
-    public function getSelectList(){
-        $result= $this->where('status',1)->select('id','name')->orderBy('listsort','asc')->get();
-
-        return $result ? $result->toArray() : [];
-    }
 }

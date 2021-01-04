@@ -12,7 +12,7 @@ class ConfigValidate extends ValidateBase
         return [
             'title' => 'required|min:2|max:50',
             'type' => 'required|min:3|max:50|alpha_dash',
-            'style'=>'required',
+            'style' => 'required',
             'listsort' => 'integer'
         ];
     }
@@ -22,10 +22,15 @@ class ConfigValidate extends ValidateBase
         return [
             'title' => '配置标题',
             'type' => '配置标识',
-            'style'=>'配置类型',
+            'style' => '配置类型',
             'listsort' => '显示顺序'
         ];
     }
+
+    /**
+     * 验证标识的唯一性
+     * @return ValidateBase
+     */
     protected function after_validate()
     {
         if (empty($this->error)) {

@@ -4,7 +4,6 @@ namespace App\Validates;
 
 
 use App\Services\DictDataService;
-use App\Services\RoleService;
 
 class DictDataValidate extends ValidateBase
 {
@@ -27,13 +26,18 @@ class DictDataValidate extends ValidateBase
             'listsort' => '显示顺序'
         ];
     }
+
+    /**
+     * 验证数据值的唯一性
+     * @return ValidateBase
+     */
     protected function after_validate()
     {
         if (empty($this->error)) {
             if ($this->data['type'] && isset($this->data['value'])) {
                 $service = new DictDataService();
                 $expect = $this->type == 'edit' ? [$this->data['id']] : [];
-                $exist = $service->exist(['type' => trim($this->data['type']),'value' => trim($this->data['value'])], $expect);
+                $exist = $service->exist(['type' => trim($this->data['type']), 'value' => trim($this->data['value'])], $expect);
                 if ($exist) {
                     $this->error = '该字典类型下已存在此键值';
                 }

@@ -1,10 +1,7 @@
-<!-- 引入基类模板 -->
 @extends('admin.public.layout')
-@section('js_common')
-    @parent
-    <script src="{{asset('static/plugins/bootstrap-treetable/bootstrap-treetable.js')}}"></script>
-@stop
-<!-- 主体部分 -->
+
+@include('widget.asset.treetable')
+
 @section('content')
     <div class="col-sm-12 search-collapse">
         <form id="role-form">
@@ -44,8 +41,6 @@
                     {
                         title: '菜单名称',
                         field: 'name',
-                        width: '20',
-                        widthUnit: '%',
                         formatter: function(value, row, index) {
                             if ($.common.isEmpty(row.icon)) {
                                 return row.name;
@@ -54,19 +49,10 @@
                             }
                         }
                     },
-                    {
-                        field: 'listsort',
-                        title: '排序',
-                        width: '10',
-                        widthUnit: '%',
-                        align: "left"
-                    },
+                    {field: 'listsort', title: '排序',},
                     {
                         field: 'url',
                         title: '请求地址',
-                        width: '15',
-                        widthUnit: '%',
-                        align: "left",
                         formatter: function(value, row, index) {
                             return $.table.tooltip(value);
                         }
@@ -74,9 +60,6 @@
                     {
                         title: '类型',
                         field: 'type',
-                        width: '10',
-                        widthUnit: '%',
-                        align: "left",
                         formatter: function(value, item, index) {
                             if (item.type == 'M') {
                                 return '<span class="label label-success">目录</span>';
@@ -92,9 +75,6 @@
                     {
                         field: 'status',
                         title: '可见',
-                        width: '10',
-                        widthUnit: '%',
-                        align: "left",
                         formatter: function(value, row, index) {
                             if (row.type == 'F') {
                                 return '-';
@@ -106,9 +86,6 @@
                     {
                         field: 'perms',
                         title: '权限标识',
-                        width: '15',
-                        widthUnit: '%',
-                        align: "left",
                         formatter: function(value, row, index) {
                             if(!value){
                                 return '-';
@@ -117,11 +94,9 @@
                             }
                         }
                     },
+                    {field: 'note', title: '备注',visible:false},
                     {
                         title: '操作',
-                        width: '20',
-                        widthUnit: '%',
-                        align: "left",
                         formatter: function(value, row, index) {
                             return '@render("iframe",["name"=>"formopbtn","extend"=>["type"=>["edit","add","delete"],"rowId"=>"row.id"]])';
                         }

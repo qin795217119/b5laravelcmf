@@ -46,7 +46,12 @@ a:focus {
 .layui-laydate-footer {height: 38px !important;padding: 6px 20px !important;}
 .laydate-footer-btns{top: 6px !important;}
 
-
+/** jquery-layout **/
+.ui-layout-pane{border: none;padding: 0;}
+.gray-bg .ui-layout-pane .container-div{background-color: #f3f3f4}
+.ui-layout-resizer{background-color: #fafafa;border-color: #eee}
+.ui-layout-toggler{background-color: #eee;border-color: #eee}
+.ui-layout-toggler:hover{background-color: #FFCC66}
 .help-block{color: #888;font-size: 12px}
 
 
@@ -3072,6 +3077,7 @@ body.boxed-layout #wrapper {
 
 .clear {
     display: block;
+    clear: both;
     overflow: hidden;
 }
 

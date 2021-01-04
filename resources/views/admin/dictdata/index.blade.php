@@ -1,20 +1,12 @@
 @extends('admin.public.layout')
-@section('css_common')
-    @parent
-    <link rel="stylesheet" href="{{asset('static/plugins/select2/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('static/plugins/select2/select2-bootstrap.css')}}">
-@stop
-@section('js_common')
-    @parent
-    <script src="{{asset('static/plugins/select2/select2.min.js')}}"></script>
-@stop
+
 @section('content')
     <div class="col-sm-12 search-collapse">
         <form id="role-form">
             <div class="select-list">
                 <ul>
                     <li>@render('iframe',['name'=>'select|字典类型','extend'=>['name'=>'where[type]','id'=>'dictType','class'=>'select2','data'=>$typelist,'showvalue'=>'type','showname'=>'name','place'=>'所有字典','value'=>$input['type']??'']])</li>
-                    <li>@render('iframe',['name'=>'input|数据标签','extend'=>['name'=>'where[name]']])</li>
+                    <li>@render('iframe',['name'=>'input|数据名称','extend'=>['name'=>'where[name]']])</li>
                     <li>@render('iframe',['name'=>'select|数据状态','extend'=>['name'=>'where[status]','value'=>'','place'=>'所有']])</li>
                     <li>
                         @render('iframe',['name'=>'searchbtn|搜索'])
@@ -45,7 +37,7 @@
                 columns: [
                     {checkbox: true},
                     {field: 'id', title: '数据ID',  sortable: true},
-                    {field: 'name', title: '数据标签'},
+                    {field: 'name', title: '数据名称'},
                     {field: 'value', title: '数据值'},
                     {field: 'listsort', title: '显示顺序',align: 'center', sortable: true},
                     {

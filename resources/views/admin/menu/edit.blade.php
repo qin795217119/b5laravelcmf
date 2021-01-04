@@ -51,7 +51,7 @@
             //选择菜单树
             $("#treeName").click(function () {
                 var treeId = $("#treeId").val();
-                var menuId = treeId > 0 ? treeId : 1;
+                var menuId = treeId > -1 ? treeId : 1;
                 var url = cUrl + "/tree?id=" + menuId;
                 var options = {
                     title: '菜单选择',

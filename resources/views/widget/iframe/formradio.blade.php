@@ -1,6 +1,6 @@
 <div class="form-group">
-    <label class="col-sm-3 control-label @if (isset($widget_data['required']))is-required @endif">{{$widget_data['title']}}：</label>
-    <div class="col-sm-8">
+    <label class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-2 @else col-sm-3 @endif control-label @if (isset($widget_data['required']))is-required @endif">{{$widget_data['title']}}：</label>
+    <div class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-9 @else col-sm-8 @endif">
         @foreach ($widget_data['data']??[0=>'停用',1=>'启用'] as $key => $val)
             <div class="radio-box">
                 @if (is_array($val))

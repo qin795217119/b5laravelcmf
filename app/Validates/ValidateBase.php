@@ -11,11 +11,19 @@ use Illuminate\Support\Facades\Validator;
  */
 class ValidateBase
 {
+    //错误信息
     public $error = '';
+    //验证的数据
     protected $data;
+    //验证场景
     protected $type = '';
+    //验证规则
     protected $ruleList = [];
 
+    /**
+     * 初始化将验证规则赋值到属性
+     * ValidateBase constructor.
+     */
     public function __construct()
     {
         $this->ruleList = $this->rules();
@@ -77,7 +85,6 @@ class ValidateBase
 
     /**
      * 基于验证场景获取验证规则
-     * @param string $type
      * @return array
      */
     protected function getRules()
@@ -86,28 +93,29 @@ class ValidateBase
         if (!$rules) return [];
         if (!$this->type) return $rules;
 
-        $scenArr = $this->scen();
-        if ($scenArr && array_key_exists($this->type, $scenArr)) {
+        //若指定场景则对验证规则调整
+        $sceneArr = $this->scen();
+        if ($sceneArr && array_key_exists($this->type, $sceneArr)) {
             foreach ($rules as $field => $rule) {
-                if (!in_array($field, $scenArr[$this->type])) {
+                if (!in_array($field, $sceneArr[$this->type])) {
                     unset($rules[$field]);
                 }
             }
         }
 
         //增加bail
-        foreach ($rules as $field => $rule){
-            if(!$rules) continue;
-            if(is_string($rule)){
-                if (strpos($rule,'|')!==false && strpos($rule,'|bail')===false && strpos($rule,'bail|')===false){
-                    $rule='bail|'.$rule;
+        foreach ($rules as $field => $rule) {
+            if (!$rules) continue;
+            if (is_string($rule)) {
+                if (strpos($rule, '|') !== false && strpos($rule, '|bail') === false && strpos($rule, 'bail|') === false) {
+                    $rule = 'bail|' . $rule;
                 }
-            } elseif (is_array($rule)){
-                if(count($rule)>1 && !in_array('bail',$rule)){
-                    array_unshift($rule,'bail');
+            } elseif (is_array($rule)) {
+                if (count($rule) > 1 && !in_array('bail', $rule)) {
+                    array_unshift($rule, 'bail');
                 }
             }
-            $rules[$field]=$rule;
+            $rules[$field] = $rule;
         }
         return $rules;
     }
@@ -145,8 +153,6 @@ class ValidateBase
 
     /**
      * 执行验证并返回错误信息
-     * @param $data
-     * @param string $type
      * @return string
      */
     public function run()

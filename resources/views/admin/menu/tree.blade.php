@@ -1,11 +1,6 @@
 @extends('admin.public.layout')
 
-@section('css_common')
-    <link rel="stylesheet" href="{{asset('static/plugins/ztree/css/metroStyle/metroStyle.css')}}">
-@stop
-@section('js_common')
-    <script src="{{asset('static/plugins/ztree/js/jquery.ztree.core.min.js')}}"></script>
-@stop
+@include('widget.asset.ztree')
 
 @section('content')
     <style>
@@ -36,17 +31,9 @@
         $(function() {
             var options = {
                 url: aUrl,
-                expandLevel: 1,
-                onClick : zOnClick
+                expandLevel: 2
             };
             $.tree.init(options);
         });
-
-        function zOnClick(event, treeId, treeNode) {
-            var treeId = treeNode.id;
-            var treeName = treeNode.name;
-            $("#treeId").val(treeId);
-            $("#treeName").val(treeName);
-        }
     </script>
 @stop

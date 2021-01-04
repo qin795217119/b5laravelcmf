@@ -8,16 +8,16 @@ class NoticeValidate extends ValidateBase
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:30',
-            'rolekey' => 'required|min:3|max:30|alpha_num'
+            'title' => 'required|min:2|max:150',
+            'type' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => '角色名称',
-            'roleky' => '角色标识'
+            'title' => '公告标题',
+            'type' => '公告类型'
         ];
     }
 }

@@ -15,7 +15,6 @@ class Notice extends BaseModel
         'content'=>'',
         'textarea'=>'',
         'status'=>1,
-        'listsort'=>0,
-        'note'=>'',
+        'listsort'=>99,
     ];
 }

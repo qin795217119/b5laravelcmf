@@ -30,6 +30,33 @@ $(function() {
             })
         })
     }
+
+    //富文本
+    if ($(".summernote").length > 0) {
+        $(".summernote").each(function () {
+            var thisObj=$(this);
+            //
+            var summernote_title=thisObj.data('place');
+            if($.common.isEmpty(summernote_title)) summernote_title='';
+            var summernote_height=thisObj.data('height');
+            if($.common.isEmpty(summernote_height)) summernote_height=192;
+            thisObj.summernote({
+                placeholder: summernote_title,
+                height: summernote_height,
+                lang: 'zh-CN',
+                followingToolbar: false,
+                callbacks: {
+                    onImageUpload: function (files) {
+                        // sendFile(files[0], this);
+                    }
+                }
+            });
+            if(thisObj.parent().find(".summernote_content").length>0){
+                thisObj.summernote('code', thisObj.parent().find("input.summernote_content").eq(0).val());
+            }
+        })
+    }
+
     // 气泡弹出框特效
     $(document).on("click", '.table [data-toggle="popover"]', function() {
         $(this).popover("toggle")
@@ -400,7 +427,6 @@ var log = {
         console.error(msg);
     }
 };
-
 // 本地缓存处理
 var storage = {
     set: function(key, value) {

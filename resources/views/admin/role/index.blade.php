@@ -52,13 +52,27 @@
                         title: '操作',
                         align: 'center',
                         formatter: function(value, row, index) {
-                            return '@render("iframe",["name"=>"formopbtn","extend"=>["type"=>["edit","delete"],"rowId"=>"row.id"]])';
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs" href="javascript:;" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs" href="javascript:;" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                            var more = [];
+
+                            more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='authDataScope(" + row.id + ")'><i class='fa fa-check-square-o'></i>数据权限</a> ");
+                            more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='authUser(" + row.id + ")'><i class='fa fa-user'></i>分配用户</a>");
+                            actions.push('<a tabindex="0" class="btn btn-info btn-xs" data-placement="left" data-toggle="popover" data-html="true" data-trigger="focus" data-container="body" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
+
+                            return actions.join('');
                         }
                     }
                 ]
             };
             $.table.init(options);
         });
+        /* 角色管理-分配用户 */
+        function authUser(roleId) {
+            var url = mUrl + '/adminrole/index?role_id=' + roleId;
+            $.modal.openTab("分配用户", url);
+        }
     </script>
 @stop
 

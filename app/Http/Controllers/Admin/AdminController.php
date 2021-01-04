@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\AdminService;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 
 /**
@@ -16,5 +17,6 @@ class AdminController extends Backend
     {
         parent::__construct($request);
         $this->service = new AdminService();
+        IS_GET && !IS_AJAX && view()->share('rolelist',(new RoleService())->getAll([],['id','name'],[],'id,name',[['listsort','asc'],['id','asc']]));
     }
 }

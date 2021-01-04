@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Validates;
 
 
@@ -9,7 +10,7 @@ class MenuValidate extends ValidateBase
     public function rules()
     {
         return [
-            'name'=>'required|min:2|max:30',
+            'name' => 'required|min:2|max:30',
             'listsort' => 'integer'
         ];
     }
@@ -17,12 +18,15 @@ class MenuValidate extends ValidateBase
     public function attributes()
     {
         return [
-            'name'=>'菜单名称',
+            'name' => '菜单名称',
             'listsort' => '显示顺序'
         ];
     }
 
-
+    /**
+     * 验证标识的唯一性
+     * @return ValidateBase
+     */
     protected function after_validate()
     {
         if (empty($this->error)) {

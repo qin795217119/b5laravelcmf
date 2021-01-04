@@ -25,6 +25,10 @@ class RoleValidate extends ValidateBase
         ];
     }
 
+    /**
+     * 验证标识的唯一性
+     * @return ValidateBase
+     */
     protected function after_validate()
     {
         if (empty($this->error)) {

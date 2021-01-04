@@ -20,13 +20,9 @@ class Admin extends BaseModel
         'note'=>'',
     ];
 
-    /**
-     * 根据用户名查询信息
-     * @param $username
-     * @return mixed
-     */
-    public function getUserByName($username)
+
+    public function role()
     {
-        return parent::info([['username','=',$username]]);
+        return $this->hasOne(AdminRole::class,'admin_id');
     }
 }

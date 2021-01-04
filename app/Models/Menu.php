@@ -22,5 +22,4 @@ class Menu extends BaseModel
         'icon'=>'',
         'note'=>'',
     ];
-    public $typeArr=['M'=>'目录','C'=>'菜单','F'=>'按钮'];
 }

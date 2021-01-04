@@ -13,7 +13,6 @@ class DictData extends BaseModel
         'name'=>'',
         'value'=>'',
         'type'=>'',
-        'is_default'=>0,
         'status'=>1,
         'listsort'=>0,
         'note'=>'',

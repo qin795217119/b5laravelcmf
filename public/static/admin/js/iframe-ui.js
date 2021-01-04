@@ -649,34 +649,36 @@ var table = {
         // 表单常用展示效果
         view:{
             //开关状态显示
-            statusTools:function(row,click,statusArr) {
+            statusTools:function(row,click,statusArr,field) {
                 if($.common.isEmpty(statusArr)) {
                     statusArr=['停用','正常'];
                 }
+                field=$.common.isEmpty(field)?'status':field;
                 var clickHtml = '';
                 if(click){
-                    var dataval = row.status == 1 ? 0 : 1;
-                    var datatitle = row.status == 1 ? statusArr[0]:statusArr[1];
+                    var dataval = row[field] == 1 ? 0 : 1;
+                    var datatitle = row[field] == 1 ? statusArr[0]:statusArr[1];
                     datatitle=datatitle==='正常'?'启用':datatitle;
                     clickHtml = 'b5-event="tablestatus" data-id="' + row.id + '" data-val="' + dataval + '" data-name="'+datatitle+'"';
                 }
-                var classs = row.status == 1 ? 'fa-toggle-on' : 'fa-toggle-off';
+                var classs = row[field] == 1 ? 'fa-toggle-on' : 'fa-toggle-off';
                 return '<i class="fa '+classs+' text-info fa-2x" '+clickHtml+'></i> ';
             },
             //lable状态显示
-            statusShow:function (row,click,statusArr) {
+            statusShow:function (row,click,statusArr,field) {
                 if($.common.isEmpty(statusArr)) {
                     statusArr=['停用','正常'];
                 }
+                field=$.common.isEmpty(field)?'status':field;
                 var clickHtml = '';
                 if(click){
-                    var dataval = row.status == 1 ? 0 : 1;
-                    var datatitle = row.status == 1 ? statusArr[0]:statusArr[1];
+                    var dataval = row[field] == 1 ? 0 : 1;
+                    var datatitle = row[field] == 1 ? statusArr[0]:statusArr[1];
                     datatitle=datatitle==='正常'?'启用':datatitle;
                     clickHtml = 'b5-event="tablestatus" data-id="' + row.id + '" data-val="' + dataval + '" data-name="'+datatitle+'"';
                 }
-                var classs = row.status == 1 ? 'badge-primary' : 'badge-warning';
-                return '<span class="badge '+classs+'" '+clickHtml+'>'+statusArr[row.status]+'</span>';
+                var classs = row[field] == 1 ? 'badge-primary' : 'badge-warning';
+                return '<span class="badge '+classs+'" '+clickHtml+'>'+statusArr[row[field]]+'</span>';
             }
         },
         // 表单封装处理
@@ -1233,7 +1235,7 @@ var table = {
                     width=$(obj).data('width');
                     height=$(obj).data('height');
                 }
-                if($.common.isEmpty(id)){
+                if($.common.isEmpty(id) && obj){
                     var dataid=$(obj).data('id');
                     if($.common.isNotEmpty(dataid)){
                         id=dataid;
@@ -1247,8 +1249,14 @@ var table = {
                 $.modal.openTab("添加" + table.options.modalName, $.operate.addUrl(id));
             },
             // 添加信息 全屏
-            addFull: function(id) {
+            addFull: function(id,obj) {
                 table.set();
+                if($.common.isEmpty(id) && obj){
+                    var dataid=$(obj).data('id');
+                    if($.common.isNotEmpty(dataid)){
+                        id=dataid;
+                    }
+                }
                 $.modal.openFull("添加" + table.options.modalName, $.operate.addUrl(id));
             },
             // 添加访问地址
@@ -1257,8 +1265,15 @@ var table = {
                 return url;
             },
             // 修改信息
-            edit: function(id) {
+            edit: function(id,obj) {
                 table.set();
+                if($.common.isEmpty(id) && obj){
+                    var dataid=$(obj).data('id');
+                    if($.common.isNotEmpty(dataid)){
+                        id=dataid;
+                    }
+                }
+
                 if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
                     var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
                     if ($.common.isEmpty(row)) {
@@ -1277,22 +1292,30 @@ var table = {
                 $.modal.openTab("修改" + table.options.modalName, $.operate.editUrl(id));
             },
             // 修改信息 全屏
-            editFull: function(id) {
+            editFull: function(id,obj) {
                 table.set();
                 var url = "/404.html";
                 if ($.common.isNotEmpty(id)) {
                     url = table.options.updateUrl.replace("{id}", id);
                 } else {
-                    if(table.options.type == table_type.bootstrapTreeTable) {
-                        var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
-                        if ($.common.isEmpty(row)) {
-                            $.modal.alertWarning("请至少选择一条记录");
-                            return;
+                    if($.common.isEmpty(id) && obj){
+                        var dataid=$(obj).data('id');
+                        if($.common.isNotEmpty(dataid)){
+                            id=dataid;
                         }
-                        url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
-                    } else {
-                        var row = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
-                        url = table.options.updateUrl.replace("{id}", row);
+                    }
+                    if($.common.isEmpty(id)){
+                        if(table.options.type == table_type.bootstrapTreeTable) {
+                            var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                            if ($.common.isEmpty(row)) {
+                                $.modal.alertWarning("请至少选择一条记录");
+                                return;
+                            }
+                            url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
+                        } else {
+                            var row = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                            url = table.options.updateUrl.replace("{id}", row);
+                        }
                     }
                 }
                 $.modal.openFull("修改" + table.options.modalName, url);
@@ -1480,26 +1503,40 @@ var table = {
                 var defaults = {
                     id: "tree",                    // 属性ID
                     expandLevel: 0,                // 展开等级节点
+                    ismult:false,                   //是否开启多选
+                    childparent:false,
                     view: {
                         selectedMulti: false,      // 设置是否允许同时选中多个节点
                         nameIsHTML: true           // 设置 name 属性是否支持 HTML 脚本
                     },
                     check: {
-                        enable: false,             // 置 zTree 的节点上是否显示 checkbox / radio
+                        enable: true,             // 置 zTree 的节点上是否显示 checkbox / radio
+                        chkStyle:'checkbox',
                         nocheckInherit: true,      // 设置子节点是否自动继承
-                        chkboxType: { "Y": "ps", "N": "ps" } // 父子节点的关联关系
                     },
                     data: {
                         key: {
-                            title: "title"         // 节点数据保存节点提示信息的属性名称
+                            title: "name"         // 节点数据保存节点提示信息的属性名称
                         },
                         simpleData: {
                             enable: true,           // true / false 分别表示 使用 / 不使用 简单数据模式
                             pIdKey: 'parent_id'
                         }
                     },
+                    onClick:$.tree.zOnClick,
+                    onCheck:$.tree.zOnCheck,
                 };
                 var options = $.extend(defaults, options);
+                if(options.childparent){
+                    options.check.chkboxType={ "Y": "ps", "N": "ps" };
+                }else{
+                    options.check.chkboxType={"Y":"","N":""};
+                }
+                if(options.ismult){
+                    options.check.enable=true;
+                }else{
+                    options.check.enable=false;
+                }
                 $.tree._option = options;
                 // 树结构初始化加载
                 var setting = {
@@ -1516,7 +1553,7 @@ var table = {
                     if (result.code == web_status.SUCCESS) {
                         var data=result.data;
                         var treeId = $("#treeId").val();
-                        tree = $.fn.zTree.init($("#" + options.id), setting, data);
+                        var tree = $.fn.zTree.init($("#" + options.id), setting, data);
                         $._tree = tree;
                         for (var i = 0; i < options.expandLevel; i++) {
                             var nodes = tree.getNodesByParam("level", i);
@@ -1524,8 +1561,23 @@ var table = {
                                 tree.expandNode(nodes[j], true, false, false);
                             }
                         }
-                        var node = tree.getNodesByParam("id", treeId, null)[0];
-                        $.tree.selectByIdName(treeId, node);
+
+                        //选中默认
+                        if($.common.isNotEmpty(treeId)){
+                            var treeIdArr=treeId.split(',');
+                            console.log(treeIdArr)
+                            treeIdArr.forEach(function (item) {
+                                if($.common.isNotEmpty(item)){
+                                    var node = tree.getNodesByParam("id", item, null)[0];
+                                    if(!options.check.enable){
+                                        $._tree.selectNode(node, true);
+                                    }
+                                    $.tree.zOnClick('',options.id,node);
+                                }
+                            });
+
+                        }
+
                         // 回调tree方法
                         if(typeof(options.callBack) === "function"){
                             options.callBack(tree);
@@ -1557,17 +1609,6 @@ var table = {
                 $.tree.hideAllNode(nodes);
                 // 根据搜索值模糊匹配
                 $.tree.updateNodes($._tree.getNodesByParamFuzzy("name", value));
-            },
-            // 根据Id和Name选中指定节点
-            selectByIdName: function(treeId, node) {
-                if ($.common.isNotEmpty(treeId) && treeId == node.id) {
-                    $._tree.selectNode(node, true);
-                    var selectedNodes = $._tree.getSelectedNodes();
-                    if(selectedNodes && selectedNodes.length>0){
-                        $("#treeId").val(selectedNodes[0].id);
-                        $("#treeName").val(selectedNodes[0].name);
-                    }
-                }
             },
             // 显示所有节点
             showAllNode: function(nodes) {
@@ -1670,6 +1711,32 @@ var table = {
             // 展开
             expand: function() {
                 $._tree.expandAll(true);
+            },
+            zOnCheck:function(){
+                var treeIdArr = [];
+                var treeIdName = [];
+                $._tree.getCheckedNodes().forEach(function (item) {
+                    treeIdArr.push(item.id);
+                    treeIdName.push(item.name);
+                });
+                $("#treeId").val(treeIdArr.join(','));
+                $("#treeName").val(treeIdName.join(','));
+            },
+            zOnClick:function (event, ztreeId, treeNode) {
+                if($.tree._option.check.enable){//多选
+                    $._tree.checkNode(treeNode, !treeNode.checked, true, true);
+                }else{
+                    //单选
+                    var treeIdArr = [];
+                    var treeIdName = [];
+                    $._tree.getSelectedNodes().forEach(function (item) {
+                        treeIdArr.push(item.id);
+                        treeIdName.push(item.name);
+                    });
+                    $("#treeId").val(treeIdArr.join(','));
+                    $("#treeName").val(treeIdName.join(','));
+                }
+
             }
         },
         // 通用方法封装处理
