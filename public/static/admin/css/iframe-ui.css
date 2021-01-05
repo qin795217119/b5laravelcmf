@@ -147,7 +147,17 @@
     text-overflow: ellipsis;
     float: left;
 }
-
+/* 上传文件 */
+.b5uploadmainbox .uploadimg_link{display: inline-block;width: 100%;max-width: 330px;padding-right: 50px;position: relative}
+.b5uploadmainbox .uploadimg_link input{display: inline-block;}
+.b5uploadmainbox .uploadimg_link .btn{position: absolute;top: 0;right: 0}
+.b5uploadlistbox{overflow: hidden}
+.b5uploadimg_li{width: 120px;margin: 15px 15px 0 0;border: 1px solid #eee;float: left}
+.b5uploadimg_con{width:100%;padding-bottom: 100%;position: relative;background-color: #F2F2F2;overflow: hidden;background-size: contain;background-position: center;background-repeat: no-repeat}
+.b5uploadimg_cell{position: absolute;width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;overflow: hidden }
+.b5uploadimg_cell img{max-width: 118px;max-height: 118px;display: inline-block}
+.b5uploadimg_footer{display: flex;justify-content: space-between}
+.b5uploadimg_footer a{font-size: 13px;display: inline-block;padding: 5px;}
 /* 导航页签 */
 .nav-tabs-custom {
 	margin-bottom: 20px;
@@ -343,9 +353,12 @@
 .select2-container .select2-selection--single .select2-selection__rendered {
 	padding-right: 10px;
     font-size:13px;
-    color: #333;
+    color: #676A6C;
+    line-height: 1.5;
 }
-
+.select2-container--bootstrap .select2-selection--single .select2-selection__arrow b{
+    margin-left: 2px;
+}
 /** 表单验证 样式布局 **/
 .control-label.is-required:before {
   content: '* ';

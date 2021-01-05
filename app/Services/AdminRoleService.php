@@ -158,9 +158,11 @@ class AdminRoleService extends BaseService
     /**
      * 获取某个人员的角色列表
      * @param $adminId
+     * @param bool $all
+     * @param bool $onlyKey
      * @return array
      */
-    public function getListByAdmin($adminId){
+    public function getListByAdmin($adminId,bool $all=true,bool $onlyKey=false){
         $reArr=[];
         if($adminId){
             $list=$this->getAll([['admin_id','=',$adminId]]);
@@ -170,10 +172,17 @@ class AdminRoleService extends BaseService
                 foreach ($list as $value){
                     $roleInfo=$RoleService->info($value['role_id'],true);
                     if($roleInfo){
-                        $reArr[]=[
-                            'id'=>$roleInfo['id'],
-                            'name'=>$roleInfo['name']
-                        ];
+                        if($all || (!$all && $roleInfo['status'])){
+                            if($onlyKey){
+                                $reArr[]=$roleInfo['id'];
+                            }else{
+                                $reArr[]=[
+                                    'id'=>$roleInfo['id'],
+                                    'name'=>$roleInfo['name']
+                                ];
+                            }
+
+                        }
                     }
                 }
             }

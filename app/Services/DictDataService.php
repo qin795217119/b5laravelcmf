@@ -30,14 +30,14 @@ class DictDataService extends BaseService
     {
         $reArr=[];
         if (empty($key)) return $reArr;
-        $list = $this->getAll([['type', '=', $key]], ['id','name', 'value', 'status'], [], '', [['listsort', 'asc'], ['id', 'asc']]);
+        $list = $this->getAll([['type', '=', $key]], ['name', 'value', 'status'], [], 'value', [['listsort', 'asc'], ['id', 'asc']]);
         if($list){
             foreach ($list as $val){
                 if($isable && !$val['status']) continue;
                 if($valKey){
                     $reArr[$val['value']]=$val['name'];
                 }else{
-                    $reArr[]=$val;
+                    $reArr[$val['value']]=$val;
                 }
             }
         }

@@ -16,7 +16,9 @@ $(function() {
         $.fn.select2.defaults.set( "theme", "bootstrap" );
         $("select.select2").each(function () {
             $(this).select2().on("change", function () {
-                $(this).valid();
+                if($.common.isFunction('select2change')){
+                    select2change($(this))
+                }
             })
         })
     }
@@ -386,31 +388,6 @@ function calSumWidth(elements) {
     return width;
 }
 
-/** 密码规则范围验证 */
-function checkpwd(chrtype, password) {
-    if (chrtype == 1) {
-        if(!$.common.numValid(password)){
-            $.modal.alertWarning("密码只能为0-9数字");
-            return false;
-        }
-    } else if (chrtype == 2) {
-        if(!$.common.enValid(password)){
-            $.modal.alertWarning("密码只能为a-z和A-Z字母");
-            return false;
-        }
-    } else if (chrtype == 3) {
-        if(!$.common.enNumValid(password)){
-            $.modal.alertWarning("密码必须包含字母以及数字");
-            return false;
-        }
-    } else if (chrtype == 4) {
-        if(!$.common.charValid(password)){
-            $.modal.alertWarning("密码必须包含字母、数字、以及特殊符号<font color='red'>~!@#$%^&*()-=_+</font>");
-            return false;
-        }
-    }
-    return true;
-}
 
 // 日志打印封装处理
 var log = {
@@ -507,7 +484,94 @@ function loadJs(file, headElem) {
     if (headElem) headElem.appendChild(script);
     else document.getElementsByTagName('head')[0].appendChild(script);
 }
+function b5uploadRemove(obj) {
+    $(obj).parents(".b5uploadimg_li").remove();
+}
+function b5uploadimginit(id,callback) {
+    var obj=$("#"+id);
+    var listbox=obj.parents(".b5uploadmainbox").find(".b5uploadlistbox");
+    var name=obj.data('name');
+    var maxnum=obj.data('multi');
+    if($.common.isEmpty(maxnum) || !maxnum || maxnum==='false'){
+        maxnum=1;
+    }
+    if(maxnum===true || maxnum==="true") maxnum=10;
+    var multi = maxnum > 1 ? true : false;
 
+    var cat=$.common.isEmpty(obj.data('cat'))?'':obj.data('cat');
+    var width=$.common.isEmpty(obj.data('width'))?obj.data('width'):'';
+    var height=$.common.isEmpty(obj.data('height'))?obj.data('height'):'';
+    var data={};
+    data.type='img';
+    data.cat=cat;
+    data.width=width;
+    data.height=height;
+
+    $("#"+id+"_linkbtn").click(function () {
+        var linkval=$("#"+id+"_link").val();
+        if($.common.isEmpty(linkval)){
+            $.modal.msgWarning("请输入图片链接");
+        }else{
+            var html=b5uploadimghtml(linkval,name);
+            if(multi){
+                listbox.append(html)
+            }else{
+                listbox.html(html)
+            }
+            $("#"+id+"_link").val('');
+        }
+    });
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#'+id //绑定元素
+            ,url: mUrl+'/common/uploadimg' //上传接口
+            ,field:'file'
+            ,multiple:multi
+            ,number:maxnum
+            ,data:data
+            ,accept:'images'
+            ,acceptMime:'image/*'
+            ,before:function () {}
+            ,done: function(res){
+                if(res.success && res.code===0){
+                    if($.common.isFunction(callback)){
+                        callback(id,res.data);
+                    }else{
+                        var html=b5uploadimghtml(res.data.path,name);
+                        if(multi){
+                            listbox.append(html)
+                        }else{
+                            listbox.html(html)
+                        }
+                    }
+                }else{
+                    $.modal.msgError(res.msg)
+                }
+            }
+            ,error: function(){
+                $.modal.msgWarning('网络连接错误')
+            }
+        });
+    });
+}
+function b5uploadimghtml(path,name){
+    var html='<div class="b5uploadimg_li">' +
+        '           <input type="hidden" name="'+name+'[]" value="'+path+'">' +
+        '           <div class="b5uploadimg_con">' +
+        '                <div class="b5uploadimg_cell">' +
+        '                     <img src="'+path+'" alt="">' +
+        '                </div>' +
+        '            </div>' +
+        '            <div class="b5uploadimg_footer">' +
+        '                 <a href="javascript:;" onclick="b5uploadRemove(this)"><i class="fa fa-trash-o"></i>删除</a>' +
+        '                  <a href="'+path+'" target="_blank"><i class="fa fa-hand-o-right"></i>查看</a>' +
+        '            </div>' +
+        '      </div>';
+    return html;
+}
 /** 设置全局ajax处理 */
 $.ajaxSetup({
     headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

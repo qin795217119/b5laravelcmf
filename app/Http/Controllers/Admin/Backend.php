@@ -49,6 +49,16 @@ class Backend extends BaseController
     }
 
     /**
+     * 跳转到错误页
+     * @param string $msg
+     * @param int $code
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function toError(string $msg='发生错误了',int $code=400){
+        $data=['msg'=>$msg,'code'=>$code];
+        return $this->render('admin.public.error',$data);
+    }
+    /**
      * 控制器入口
      * @return mixed
      */

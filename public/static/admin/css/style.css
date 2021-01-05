@@ -54,7 +54,9 @@ a:focus {
 .ui-layout-toggler:hover{background-color: #FFCC66}
 .help-block{color: #888;font-size: 12px}
 
-
+.note-editor .note-modal{background: rgba(0,0,0,.2)}
+.note-modal .modal-dialog{margin: 60px auto}
+.modal-open{overflow-y: auto}
 .nav>li>a {
     color: #a7b1c2;
     font-weight: 600;
@@ -753,7 +755,9 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     background-color: #1dc5a3;
     border-color: #1dc5a3;
 }
-
+.note-editor .btn-primary.disabled, .note-editor .btn-primary[disabled], fieldset[disabled] .note-editor .btn-primary, .note-editor .btn-primary.disabled:hover, .note-editor .btn-primary[disabled]:hover, fieldset[disabled] .note-editor .btn-primary:hover, .note-editor .btn-primary.disabled:focus, .note-editor .btn-primary[disabled]:focus, fieldset[disabled] .note-editor .btn-primary:focus, .note-editor .btn-primary.disabled:active, .note-editor .btn-primary[disabled]:active, fieldset[disabled] .note-editor .btn-primary:active, .note-editor .btn-primary.disabled.active, .note-editor .btn-primary[disabled].active, fieldset[disabled] .note-editor .btn-primary.active{
+    background-color: #428bca;border-color: #357ebd;
+}
 .btn-success {
     background-color: #1c84c6;
     border-color: #1c84c6;
@@ -1857,7 +1861,7 @@ table.dataTable thead .sorting:after {
     border-radius: 4px;
     color: inherit;
     display: block;
-    padding: 3px 6px 4px;
+    padding: 3px 3px 4px;
     -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s  ease-in-out 0s;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s  ease-in-out 0s;
     width: 100%;
@@ -3991,7 +3995,9 @@ a.close-canvas-menu:hover {
 }
 
 .modal-backdrop {
-    z-index: 2040 !important;
+    z-index: 0;
+    display: none;
+    /*z-index: 2040 !important;*/
 }
 
 .modal {

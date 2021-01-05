@@ -774,13 +774,13 @@ var table = {
             msg: function(content, type,callback) {
                 $.modal.layerinit(function (layer) {
                     if ($.common.isNotEmpty(type)) {
-                        layer.msg(content, {icon: $.modal.icon(type), time: 2000, shift: 5},function () {
+                        layer.msg(content, {icon: $.modal.icon(type), time: 2000, shift: 5, shade: [0.1, '#000'],shadeClose:true},function () {
                             if($.common.isNotEmpty(callback)) {
                                 $.common.callBackOp(callback);
                             }
                         });
                     } else {
-                        layer.msg(content,function () {
+                        layer.msg(content,{icon:'?',time: 2000, shade: [0.1, '#000']},function () {
                             if($.common.isNotEmpty(callback)) {
                                 $.common.callBackOp(callback);
                             }
@@ -1140,7 +1140,7 @@ var table = {
                     name = status == '1' ? '启用' : '停用';
                 }
                 $.modal.confirm("确认要" + name + "该" + title + "吗？", function() {
-                    $.operate.post(cUrl + "/status", { "id": id, "status": status });
+                    $.operate.post(cUrl + "/setstatus", { "id": id, "status": status });
                 });
             },
             // 详细信息
@@ -1512,7 +1512,7 @@ var table = {
                     check: {
                         enable: true,             // 置 zTree 的节点上是否显示 checkbox / radio
                         chkStyle:'checkbox',
-                        nocheckInherit: true,      // 设置子节点是否自动继承
+                        nocheckInherit: false,      // 设置子节点是否自动继承
                     },
                     data: {
                         key: {
@@ -1565,14 +1565,15 @@ var table = {
                         //选中默认
                         if($.common.isNotEmpty(treeId)){
                             var treeIdArr=treeId.split(',');
-                            console.log(treeIdArr)
                             treeIdArr.forEach(function (item) {
+
                                 if($.common.isNotEmpty(item)){
                                     var node = tree.getNodesByParam("id", item, null)[0];
                                     if(!options.check.enable){
                                         $._tree.selectNode(node, true);
                                     }
                                     $.tree.zOnClick('',options.id,node);
+
                                 }
                             });
 
@@ -1719,12 +1720,14 @@ var table = {
                     treeIdArr.push(item.id);
                     treeIdName.push(item.name);
                 });
+
                 $("#treeId").val(treeIdArr.join(','));
                 $("#treeName").val(treeIdName.join(','));
             },
             zOnClick:function (event, ztreeId, treeNode) {
                 if($.tree._option.check.enable){//多选
-                    $._tree.checkNode(treeNode, !treeNode.checked, true, true);
+                    $._tree.checkNode(treeNode, !treeNode.checked, true);
+                    $._tree.updateNode(treeNode)
                 }else{
                     //单选
                     var treeIdArr = [];

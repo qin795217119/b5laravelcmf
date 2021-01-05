@@ -20,13 +20,25 @@ class RedtypeService extends BaseService
     }
 
     /**
-     * 获取字典类型列表
-     * @param string|null $key
-     * @return array
+     * 获取模块列表
+     * @param bool $valKey
+     * @param bool $isable
+     * @return array|mixed|string
      */
-    public function getTypeList(string $key=null)
+    public function getTypeList(bool $valKey = false,bool $isable=false)
     {
-        $list=(new DictDataService())->getDataList('sys_redtype_type',true,true);
-        return is_null($key)?$list:(isset($list[$key])?$list[$key]:'');
+        $reArr=[];
+        $list=$this->getAll([],['title','type','status','list_url','info_url'],[],'type');
+        if($list){
+            foreach ($list as $val){
+                if($isable && !$val['status']) continue;
+                if($valKey){
+                    $reArr[$val['type']]=$val['title'];
+                }else{
+                    $reArr[$val['type']]=$val;
+                }
+            }
+        }
+        return $reArr;
     }
 }

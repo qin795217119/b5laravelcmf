@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link href="{{asset('static/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('static/plugins/fontawesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
-    @section('css_common')
-<link href="{{asset('static/plugins/bootstrap-table/bootstrap-table.min.css')}}" rel="stylesheet"/>
-    @show
-<link href="{{asset('static/plugins/layui/css/layui.css')}}" rel="stylesheet">
+    <link href="{{asset('static/plugins/bootstrap-table/bootstrap-table.min.css')}}" rel="stylesheet"/>
+@section('css_common')
+@show
+    <link href="{{asset('static/plugins/layui/css/layui.css')}}" rel="stylesheet">
     <link href="{{asset('static/plugins/animate/animate.css')}}" rel="stylesheet"/>
     <link href="{{asset('static/admin/css/style.css')}}" rel="stylesheet"/>
     <link href="{{asset('static/admin/css/iframe-ui.css')}}" rel="stylesheet"/>

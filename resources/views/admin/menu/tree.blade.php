@@ -30,7 +30,7 @@
     <script>
         $(function() {
             var options = {
-                url: aUrl,
+                url: aUrl+'?root={{$root}}',
                 expandLevel: 2
             };
             $.tree.init(options);

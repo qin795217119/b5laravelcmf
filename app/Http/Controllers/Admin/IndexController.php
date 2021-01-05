@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Services\AdminService;
+use App\Services\MenuService;
 use Illuminate\Http\Request;
 
 class IndexController extends Backend
@@ -17,7 +18,15 @@ class IndexController extends Backend
        parent::__construct($request);
    }
 
-   public function home(){
+   public function index()
+   {
+       $menuService=new MenuService();
+       $menuHtml=$menuService->getMenuList(1);
+
+       return $this->render('',['menuHtml'=>$menuHtml]);
+   }
+
+    public function home(){
        return $this->render();
    }
     public function test(){

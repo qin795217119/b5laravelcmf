@@ -144,7 +144,12 @@ class BaseModel extends Model
             $data[self::CREATED_AT] = date('Y-m-d H:i:s', time());
             $data[self::UPDATED_AT] = date('Y-m-d H:i:s', time());
         }
-        return $this->insertGetId($data);
+        if($this->incrementing){
+            return $this->insertGetId($data);
+        }else{
+            return $this->insert($data);
+        }
+
     }
 
     /**

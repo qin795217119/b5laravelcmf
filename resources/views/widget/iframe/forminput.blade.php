@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group {{$widget_data['name']}}_field">
     <label class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-2 @else col-sm-3 @endif control-label @if (isset($widget_data['required']))is-required @endif">{{$widget_data['title']}}：</label>
     <div class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-9 @else col-sm-8 @endif">
         @if(isset($widget_data['addon']) && $widget_data['addon'])
@@ -36,8 +36,8 @@
             <span class="input-group-addon"><i class="fa {{$widget_data['addon']}}"></i></span>
             </div>
         @endif
-        @if(isset($widget_data['tips']) && $widget_data['tips'])
-            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$widget_data['tips']}}</span>
+        @if(isset($widget_data['tips']))
+            <span class="help-block m-b-none">@if($widget_data['tips'])<i class="fa fa-info-circle"></i> {{$widget_data['tips']}}@endif</span>
         @endif
     </div>
 </div>

@@ -49,39 +49,27 @@
                     </div>
                 </li>
                 <!--- 菜单 -->
+
                 <li>
                     <a class="menuItem" href="/admin/home"><i class="fa fa-home"></i> <span class="nav-label">首页</span> </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-cog"></i>
-                        <span class="nav-label">系统管理</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="menuItem" href="/admin/config/index">参数配置</a></li>
-                        <li><a class="menuItem" href="/admin/dict/index">字典管理</a></li>
-                        <li><a class="menuItem" href="/admin/notice/index">通知公告</a></li>
-                        <li><a class="menuItem" href="/admin/adlist/index">推荐信息</a></li>
-                        <li><a class="menuItem" href="/admin/adposition/index">推荐位置</a></li>
-                        <li><a class="menuItem" href="/admin/redtype/index">跳转管理</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-cog"></i>
-                        <span class="nav-label">权限管理</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="menuItem" href="/admin/admin/index">人员管理</a></li>
-                        <li><a class="menuItem" href="/admin/role/index">角色管理</a></li>
-                        <li><a class="menuItem" href="/admin/menu/index">菜单管理</a></li>
-                        <li><a class="menuItem" href="/admin/struct/index">组织架构</a></li>
-                        <li><a class="menuItem" href="/admin/opertlog/index">操作日志</a></li>
-                        <li><a class="menuItem" href="/admin/loginlog/index">登录日志</a></li>
-                    </ul>
-                </li>
+                {!! $menuHtml !!}
+{{--                <li>--}}
+{{--                    <a href="#">--}}
+{{--                        <i class="fa fa-cog"></i>--}}
+{{--                        <span class="nav-label">系统管理</span>--}}
+{{--                        <span class="fa arrow"></span>--}}
+{{--                    </a>--}}
+{{--                    <ul class="nav nav-second-level">--}}
+{{--                        <li><a class="menuItem" href="/admin/config/index">参数配置</a></li>--}}
+{{--                        <li><a class="menuItem" href="/admin/dict/index">字典管理</a></li>--}}
+{{--                        <li><a class="menuItem" href="/admin/notice/index">通知公告</a></li>--}}
+{{--                        <li><a class="menuItem" href="/admin/adlist/index">推荐信息</a></li>--}}
+{{--                        <li><a class="menuItem" href="/admin/adposition/index">推荐位置</a></li>--}}
+{{--                        <li><a class="menuItem" href="/admin/redtype/index">跳转管理</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+
             </ul>
         </div>
     </nav>

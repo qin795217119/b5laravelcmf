@@ -18,6 +18,8 @@ Route::namespace('Admin')->group(function (){
     Route::get('/home', 'IndexController@home');
 
     Route::get('/test','IndexController@test');
+//公共操作
+    Route::any('/common/uploadimg', 'CommonController@uploadimg');
 //组织架构
     Route::any('/struct/index', 'StructController@index');
     Route::any('/struct/add', 'StructController@add');
@@ -29,14 +31,15 @@ Route::namespace('Admin')->group(function (){
     Route::any('/admin/add', 'AdminController@add');
     Route::any('/admin/edit', 'AdminController@edit');
     Route::any('/admin/drop', 'AdminController@drop');
-    Route::any('/admin/status','AdminController@setStatus');
+    Route::any('/admin/setstatus','AdminController@setstatus');
 //权限管理
     Route::any('/role/index', 'RoleController@index');
     Route::any('/role/add', 'RoleController@add');
     Route::any('/role/edit', 'RoleController@edit');
     Route::any('/role/drop', 'RoleController@drop');
-    Route::any('/role/status','RoleController@setStatus');
-//人员权限分配管理
+    Route::any('/role/setstatus','RoleController@setstatus');
+    Route::any('/role/auth', 'RoleController@auth');
+//人员角色分配管理
     Route::any('/adminrole/index','AdminRoleController@index');
     Route::any('/adminrole/drop', 'AdminRoleController@drop');
     Route::any('/adminrole/add', 'AdminRoleController@add');
@@ -73,6 +76,11 @@ Route::namespace('Admin')->group(function (){
     Route::any('/redtype/add', 'RedtypeController@add');
     Route::any('/redtype/edit', 'RedtypeController@edit');
     Route::any('/redtype/drop', 'RedtypeController@drop');
+//推荐信息
+    Route::any('/adlist/index', 'AdlistController@index');
+    Route::any('/adlist/add', 'AdlistController@add');
+    Route::any('/adlist/edit', 'AdlistController@edit');
+    Route::any('/adlist/drop', 'AdlistController@drop');
 //通知公告
     Route::any('/notice/index', 'NoticeController@index');
     Route::any('/notice/add', 'NoticeController@add');

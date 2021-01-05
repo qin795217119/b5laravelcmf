@@ -14,8 +14,4 @@ class AdminRole extends BaseModel
     public $timestamps=false;
 
 
-    public function admin(){
-        return $this->belongsTo(Admin::class,'admin_id');
-    }
-
 }

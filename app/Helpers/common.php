@@ -50,9 +50,26 @@ if (!function_exists('get_image_url')) {
      * @param $image_url 图片地址
      * @return string 返回图片网络地址
      */
-    function get_image_url($image_url)
+    function get_image_url($image_url,$default='')
     {
-        return IMG_URL . $image_url;
+        if(!$image_url) return $default;
+        if(strpos($image_url,',')){
+            $image_url=explode(',',$image_url);
+        }
+        if(is_array($image_url)){
+            $reInfo=[];
+            foreach ($image_url as $img){
+                if($img){
+                    $reInfo[]=get_image_url($img);
+                }
+            }
+            return  $reInfo;
+        }
+        if(strpos($image_url,'http')===0){
+            return $image_url;
+        }else{
+            return IMG_URL . $image_url;
+        }
     }
 }
 
@@ -114,12 +131,4 @@ if (!function_exists('strline_array')) {
         }
         return $value;
     }
-}
-
-
-function is_set($data){
-    if(isset($data)){
-        return true;
-    }
-
 }

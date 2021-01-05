@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "fideloper/proxy": "^4.4",
+        "intervention/image": "^2.5",
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5",
         "predis/predis": "^1.1"

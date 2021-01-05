@@ -19,6 +19,31 @@ class RoleService extends BaseService
         $loadValidate && $this->setValidate(new RoleValidate());
     }
 
+    /**
+     * 保存授权信息
+     * @return array
+     */
+    public function saveAuth(){
+        $input=request()->input();
+        $id=$input['id']??0;
+        $treeId=$input['treeId']??'';
+        if(empty($id)) return message('参数错误',false);
+        (new RoleMenuService())->update($id,$treeId);
+        return message('授权成功',true);
+    }
 
-
+    /**
+     * 获取授权菜单
+     * @param $roleId
+     * @param bool $isArr
+     * @return array|string
+     */
+    public function authList($roleId,bool $isArr=true){
+        $list=[];
+        if($roleId){
+            $list=(new RoleMenuService())->getRoleMenuList($roleId);
+        }
+        $list=$isArr?($list?:[]):($list?implode(',',$list):'');
+        return $list;
+    }
 }

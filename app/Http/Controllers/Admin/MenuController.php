@@ -53,7 +53,9 @@ class MenuController extends Backend
             return $this->service->getTree();
         }else{
             $id = request()->input('id', 0);
+            $root = request()->input('root', 1);
             view()->share('menuId',$id);
+            view()->share('root',$root);
             return $this->render();
         }
     }

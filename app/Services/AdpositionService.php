@@ -20,11 +20,23 @@ class AdpositionService extends BaseService
     }
 
     /**
-     * 获取字典类型列表
-     * @return mixed
+     * 获取位置列表
+     * @param bool $valKey
+     * @return array|mixed|string
      */
-    public function getTypeList()
+    public function getTypeList(bool $valKey = false)
     {
-        return $this->getAll([], ['type', 'title'], [], '');
+        $reArr=[];
+        $list=$this->getAll([],['title','type','width','height','note'],[],'type');
+        if($list){
+            foreach ($list as $val){
+                if($valKey){
+                    $reArr[$val['type']]=$val['title'];
+                }else{
+                    $reArr[$val['type']]=$val;
+                }
+            }
+        }
+        return $reArr;
     }
 }
