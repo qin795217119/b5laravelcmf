@@ -91,7 +91,5 @@ class BaseController extends Controller
         // 定义普通图片域名
         defined('IMG_URL') or define('IMG_URL', env('IMG_URL'));
 
-        // 数据表前缀
-        define('DB_PREFIX', DB::connection()->getTablePrefix());
     }
 }

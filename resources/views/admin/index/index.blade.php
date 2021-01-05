@@ -44,12 +44,11 @@
                         <div class="pull-left info">
                             <p>管理员</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
-                            <a href="" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
+                            <a href="/admin/logout" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
                         </div>
                     </div>
                 </li>
                 <!--- 菜单 -->
-
                 <li>
                     <a class="menuItem" href="/admin/home"><i class="fa fa-home"></i> <span class="nav-label">首页</span> </a>
                 </li>
@@ -102,7 +101,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href=""><i class="fa fa-sign-out"></i> 退出登录</a>
+                                <a href="/admin/logout"><i class="fa fa-sign-out"></i> 退出登录</a>
                             </li>
                         </ul>
                     </li>

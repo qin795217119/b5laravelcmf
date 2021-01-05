@@ -14,8 +14,6 @@ class Backend extends BaseController
 {
     // 服务
     protected $service;
-    // 校验
-    protected $validate;
     // 登录ID
     protected $adminId;
     // 登录信息
@@ -32,6 +30,11 @@ class Backend extends BaseController
 
         // 初始化配置
         $this->initConfig();
+
+        $this->adminId=session('adminId');
+
+        //初始化登录信息
+        $this->initBackend();
     }
 
     public function initConfig()
@@ -43,9 +46,13 @@ class Backend extends BaseController
         view()->share('group',strtolower(MODULES_NAME));
     }
 
-    public function initLogin()
+    public function initBackend()
     {
+        if(!$this->adminId) return false;
 
+        //检测权限
+        $notAuthController=['public','common'];
+        
     }
 
     /**

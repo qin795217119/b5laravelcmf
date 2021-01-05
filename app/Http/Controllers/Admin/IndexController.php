@@ -15,11 +15,13 @@ class IndexController extends Backend
 {
    public function __construct(Request $request)
    {
+
        parent::__construct($request);
    }
 
    public function index()
    {
+
        $menuService=new MenuService();
        $menuHtml=$menuService->getMenuList(1);
 
