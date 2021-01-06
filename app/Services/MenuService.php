@@ -107,7 +107,7 @@ class MenuService extends BaseService
 
 
     /**
-     * 根据登录用户获取后台展示的菜单
+     * 根据用户ID获取后台展示的菜单
      * @param $adminId
      * @return string
      */
@@ -120,12 +120,13 @@ class MenuService extends BaseService
                 $menuList = (new MenuService())->getAll([['type', '<>', 'F'], ['status', '=', 1]], ['id', 'type', 'name', 'url', 'parent_id', 'icon', 'is_refresh','target'], [], '', [['parent_id', 'asc'], ['listsort', 'asc'], ['id', 'asc']]);
             }else{
                 //获取管理员分组
-                $roleList = (new AdminRoleService())->getListByAdmin($adminId, false, true);
+                $roleList = (new AdminRoleService())->getListByAdmin($adminId, false, false);
+
                 //获取分组菜单权限ID
                 $menuIdList = (new RoleMenuService())->getRoleMenuList($roleList);
                 if ($menuIdList) {
                     //获取菜单
-                    $menuList = (new MenuService())->getAll([['id', 'in', $menuIdList], ['type', '<>', 'F'], ['status', '=', 1]], ['id', 'type', 'name', 'url', 'parent_id', 'icon', 'is_refresh'], [], '', [['parent_id', 'asc'], ['listsort', 'asc'], ['id', 'asc']]);
+                    $menuList = (new MenuService())->getAll([['id', 'in', $menuIdList], ['type', '<>', 'F'], ['status', '=', 1]], ['id', 'type', 'name', 'url', 'parent_id', 'icon', 'is_refresh','target'], [], '', [['parent_id', 'asc'], ['listsort', 'asc'], ['id', 'asc']]);
                 }
             }
         }
@@ -138,6 +139,33 @@ class MenuService extends BaseService
         return $menuHtml;
     }
 
+    /**
+     * 根据登录session获取菜单
+     * @return string
+     */
+    public function getMenuListByLogin(){
+        $menuHtml='';
+        $menuList=[];
+        $adminId=adminLoginInfo('info.id');
+        if($adminId){
+            if($adminId==1){
+                $menuList = (new MenuService())->getAll([['type', '<>', 'F'], ['status', '=', 1]], ['id', 'type', 'name', 'url', 'parent_id', 'icon', 'is_refresh','target'], [], '', [['parent_id', 'asc'], ['listsort', 'asc'], ['id', 'asc']]);
+            }else {
+                $menuIdList = adminLoginInfo('menu');
+                if ($menuIdList) {
+                    //获取菜单
+                    $menuList = (new MenuService())->getAll([['id', 'in', $menuIdList], ['type', '<>', 'F'], ['status', '=', 1]], ['id', 'type', 'name', 'url', 'parent_id', 'icon', 'is_refresh', 'target'], [], '', [['parent_id', 'asc'], ['listsort', 'asc'], ['id', 'asc']]);
+                }
+            }
+        }
+        if($menuList){
+            $menuTree=$this->getMenuTree($menuList);
+            if($menuTree){
+                $menuHtml=$this->menuToHtml($menuTree);
+            }
+        }
+        return $menuHtml;
+    }
     /**
      * 将菜单转为数形无限极
      * @param $list

@@ -21,10 +21,7 @@ class IndexController extends Backend
 
    public function index()
    {
-
-       $menuService=new MenuService();
-       $menuHtml=$menuService->getMenuList(1);
-
+       $menuHtml=(new MenuService())->getMenuListByLogin();
        return $this->render('',['menuHtml'=>$menuHtml]);
    }
 

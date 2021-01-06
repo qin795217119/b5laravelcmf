@@ -41,7 +41,7 @@ class RoleMenuService extends BaseService
     }
 
     /**
-     * 获取角色分组的菜单权限
+     * 获取角色分组的菜单权限ID
      * @param $roleId
      * @return array
      */

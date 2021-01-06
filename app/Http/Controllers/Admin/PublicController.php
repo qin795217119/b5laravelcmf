@@ -22,10 +22,17 @@ class PublicController extends Backend
         if(IS_POST){
             return (new AdminService())->login();
         }
+        if(adminLoginInfo('info.id')){
+            return redirect('/admin');
+        }
         return $this->render();
     }
 
     public function logout(){
         return (new AdminService())->logout();
+    }
+
+    public function noauth(){
+        return $this->render('admin.public.error',['msg'=>'未获取授权','code'=>400]);
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use App\Services\MenuService;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * 后台基类
@@ -16,8 +18,6 @@ class Backend extends BaseController
     protected $service;
     // 登录ID
     protected $adminId;
-    // 登录信息
-    protected $adminInfo;
 
     /**
      * 构造函数
@@ -27,33 +27,21 @@ class Backend extends BaseController
     public function __construct(Request $request)
     {
         parent::__construct($request);
-
-        // 初始化配置
-        $this->initConfig();
-
-        $this->adminId=session('adminId');
-
-        //初始化登录信息
-        $this->initBackend();
+        $this->initSys();
     }
 
-    public function initConfig()
+
+    // 初始化系统信息
+    public function initSys()
     {
         defined('MODULES_NAME') or define('MODULES_NAME', 'admin');
 
-        defined('PAGE_LIMIT') or define('PAGE_LIMIT',10);
+        defined('PAGE_LIMIT') or define('PAGE_LIMIT', 10);
 
-        view()->share('group',strtolower(MODULES_NAME));
+        view()->share('group', strtolower(MODULES_NAME));
     }
 
-    public function initBackend()
-    {
-        if(!$this->adminId) return false;
 
-        //检测权限
-        $notAuthController=['public','common'];
-        
-    }
 
     /**
      * 跳转到错误页
@@ -61,10 +49,12 @@ class Backend extends BaseController
      * @param int $code
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function toError(string $msg='发生错误了',int $code=400){
-        $data=['msg'=>$msg,'code'=>$code];
-        return $this->render('admin.public.error',$data);
+    public function toError(string $msg = '发生错误了', int $code = 400)
+    {
+        $data = ['msg' => $msg, 'code' => $code];
+        return $this->render('admin.public.error', $data);
     }
+
     /**
      * 控制器入口
      * @return mixed
@@ -85,8 +75,9 @@ class Backend extends BaseController
      * 添加操作
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function add(){
-        if(IS_POST){
+    public function add()
+    {
+        if (IS_POST) {
             $argList = func_get_args();
             $data = isset($argList[0]) ? $argList[0] : [];
             return $this->service->add($data);
@@ -97,6 +88,7 @@ class Backend extends BaseController
         }
         return $this->render();
     }
+
     /**
      * 编辑操作
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -118,7 +110,7 @@ class Backend extends BaseController
                 view()->share('input', $data);
             }
         }
-        view()->share('info',$info);
+        view()->share('info', $info);
         return $this->render();
     }
 
@@ -126,7 +118,8 @@ class Backend extends BaseController
      * 删除
      * @return mixed
      */
-    public function drop(){
+    public function drop()
+    {
         return $this->service->drop();
     }
 
@@ -134,7 +127,8 @@ class Backend extends BaseController
      * 修改状态
      * @return mixed
      */
-    public function setstatus(){
+    public function setstatus()
+    {
         return $this->service->setStatus();
     }
 

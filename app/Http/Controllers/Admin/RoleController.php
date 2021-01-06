@@ -20,9 +20,18 @@ class RoleController extends Backend
         }else{
             $role_id=request()->input('role_id',0);
             if(!$role_id) return $this->toError('参数错误');
-            $info=$this->service->info($role_id,true);
+            $info=$this->service->info($role_id,false);
             if(empty($info)) return $this->toError('角色信息不存在');
-            $menuList=$this->service->authList($role_id,false);
+            $menuList=[];
+            $lists=$info->menus;
+            if($lists){
+                foreach ($lists as $menu){
+                    $menuList[]=$menu['id'];
+                }
+            }
+            $menuList=implode(',',$menuList);
+
+//            $menuList=$this->service->authList($role_id,false);
             return $this->render("",['info'=>$info,'menuList'=>$menuList]);
         }
 

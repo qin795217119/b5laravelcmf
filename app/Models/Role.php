@@ -17,4 +17,8 @@ class Role extends BaseModel
         'permission'=>'',
         'status'=>1
     ];
+
+    public function menus(){
+        return $this->belongsToMany(Menu::class,RoleMenu::class,'role_id','menu_id');
+    }
 }

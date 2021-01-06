@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //后台管理路由
-Route::namespace('Admin')->middleware(['admin.login'])->group(function (){
+Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(function (){
 
 
     Route::get('/', 'IndexController@index');
@@ -20,6 +20,7 @@ Route::namespace('Admin')->middleware(['admin.login'])->group(function (){
 //公共操作
     Route::any('/login', 'PublicController@login');
     Route::any('/logout', 'PublicController@logout');
+    Route::any('/noauth','PublicController@noauth');
     Route::any('/common/uploadimg', 'CommonController@uploadimg');
 //组织架构
     Route::any('/struct/index', 'StructController@index');

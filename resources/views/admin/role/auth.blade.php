@@ -49,8 +49,10 @@
                 } else if (type == "2") {
                     if (checked) {
                         $._tree.checkAllNodes(true);
+                        $.tree.zOnCheck();
                     } else {
                         $._tree.checkAllNodes(false);
+                        $.tree.zOnCheck();
                     }
                 } else if (type == "3") {
                     if (checked) {

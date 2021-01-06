@@ -1512,6 +1512,7 @@ var table = {
                     check: {
                         enable: true,             // 置 zTree 的节点上是否显示 checkbox / radio
                         chkStyle:'checkbox',
+                        autoCheckTrigger:false,
                         nocheckInherit: false,      // 设置子节点是否自动继承
                     },
                     data: {

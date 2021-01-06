@@ -2,6 +2,7 @@
 
 return [
 
+    'admin_session'=>'b5AdminLogin',
     /*
     |--------------------------------------------------------------------------
     | Application Name

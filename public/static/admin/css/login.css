@@ -79,7 +79,7 @@ body:before {
     width: 130px;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid #e6e6e6;
+    /*border: 1px solid #e6e6e6;*/
     border-radius: 4px !important;
     position: absolute;
     right: 0;

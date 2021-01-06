@@ -9,6 +9,7 @@
     <link href="{{asset('static/plugins/layui/css/layui.css')}}" rel="stylesheet">
     <link href="{{asset('static/admin/css/login.css')}}" rel="stylesheet"/>
     <script>
+        if (window !== top) top.location.replace(location.href);
         var _M_ = '{{$group}}'
         var rootUrl ="/";
         var mUrl = rootUrl+_M_;
@@ -29,7 +30,7 @@
         <div class="layui-form-item layui-input-icon-group login-captcha-group">
             <i class="layui-icon layui-icon-auz"></i>
             <input class="layui-input" id="captcha" name="captcha" value="" placeholder="请输入验证码" autocomplete="off" lay-verType="tips" lay-reqText='请输入验证码' lay-verify="required" required/>
-            <img onclick="" src="" width="130px" height="48px" class="login-captcha" alt="点击刷新验证码"/>
+            <img onclick="this.src='/captcha/admin?'+Math.random()" src="{{ captcha_src('admin') }}" width="130px" height="48px" class="login-captcha" alt="点击刷新验证码"/>
         </div>
         <div class="layui-form-item">
             <input type="checkbox" id="remember" name="remember" value="1" title="记住密码" lay-skin="primary" checked>

@@ -20,9 +20,16 @@ class Admin extends BaseModel
         'note'=>'',
     ];
 
-
     public function role()
     {
         return $this->hasOne(AdminRole::class,'admin_id');
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,AdminRole::class,'admin_id','role_id');
+    }
+    public function structs()
+    {
+        return $this->belongsToMany(Struct::class,AdminStruct::class,'admin_id','struct_id');
     }
 }

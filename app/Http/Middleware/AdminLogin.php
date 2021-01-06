@@ -15,12 +15,17 @@ class AdminLogin
      */
     public function handle($request, Closure $next)
     {
-
         $controller=strtolower(CONTROLLER_NAME);
 
         $notLoginConArr = ['public'];
-        if(!session('adminId') && !in_array($controller,$notLoginConArr)){
-            return redirect('admin/login');
+        $adminId=adminLoginInfo('info.id');
+
+        if(!$adminId && !in_array($controller,$notLoginConArr)){
+            if(IS_GET && !IS_AJAX){
+                return redirect('/admin/login');
+            }else{
+                return message('请先登录',false,[],101);
+            }
         }else{
             return $next($request);
         }

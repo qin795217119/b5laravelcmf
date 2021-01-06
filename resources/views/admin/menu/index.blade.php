@@ -77,7 +77,7 @@
                         title: '可见',
                         formatter: function(value, row, index) {
                             if (row.type == 'F') {
-                                return '-';
+                                return $.view.statusShow(row,false,['禁止访问','可以访问']);
                             }
                             return $.view.statusShow(row,false,['隐藏','显示']);
 

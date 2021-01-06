@@ -26,7 +26,10 @@ class AdminService extends BaseService
         if(empty($username) || empty($password) || empty($captcha)){
             return message('请输入表单信息',false);
         }
-        $userinfo=parent::info([['username','=',$username]]);
+        if(!captcha_check($captcha)){
+            return message('验证码错误',false);
+        }
+        $userinfo=parent::info([['username','=',$username]],true);
         if(empty($userinfo)){
             return message('账号或密码错误',false);
         }
@@ -36,12 +39,34 @@ class AdminService extends BaseService
         if($userinfo['status']!=1){
             return message('该用户已被禁止登陆',false);
         }
-        session(['adminId'=>$userinfo['id']]);
+
+        //获取管理员分组
+        $roleList = (new AdminRoleService())->getListByAdmin($userinfo['id'], false, false);
+        $roleName=[];
+        $roleId=[];
+        foreach ($roleList as $role){
+            $roleId[]=$role['id'];
+            $roleName[]=$role['name'];
+        }
+        //获取分组菜单权限ID
+        $menuIdList = (new RoleMenuService())->getRoleMenuList($roleId);
+        $sessionData=[
+            'info'=>[
+                'id'=>$userinfo['id'],
+                'name'=>$userinfo['realname']
+            ],
+            'role'=>[
+                'id'=>$roleId,
+                'name'=>$roleName,
+            ],
+            'menu'=>$menuIdList
+        ];
+        app('session')->put(config('app.admin_session'),$sessionData);
         return message('登陆成功',true);
     }
 
     public function logout(){
-        app('session')->forget('adminId');
+        app('session')->flush();
         return redirect('admin');
     }
     /**
@@ -73,12 +98,14 @@ class AdminService extends BaseService
      */
     public function info($id, bool $isArray = true)
     {
-        $info=parent::info($id, $isArray);
+        $info=parent::info($id, false);
+
         if($info){
             //组织架构信息
             $structIdStr='';
             $structNameStr='';
-            $structList=(new AdminStructService())->getListByAdmin($info['id']);
+            $structList=$info->structs;
+//            $structList=(new AdminStructService())->getListByAdmin($info['id']);
             if($structList){
                 $structIdArr=[];
                 $structNameArr=[];
@@ -96,7 +123,8 @@ class AdminService extends BaseService
             //角色分组
             $roleIdStr='';
             $roleNameStr='';
-            $roleList=(new AdminRoleService())->getListByAdmin($info['id']);
+            $roleList=$info->roles;
+//            $roleList=(new AdminRoleService())->getListByAdmin($info['id']);
             if($roleList){
                 $roleIdArr=[];
                 $roleNameArr=[];
@@ -107,6 +135,7 @@ class AdminService extends BaseService
                 $roleIdStr=implode(',',$roleIdArr);
                 $roleNameStr=implode(',',$roleNameArr);
             }
+            $info=$info->toArray();
             $info['roleid']=$roleIdStr;
             $info['rolename']=$roleNameStr;
             $info['rolelist']=$roleList?:[];

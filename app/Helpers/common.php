@@ -1,5 +1,14 @@
 <?php
 // 此文件为系统框架核心公共函数文件，为了系统的稳定与安全，未经允许不得擅自改动
+function adminLoginInfo($key=null){
+    $session=session(config('app.admin_session'));
+    if(is_null($key)){
+        return $session;
+    }else{
+        if(empty($session)) return false;
+        return \Illuminate\Support\Arr::get($session,$key,false);
+    }
+}
 if (!function_exists('get_password')) {
 
     /**
