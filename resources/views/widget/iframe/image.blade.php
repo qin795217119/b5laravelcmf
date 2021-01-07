@@ -2,7 +2,7 @@
     <label class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-2 @else col-sm-3 @endif control-label {{isset($widget_data['required'])?'is-required':''}}">{{$widget_data['title']}}：</label>
     <div class="@if(isset($widget_data['sm']) && $widget_data['sm']=='2') col-sm-9 @else col-sm-8 @endif">
         <div class="b5uploadmainbox">
-            <a href="javascript:;" class="btn btn-primary btn-sm" id="{{$widget_data['id']}}" data-multi="{{$widget_data['multi']??'false'}}" data-name="{{$widget_data['name']??'uploadimg'}}" data-cat="{{$widget_data['cat']??'images'}}"><i class="fa fa-image"></i>上传图片</a>
+            <a href="javascript:;" class="btn btn-primary btn-sm" id="{{$widget_data['id']}}" data-multi="{{$widget_data['multi']??'false'}}" data-name="{{$widget_data['name']??'uploadimg'}}" data-cat="{{$widget_data['cat']??'images'}}" data-width="{{$widget_data['width']??'0'}}" data-height="{{$widget_data['height']??'0'}}"><i class="fa fa-image"></i>上传图片</a>
             @if(!isset($widget_data['link']) || $widget_data['link']!='false')
             或
             <div class="uploadimg_link">

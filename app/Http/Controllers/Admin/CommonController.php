@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Util\UploadApi;
+
 /**
  * 公共操作控制器
  * Class AdminController
@@ -11,8 +13,14 @@ class CommonController extends Backend
 {
 
     public function uploadimg(){
-        $path = request()->file('file')->store('avatars');
+        $upload=new UploadApi();
+        $upload->cat=request()->input('cat','images');
+        $upload->width=request()->input('width','0');
+        $upload->height=request()->input('height','0');
+        $res=$upload->run();
 
-        return message('成功',true,['path'=>'/uploads/'.$path]);
+        return message($res['msg'],$res['status']?true:false,$res['data']);
+
+
     }
 }

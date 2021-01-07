@@ -498,15 +498,6 @@ function b5uploadimginit(id,callback) {
     if(maxnum===true || maxnum==="true") maxnum=10;
     var multi = maxnum > 1 ? true : false;
 
-    var cat=$.common.isEmpty(obj.data('cat'))?'':obj.data('cat');
-    var width=$.common.isEmpty(obj.data('width'))?obj.data('width'):'';
-    var height=$.common.isEmpty(obj.data('height'))?obj.data('height'):'';
-    var data={};
-    data.type='img';
-    data.cat=cat;
-    data.width=width;
-    data.height=height;
-
     $("#"+id+"_linkbtn").click(function () {
         var linkval=$("#"+id+"_link").val();
         if($.common.isEmpty(linkval)){
@@ -531,7 +522,18 @@ function b5uploadimginit(id,callback) {
             ,field:'file'
             ,multiple:multi
             ,number:maxnum
-            ,data:data
+            ,size:1024*20
+            ,data:{
+                width:function(){
+                    return $.common.isEmpty($("#"+id).attr('data-width'))?0:$("#"+id).attr('data-width');
+                },
+                height:function () {
+                    return $.common.isEmpty($("#"+id).attr('data-height'))?0:$("#"+id).attr('data-height');
+                },
+                cat:function () {
+                    return $.common.isEmpty($("#"+id).attr('data-cat'))?'':$("#"+id).attr('data-cat');
+                }
+             }
             ,accept:'images'
             ,acceptMime:'image/*'
             ,before:function () {}
