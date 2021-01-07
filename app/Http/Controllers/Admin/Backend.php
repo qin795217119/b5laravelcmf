@@ -133,6 +133,13 @@ class Backend extends BaseController
     }
 
     /**
+     * 清除缓存
+     * @return mixed
+     */
+    public function delcache(){
+        return $this->service->delcache();
+    }
+    /**
      * 渲染模板
      * @param string $view
      * @param array $data

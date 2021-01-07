@@ -11,7 +11,7 @@ class UploadApi
     public $fileName = 'file';
     public $cat = 'images';//路径前缀
     public $saveName = '';//保存文件名
-    public $savepath = '';//保存路径规格 Y代表为/年 M为/年/月  YM为/年月
+    public $savePath = '';//保存路径规格 Y代表为/年 M为/年/月  YM为/年月
     private $root = 'uploads';//根目录
     public $maxSize = 0;
 
@@ -206,25 +206,30 @@ class UploadApi
      */
     private function getSavePath()
     {
-        if (!$this->savepath || $this->savepath == 'D') {
+        if (!$this->savePath || $this->savePath == 'D') {
             $savePath = date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d');
-        } elseif ($this->savepath == 'Y') {
+        } elseif ($this->savePath == 'Y') {
             $savePath = date('Y');
-        } elseif ($this->savepath == 'M') {
+        } elseif ($this->savePath == 'M') {
             $savePath = date('Y') . DIRECTORY_SEPARATOR . date('m');
-        } elseif ($this->savepath == 'YM') {
+        } elseif ($this->savePath == 'YM') {
             $savePath = date('Ym');
         } else {
-            $savePath = $this->savepath;
+            $savePath = $this->savePath;
         }
         return ($this->root ? ($this->root . DIRECTORY_SEPARATOR) : '') . ($this->cat ? ($this->cat . DIRECTORY_SEPARATOR) : '') . $savePath;
     }
 
-    private function getFileName($orginName)
+    /**
+     * 获取文件名称
+     * @param $originName
+     * @return string
+     */
+    private function getFileName($originName)
     {
         $fileName = $this->saveName;
         if (!$fileName) {
-            $fileName = md5($orginName . time() . mt_rand(1000, 9999));
+            $fileName = md5($originName . time() . mt_rand(1000, 9999));
         }
         return $fileName;
     }

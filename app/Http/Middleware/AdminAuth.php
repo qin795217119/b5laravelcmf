@@ -37,16 +37,19 @@ class AdminAuth
     public function checkAuth($adminId)
     {
         if ($adminId==1) return true;
-
         //检测权限
+
+        //节点标识
         $module_name = strtolower(MODULES_NAME);
         $controller_name = strtolower(CONTROLLER_NAME);
         $action_name = strtolower(ACTION_NAME);
+        $permission = $module_name . ':' . $controller_name . ':' . $action_name;
 
-        //不走授权的控制器及方法
+        //不走授权的控制器及、方法及节点
         $notAuthController = ['public', 'common'];
         $notAuthAction = ['tree'];
-        if (in_array($controller_name, $notAuthController) || in_array($action_name, $notAuthAction)) {
+        $notAuthPermission=['admin:index:index','admin:index:home'];
+        if (in_array($controller_name, $notAuthController) || in_array($action_name, $notAuthAction) || in_array($permission,$notAuthPermission)) {
             return true;
         }
 
@@ -55,8 +58,7 @@ class AdminAuth
         if (empty($menuList)) {
             return false;
         }
-        //节点标识
-        $permission = $module_name . ':' . $controller_name . ':' . $action_name;
+
         //获取节点信息
         $menuInfo = (new MenuService())->info([['perms', '=', $permission]], true);
         //节点不存在或禁用

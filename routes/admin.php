@@ -45,7 +45,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/adminrole/index','AdminRoleController@index');
     Route::any('/adminrole/drop', 'AdminRoleController@drop');
     Route::any('/adminrole/add', 'AdminRoleController@add');
-    Route::any('/adminrole/unauthlist', 'AdminRoleController@unauthlist');
+    Route::any('/adminrole/tree', 'AdminRoleController@tree');
 //菜单管理
     Route::any('/menu/index', 'MenuController@index');
     Route::any('/menu/add', 'MenuController@add');
@@ -57,6 +57,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/dict/add', 'DictController@add');
     Route::any('/dict/edit', 'DictController@edit');
     Route::any('/dict/drop', 'DictController@drop');
+    Route::any('/dict/delcache', 'DictController@delcache');
 //字典数据
     Route::any('/dictdata/index', 'DictdataController@index');
     Route::any('/dictdata/add', 'DictdataController@add');
@@ -73,6 +74,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/adposition/add', 'AdpositionController@add');
     Route::any('/adposition/edit', 'AdpositionController@edit');
     Route::any('/adposition/drop', 'AdpositionController@drop');
+    Route::any('/adposition/delcache', 'AdpositionController@delcache');
 //跳转管理
     Route::any('/redtype/index', 'RedtypeController@index');
     Route::any('/redtype/add', 'RedtypeController@add');
@@ -88,6 +90,10 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/notice/add', 'NoticeController@add');
     Route::any('/notice/edit', 'NoticeController@edit');
     Route::any('/notice/drop', 'NoticeController@drop');
+//登录日志
+    Route::any('/loginlog/index', 'LoginlogController@index');
+    Route::any('/loginlog/drop', 'LoginlogController@drop');
+    Route::any('/loginlog/trash', 'LoginlogController@trash');
 });
 
 

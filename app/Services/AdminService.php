@@ -24,20 +24,21 @@ class AdminService extends BaseService
         $captcha=request()->input('captcha','');
         $remember=request()->input('remember','');
         if(empty($username) || empty($password) || empty($captcha)){
-            return message('请输入表单信息',false);
+            return $this->loginResult($username,'请输入表单信息',false);
         }
         if(!captcha_check($captcha)){
-            return message('验证码错误',false);
+
+            return $this->loginResult($username,'验证码错误',false);
         }
         $userinfo=parent::info([['username','=',$username]],true);
         if(empty($userinfo)){
-            return message('账号或密码错误',false);
+            return $this->loginResult($username,'账号或密码错误',false);
         }
         if($userinfo['password']!=get_password($password)){
-            return message('账号或密码错误',false);
+            return $this->loginResult($username,'账号或密码错误',false);
         }
         if($userinfo['status']!=1){
-            return message('该用户已被禁止登陆',false);
+            return $this->loginResult($username,'该用户已被禁止登陆',false);
         }
 
         //获取管理员分组
@@ -62,8 +63,22 @@ class AdminService extends BaseService
             'menu'=>$menuIdList
         ];
         app('session')->put(config('app.admin_session'),$sessionData);
-        return message('登陆成功',true);
+
+        return $this->loginResult($username,'登陆成功',true);
     }
+
+    /**
+     * 返回登录信息 并添加登录记录
+     * @param $username
+     * @param $msg
+     * @param $success
+     * @return array
+     */
+    public function loginResult($username,$msg,$success){
+        (new LoginlogService())->logAdd($username,$success?1:0,$msg);
+        return message($msg,$success);
+    }
+
 
     public function logout(){
         app('session')->flush();

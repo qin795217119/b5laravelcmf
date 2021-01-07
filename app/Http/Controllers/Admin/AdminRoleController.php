@@ -19,7 +19,7 @@ class AdminRoleController extends Backend
         IS_GET && !IS_AJAX && view()->share('role_id',intval(request()->input('role_id')));
     }
 
-    public function unauthlist(){
+    public function tree(){
         return $this->service->getList(false);
     }
 }

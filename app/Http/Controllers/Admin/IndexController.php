@@ -7,7 +7,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Services\AdminService;
+use App\Cache\DictCache;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
 

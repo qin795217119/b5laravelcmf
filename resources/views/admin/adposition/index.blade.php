@@ -17,6 +17,7 @@
     </div>
     <div class="btn-group-sm" id="toolbar" role="group">
         @include('admin.public.toolbar')
+        @render('iframe',['name'=>'cachebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
         <table id="bootstrap-table"></table>

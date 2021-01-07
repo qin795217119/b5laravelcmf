@@ -12,5 +12,4 @@ class DictController extends Backend
         parent::__construct($request);
         $this->service = new DictTypeService();
     }
-
 }

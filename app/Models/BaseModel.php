@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -177,6 +178,14 @@ class BaseModel extends Model
             $res = $this->where($field, $id)->delete();
         }
         return $res;
+    }
+
+    /**
+     * 清空表
+     */
+    public function trash(){
+        DB::table($this->table)->truncate();
+        return true;
     }
 
     /**

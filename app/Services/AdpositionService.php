@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Cache\AdpositionCache;
 use App\Models\Adposition;
 use App\Validates\AdpositionValidate;
 
@@ -38,5 +39,14 @@ class AdpositionService extends BaseService
             }
         }
         return $reArr;
+    }
+
+    /**
+     * 清除缓存
+     * @return array
+     */
+    public function delcache(){
+        AdpositionCache::clear();
+        return message('清理缓存完成', true);
     }
 }

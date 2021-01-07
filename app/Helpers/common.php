@@ -141,3 +141,9 @@ if (!function_exists('strline_array')) {
         return $value;
     }
 }
+function paramSet($key){
+    if(is_null($key) || $key===''){
+        return false;
+    }
+    return true;
+}

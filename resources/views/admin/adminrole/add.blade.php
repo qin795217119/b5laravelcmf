@@ -28,7 +28,7 @@
             var options = {
                 modalName: "人员",
                 sortName:'id',
-                url: cUrl + "/unauthlist",
+                url: cUrl + "/tree",
                 showSearch: false,
                 showRefresh: false,
                 showToggle: false,
