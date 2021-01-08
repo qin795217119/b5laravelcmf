@@ -2,7 +2,10 @@
 /public/hot
 /public/storage
 /public/uploads
-/storage
+/storage/app/*
+/storage/debugbar/*
+/storage/framework/*
+/storage/logs/*
 /vendor
 /tests
 /.idea
@@ -13,4 +16,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-storage
