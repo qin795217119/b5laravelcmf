@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Cache\RedtypeCache;
 use App\Models\Redtype;
 use App\Validates\RedtypeValidate;
 
@@ -40,5 +41,13 @@ class RedtypeService extends BaseService
             }
         }
         return $reArr;
+    }
+    /**
+     * 清除缓存
+     * @return array
+     */
+    public function delcache(){
+        RedtypeCache::clear();
+        return message('清理缓存完成', true);
     }
 }

@@ -74,7 +74,18 @@ class BaseService
             if (!empty($param['between']) && is_array($param['between'])) {
                 foreach ($param['between'] as $paramField => $paramValue) {
                     if (is_array($paramValue) && count($paramValue) > 1) {
-                        $map[] = [$paramField, 'between', [$paramValue['start'], $paramValue['end']]];
+                        $start=$paramValue['start'];
+                        $end=$paramValue['end'];
+                        if($start || $end){
+                            if($start && $end){
+                                $map[] = [$paramField, 'between', [$start, $end]];
+                            }elseif ($start){
+                                $map[] = [$paramField, '>', $start];
+                            }elseif ($end){
+                                $map[] = [$paramField, '<', $end];
+                            }
+                        }
+
                     }
                 }
             }

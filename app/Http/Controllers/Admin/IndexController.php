@@ -7,7 +7,10 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Cache\AdpositionCache;
+use App\Cache\ConfigCache;
 use App\Cache\DictCache;
+use App\Cache\RedtypeCache;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
 
@@ -21,6 +24,7 @@ class IndexController extends Backend
 
    public function index()
    {
+//       var_dump(ConfigCache::get('sys_config_group'));
        $menuHtml=(new MenuService())->getMenuListByLogin();
        return $this->render('',['menuHtml'=>$menuHtml]);
    }

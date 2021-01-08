@@ -6,6 +6,7 @@
             <div class="select-list">
                 <ul>
                     <li>@render('iframe',['name'=>'input|信息标题','extend'=>['name'=>'like[title]']])</li>
+                    <li>@render('iframe',['name'=>'select|推荐位置','extend'=>['name'=>'where[adtype]','value'=>'','place'=>'所有','data'=>$adposlist]])</li>
                     <li>@render('iframe',['name'=>'select|跳转类型','extend'=>['name'=>'where[redtype]','value'=>'','place'=>'所有','data'=>$typelist]])</li>
                     <li>@render('iframe',['name'=>'select|跳转模块','extend'=>['name'=>'where[redfunc]','value'=>'','place'=>'所有','data'=>$funclist]])</li>
                     <li>
@@ -20,6 +21,7 @@
         @render('iframe',['name'=>'addbtn','extend'=>['full'=>'']])
         @render('iframe',['name'=>'editbtn','extend'=>['full'=>'']])
         @render('iframe',['name'=>'deletebtn'])
+        @render('iframe',['name'=>'cachebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
         <table id="bootstrap-table"></table>
@@ -30,6 +32,7 @@
     <script>
         var typelist = @json($typelist);
         var funclist = @json($funclist);
+        var adposlist = @json($adposlist);
         $(function () {
             var options = {
                 modalName: "推荐信息",
@@ -38,6 +41,13 @@
                     {checkbox: true},
                     {field: 'id', title: '信息ID',  sortable: true},
                     {field: 'title', title: '信息标题'},
+                    {
+                        field: 'adtype',
+                        title: '推荐位置',
+                        formatter: function (value, row, index) {
+                            return adposlist.hasOwnProperty(value)?adposlist[value]:'-';
+                        }
+                    },
                     {
                         field: 'redtype',
                         title: '跳转类型',

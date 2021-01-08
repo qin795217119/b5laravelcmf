@@ -9,39 +9,37 @@ use Illuminate\Support\Facades\Cache;
 class DictCache
 {
     /**
-     * 字典类型及获取类型名称
-     * @param string $key
-     * @return mixed|string
-     */
-    public static function getType(string $key=null){
-        $list=Cache::rememberForever('dict_type_list',function (){
-            $list= (new DictTypeService())->getAll([],['name','type'],[],'type,name');
-            return $list?:[];
-        });
-        if(paramSet($key)){
-            return $list[$key]??null;
-        }
-        return $list;
-    }
-
-    /**
      * 获取某个字典类型下得数据列表及数据名
      * @param string|null $type 字典类型
      * @param string|null $value 数据值
      * @param bool $valid 是否只取有效数据
      * @return array|null
      */
-    public static function getData(string $type=null,string $value=null,bool $valid=false){
+    public static function get(string $type=null,string $value=null,bool $valid=true){
         if(!paramSet($type)){
             return null;
         }
-        $list=Cache::tags('dict_datalist')->rememberForever($type,function () use ($type){
-            if(is_null(self::getType($type))){
-                return null;
+
+        if(config('cache.default')=='redis'){
+            $list=Cache::tags('dict_datalist')->rememberForever($type,function () use ($type){
+                if(is_null(self::getType($type))){
+                    return null;
+                }
+                $list=(new DictDataService())->getAll([['type','=',$type]],['name','value','status'],[],'value',[['listsort','asc'],['id','asc']]);
+                return $list?:[];
+            });
+        }else{
+            $lists=Cache::rememberForever('dict_datalist',function (){
+                $list=(new DictDataService())->getAll([],['type','name','value','status'],[],'',[['type','asc'],['listsort','asc'],['id','asc']]);
+                return $list?:[];
+            });
+            $list=[];
+            foreach ($lists as $val){
+                if($val['type']==$type){
+                    $list[$val['value']]=$val;
+                }
             }
-            $list=(new DictDataService())->getAll([['type','=',$type]],['name','value','status'],[],'value',[['listsort','asc'],['id','asc']]);
-            return $list?:[];
-        });
+        }
         if(paramSet($value)){
             return isset($list[$value])?$list[$value]['name']:null;
         }
@@ -56,11 +54,33 @@ class DictCache
         return $dataList;
     }
 
+
     /**
-     * 字典相关清除所有
+     * 字典类型及获取类型名称
+     * @param string $key
+     * @return mixed|string
+     */
+    public static function getType(string $key=null){
+        $list=Cache::rememberForever('dict_typelist',function (){
+            $list= (new DictTypeService())->getAll([],['name','type'],[],'type,name');
+            return $list?:[];
+        });
+        if(paramSet($key)){
+            return $list[$key]??null;
+        }
+        return $list;
+    }
+
+
+    /**
+     * 清除所有
      */
     public static function clear(){
-        Cache::forget('dict_type_list');
-        Cache::tags('dict_datalist')->flush();
+        Cache::forget('dict_typelist');
+        if(config('cache.default')=='redis'){
+            Cache::tags('dict_datalist')->flush();
+        }else{
+            Cache::forget('dict_datalist');
+        }
     }
 }

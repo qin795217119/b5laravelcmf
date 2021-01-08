@@ -20,7 +20,6 @@
         @render('iframe',['name'=>'addbtn'])
         @render('iframe',['name'=>'editbtn'])
         @render('iframe',['name'=>'deletebtn','extend'=>['column'=>'type']])
-        @render('iframe',['name'=>'exportbtn'])
         @render('iframe',['name'=>'cachebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">

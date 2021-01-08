@@ -39,7 +39,7 @@
                         title: '位置标识',
                         sortable: true,
                         formatter:function (value, row, index) {
-                            return $.table.tooltip(value,15);
+                            return $.table.tooltip(value,20);
                         }
                     },
                     {

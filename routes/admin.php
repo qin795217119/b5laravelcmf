@@ -69,6 +69,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/config/add', 'ConfigController@add');
     Route::any('/config/edit', 'ConfigController@edit');
     Route::any('/config/drop', 'ConfigController@drop');
+    Route::any('/config/delcache','ConfigController@delcache');
 //推荐位置
     Route::any('/adposition/index', 'AdpositionController@index');
     Route::any('/adposition/add', 'AdpositionController@add');
@@ -80,11 +81,13 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/redtype/add', 'RedtypeController@add');
     Route::any('/redtype/edit', 'RedtypeController@edit');
     Route::any('/redtype/drop', 'RedtypeController@drop');
+    Route::any('/redtype/delcache','RedtypeController@delcache');
 //推荐信息
     Route::any('/adlist/index', 'AdlistController@index');
     Route::any('/adlist/add', 'AdlistController@add');
     Route::any('/adlist/edit', 'AdlistController@edit');
     Route::any('/adlist/drop', 'AdlistController@drop');
+    Route::any('/adlist/delcache','AdlistController@delcache');
 //通知公告
     Route::any('/notice/index', 'NoticeController@index');
     Route::any('/notice/add', 'NoticeController@add');

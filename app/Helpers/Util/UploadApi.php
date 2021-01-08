@@ -3,6 +3,7 @@
 namespace App\Helpers\Util;
 
 
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 class UploadApi
@@ -129,6 +130,8 @@ class UploadApi
 
         $savePath = $this->getSavePath();//保存路径
         $uploads = public_path($savePath);
+
+        File::isDirectory($uploads) or File::makeDirectory($uploads, 0777, true, true);
 
         $fileName = $this->getFileName($originName);//获取文件名
         $fileFullName = $fileName . '.' . $ext;

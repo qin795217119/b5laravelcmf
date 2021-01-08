@@ -27,15 +27,15 @@ class AdlistValidate extends ValidateBase
      */
     protected function before_validate()
     {
-//
-//        if($this->data['redtype']=='none'){
-//            $this->data['redfunc']='';
-//            $this->data['redinfo']='';
-//        }elseif ($this->data['redtype']=='url'){
-//            $this->data['redfunc']='';
-//        }elseif ($this->data['redtype']=='func'){
-//            $this->data['redinfo']='';
-//        }
+
+        if($this->data['redtype']=='none'){
+            $this->data['redfunc']='';
+            $this->data['redinfo']='';
+        }elseif ($this->data['redtype']=='url'){
+            $this->data['redfunc']='';
+        }elseif ($this->data['redtype']=='func'){
+            $this->data['redinfo']='';
+        }
 
         $this->data['imglist']=$this->data['imglist']??[];
         $this->data['imglist']=$this->data['imglist']?:'';

@@ -49,7 +49,11 @@ $(function() {
                 followingToolbar: false,
                 callbacks: {
                     onImageUpload: function (files) {
-                        // sendFile(files[0], this);
+                        for (var i=0;i<files.length;i++){
+                            sendFile(files[i],{cat:'editor'},function (data) {
+                                thisObj.summernote('editor.insertImage', data.url, data.originName);
+                            });
+                        }
                     }
                 }
             });
@@ -192,9 +196,6 @@ $(function() {
         }
     });
 });
-function dropdownfunc() {
-    console.log('bbbcc')
-}
 (function ($) {
     'use strict';
     $.fn.toTop = function(opt) {
@@ -389,21 +390,6 @@ function calSumWidth(elements) {
 }
 
 
-// 日志打印封装处理
-var log = {
-    log: function(msg) {
-        console.log(msg);
-    },
-    info: function(msg) {
-        console.info(msg);
-    },
-    warn: function(msg) {
-        console.warn(msg);
-    },
-    error: function(msg) {
-        console.error(msg);
-    }
-};
 // 本地缓存处理
 var storage = {
     set: function(key, value) {
@@ -465,28 +451,41 @@ var sub = {
         });
     }
 };
-
-// 动态加载css文件
-function loadCss(file, headElem) {
-    var link = document.createElement('link');
-    link.href = file;
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    if (headElem) headElem.appendChild(link);
-    else document.getElementsByTagName('head')[0].appendChild(link);
+function sendFile(file,data, callback) {
+    var formData = new FormData();
+    formData.append("file", file);
+    if(data){
+        for (var key in data){
+            formData.append(key, data[key]);
+        }
+    }
+    $.ajax({
+        type: "POST",
+        url: mUrl + "/common/uploadimg",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function(result) {
+            if (result.code == web_status.SUCCESS) {
+                if($.common.isFunction(callback)){
+                    callback(result.data);
+                }
+            } else {
+                $.modal.alertError(result.msg);
+            }
+        },
+        error: function(error) {
+            $.modal.alertWarning("图片上传失败。");
+        }
+    });
 }
-
-// 动态加载js文件
-function loadJs(file, headElem) {
-    var script = document.createElement('script');
-    script.src = file;
-    script.type = 'text/javascript';
-    if (headElem) headElem.appendChild(script);
-    else document.getElementsByTagName('head')[0].appendChild(script);
-}
+//删除上传文件
 function b5uploadRemove(obj) {
     $(obj).parents(".b5uploadimg_li").remove();
 }
+//上传文件按钮初始化
 function b5uploadimginit(id,callback) {
     var obj=$("#"+id);
     var listbox=obj.parents(".b5uploadmainbox").find(".b5uploadlistbox");
@@ -514,7 +513,6 @@ function b5uploadimginit(id,callback) {
     });
     layui.use('upload', function(){
         var upload = layui.upload;
-
         //执行实例
         var uploadInst = upload.render({
             elem: '#'+id //绑定元素
@@ -559,6 +557,7 @@ function b5uploadimginit(id,callback) {
         });
     });
 }
+//上传图片成功后的展示
 function b5uploadimghtml(path,name){
     var html='<div class="b5uploadimg_li">' +
         '           <input type="hidden" name="'+name+'[]" value="'+path+'">' +

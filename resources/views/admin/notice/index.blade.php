@@ -7,6 +7,12 @@
                 <ul>
                     <li>@render('iframe',['name'=>'input|公告标题','extend'=>['name'=>'like[title]']])</li>
                     <li>@render('iframe',['name'=>'select|公告类型','extend'=>['name'=>'where[type]','value'=>'','place'=>'所有','data'=>$typelist]])</li>
+                    <li class="select-time">
+                        <label>创建时间： </label>
+                        @render('iframe',['name'=>'input','extend'=>['name'=>'between[create_time][start]','id'=>'startTime','class'=>'time-input','place'=>'开始时间']])
+                        <span>-</span>
+                        @render('iframe',['name'=>'input','extend'=>['name'=>'between[create_time][end]','id'=>'endTime','class'=>'time-input','place'=>'结束时间']])
+                    </li>
                     <li>
                         @render('iframe',['name'=>'searchbtn|搜索'])
                         @render('iframe',['name'=>'resetbtn|重置'])

@@ -72,7 +72,7 @@ if (!function_exists('get_image_url')) {
                     $reInfo[]=get_image_url($img);
                 }
             }
-            return  $reInfo;
+            return $reInfo;
         }
         if(strpos($image_url,'http')===0){
             return $image_url;
@@ -141,9 +141,44 @@ if (!function_exists('strline_array')) {
         return $value;
     }
 }
-function paramSet($key){
-    if(is_null($key) || $key===''){
-        return false;
+if (!function_exists('paramSet')) {
+    /**
+     * 判断变量是否为null或空字符串
+     * @param $key
+     * @return bool
+     */
+    function paramSet($key)
+    {
+        if (is_null($key) || $key === '') {
+            return false;
+        }
+        return true;
     }
-    return true;
+}
+if (!function_exists('arr_keymap')) {
+
+    /**
+     * 将二维数组 变成一维 以某个值为键或以某个值为值
+     * @param array $arr
+     * @param string $key
+     * @param string|null $valueKey
+     * @return array
+     */
+    function arr_keymap(array $arr,string $key,string $valueKey=null)
+    {
+        if(empty($arr)) return [];
+        if(empty($key)) return $arr;
+        $reArr=[];
+        foreach ($arr as $value){
+            if(is_array($value) && isset($value[$key])){
+                if(paramSet($valueKey)){
+                    $reArr[$value[$key]]=$value[$valueKey]??'';
+                }else{
+                    $reArr[$value[$key]]=$value;
+                }
+            }
+
+        }
+        return $reArr;
+    }
 }

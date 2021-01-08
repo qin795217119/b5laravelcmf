@@ -20,7 +20,6 @@
         @render('iframe',['name'=>'btn|新增','extend'=>['class'=>'btn-success','id'=>'addDictData']])
         @render('iframe',['name'=>'editbtn'])
         @render('iframe',['name'=>'deletebtn'])
-        @render('iframe',['name'=>'exportbtn'])
         @render('iframe',['name'=>'closetab'])
     </div>
     <div class="col-sm-12 select-table table-striped">

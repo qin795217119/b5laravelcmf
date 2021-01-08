@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Cache\AdlistCache;
 use App\Models\Adlist;
 use App\Validates\AdlistValidate;
 
@@ -39,5 +40,14 @@ class AdlistService extends BaseService
             }
         }
         return $reArr;
+    }
+
+    /**
+     * 清除缓存
+     * @return array
+     */
+    public function delcache(){
+        AdlistCache::clear();
+        return message('清理缓存完成', true);
     }
 }
