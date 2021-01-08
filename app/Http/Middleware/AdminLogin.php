@@ -24,7 +24,7 @@ class AdminLogin
             if(IS_GET && !IS_AJAX){
                 return redirect('/admin/login');
             }else{
-                return message('请先登录',false,[],101);
+                return response(message('请先登录',false,[],101),200);
             }
         }else{
             return $next($request);

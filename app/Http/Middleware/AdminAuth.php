@@ -23,7 +23,7 @@ class AdminAuth
                 if(IS_GET && !IS_AJAX){
                     return redirect('/admin/noauth');
                 }else{
-                    return message('无权访问',false);
+                    return response(message('无权访问',false),200);
                 }
             }
         }
