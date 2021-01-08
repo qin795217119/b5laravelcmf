@@ -5,7 +5,6 @@
 /storage
 /vendor
 /tests
-/database
 /.idea
 .env
 .env.backup
