@@ -1,5 +1,9 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Http\Middleware;
 
 use App\Services\MenuService;
@@ -18,6 +22,16 @@ class AdminAuth
     {
         $adminId = adminLoginInfo('info.id');
         if($adminId){
+            //锁屏判断
+            $islock=$this->checkLock();
+            if($islock){
+                if(IS_GET && !IS_AJAX){
+                    return redirect('/admin/lockscreen');
+                }else{
+                    return response(message('锁屏中，无法此操作',false),200);
+                }
+            }
+            //权限判断
             $hasPerms = $this->checkAuth($adminId);
             if(!$hasPerms){
                 if(IS_GET && !IS_AJAX){
@@ -30,6 +44,23 @@ class AdminAuth
         return $next($request);
     }
 
+    /**
+     * 判断锁屏
+     * @return bool
+     */
+    public function checkLock(){
+        $islock=session('islock');
+        if(!$islock) return false;
+        //节点标识
+        $module_name = strtolower(MODULES_NAME);
+        $controller_name = strtolower(CONTROLLER_NAME);
+        $action_name = strtolower(ACTION_NAME);
+        $permission = $module_name . ':' . $controller_name . ':' . $action_name;
+        if($permission=='admin:common:lockscreen'){
+            return false;
+        }
+        return true;
+    }
     /**
      * 权限验证
      * @return bool

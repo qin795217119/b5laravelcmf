@@ -731,7 +731,7 @@ var table = {
         modal: {
             //layer初始化
             layerinit:function(callback) {
-                if(layer){
+                if(window.layer!==undefined){
                     if($.common.isFunction(callback)) {
                         if (typeof callback === 'string') {
                             eval(callback + "(layer)")
@@ -770,6 +770,22 @@ var table = {
                 }
                 return icon;
             },
+            //请提示
+            tips:function(content,callback){
+                window.layer=undefined;
+                layui.use(['layer'],function () {
+                    var layers=layui.layer;
+                    layers.config({
+                        extend: 'default/layer.css',
+                        skin: ''
+                    });
+                    layers.msg(content,{time: 2000, shade: [0.1, '#000'],shadeClose:true},function () {
+                        if($.common.isNotEmpty(callback)) {
+                            $.common.callBackOp(callback);
+                        }
+                    });
+                })
+            },
             // 消息提示
             msg: function(content, type,callback) {
                 $.modal.layerinit(function (layer) {
@@ -780,13 +796,26 @@ var table = {
                             }
                         });
                     } else {
-                        layer.msg(content,{icon:'?',time: 2000, shade: [0.1, '#000']},function () {
+                        layer.msg(content,{icon:0,time: 2000, shade: [0.1, '#000']},function () {
                             if($.common.isNotEmpty(callback)) {
                                 $.common.callBackOp(callback);
                             }
                         });
                     }
                 });
+            },
+            //layer的加载曾
+            b5showload(){
+                $.modal.layerinit(function (layer) {
+                    layer.load(1, {
+                        shade: [0.2,'#000'] //0.1透明度的白色背景
+                    });
+                })
+            },
+            b5hideload(){
+                $.modal.layerinit(function (layer) {
+                    layer.closeAll('loading');
+                })
             },
             // 错误消息
             msgError: function(content,callback) {
@@ -1993,7 +2022,7 @@ var table = {
     });
 })(jQuery);
 
-$.modal.layerinit()
+$.modal.layerinit();
 /** 表格类型 */
 table_type = {
     bootstrapTable: 0,

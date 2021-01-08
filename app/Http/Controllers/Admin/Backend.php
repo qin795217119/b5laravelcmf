@@ -1,11 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Services\MenuService;
 use Illuminate\Http\Request;
-use function GuzzleHttp\Psr7\str;
 
 /**
  * 后台基类
@@ -16,8 +18,6 @@ class Backend extends BaseController
 {
     // 服务
     protected $service;
-    // 登录ID
-    protected $adminId;
 
     /**
      * 构造函数

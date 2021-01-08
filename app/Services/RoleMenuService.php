@@ -1,5 +1,9 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Services;
 
 use App\Models\RoleMenu;
@@ -26,6 +30,7 @@ class RoleMenuService extends BaseService
      */
     public function update($role_id,$treeId){
         if(!$role_id) return false;
+
         $this->model->drop($role_id,'role_id');
         if(empty($treeId)) return true;
         if(!is_array($treeId)){

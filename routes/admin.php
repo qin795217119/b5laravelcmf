@@ -21,6 +21,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/login', 'PublicController@login');
     Route::any('/logout', 'PublicController@logout');
     Route::any('/noauth','PublicController@noauth');
+    Route::any('/lockscreen','CommonController@lockscreen');
     Route::any('/common/uploadimg', 'CommonController@uploadimg');
 //组织架构
     Route::any('/struct/index', 'StructController@index');

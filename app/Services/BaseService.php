@@ -1,5 +1,9 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Services;
 
 
@@ -213,6 +217,12 @@ class BaseService
                 }
                 $data = $validate->get();
             }
+
+            //演示限制
+            if(system_isDemo() && get_class($this)!='App\Services\LoginlogService'){
+                return $this->demo_system();
+            }
+
             $result = $this->model->add($data);
             if ($result) {
                 $data[$this->model->getprimaryKey()] = $result;
@@ -252,6 +262,11 @@ class BaseService
                 }
                 $data = $validate->get();
             }
+            //演示限制
+            if(system_isDemo()){
+                return $this->demo_system();
+            }
+
             $result = $this->model->edit($data);
             if ($result !== false) {
                 $this->after_edit($data);
@@ -260,7 +275,9 @@ class BaseService
         }
         return message('操作失败', false);
     }
-
+    public function demo_system(){
+        return message('演示环境无法此操作', false);
+    }
     /**
      * 编辑成功后
      * @param $data
@@ -288,6 +305,12 @@ class BaseService
             return message('未选择数据', false);
         }
         $field = $argList[1] ?? '';
+
+        //演示限制
+        if(system_isDemo()){
+            return $this->demo_system();
+        }
+
         $result = $this->model->drop($data['ids'], $field);
         if ($result) {
             $this->after_drop($data);
@@ -324,6 +347,12 @@ class BaseService
         if (!isset($data['status'])) {
             return message('状态参数错误', false);
         }
+
+        //演示限制
+        if(system_isDemo()){
+            return $this->demo_system();
+        }
+
         $update = [$this->model->getprimaryKey() => $data['id'], 'status' => $data['status']];
         $result = $this->model->edit($update);
         $title = $data['status'] ? '启用' : '停用';

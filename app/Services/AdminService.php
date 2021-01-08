@@ -1,5 +1,9 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Services;
 
 use App\Models\Admin;
@@ -30,7 +34,7 @@ class AdminService extends BaseService
 
             return $this->loginResult($username,'验证码错误',false);
         }
-        $userinfo=parent::info([['username','=',$username]],true);
+        $userinfo=$this->info([['username','=',$username]],true,false);
         if(empty($userinfo)){
             return $this->loginResult($username,'账号或密码错误',false);
         }
@@ -40,6 +44,8 @@ class AdminService extends BaseService
         if($userinfo['status']!=1){
             return $this->loginResult($username,'该用户已被禁止登陆',false);
         }
+        //获取管理员组织
+        $structList=(new AdminStructService())->getListByAdmin($userinfo['id']);
 
         //获取管理员分组
         $roleList = (new AdminRoleService())->getListByAdmin($userinfo['id'], false, false);
@@ -54,14 +60,17 @@ class AdminService extends BaseService
         $sessionData=[
             'info'=>[
                 'id'=>$userinfo['id'],
+                'username'=>$userinfo['username'],
                 'name'=>$userinfo['realname']
             ],
+            'struct'=>$structList,
             'role'=>[
                 'id'=>$roleId,
                 'name'=>$roleName,
             ],
             'menu'=>$menuIdList
         ];
+        app('session')->flush();
         app('session')->put(config('app.admin_session'),$sessionData);
 
         return $this->loginResult($username,'登陆成功',true);
@@ -109,13 +118,14 @@ class AdminService extends BaseService
      * 人员信息返回关联信息
      * @param $id
      * @param bool $isArray
+     * @param bool $extend
      * @return mixed
      */
-    public function info($id, bool $isArray = true)
+    public function info($id, bool $isArray = true,bool $extend=true)
     {
         $info=parent::info($id, false);
 
-        if($info){
+        if($info && $extend){
             //组织架构信息
             $structIdStr='';
             $structNameStr='';

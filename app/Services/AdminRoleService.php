@@ -1,5 +1,9 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
 namespace App\Services;
 
 use App\Models\AdminRole;
@@ -125,6 +129,12 @@ class AdminRoleService extends BaseService
             }
             $user_id=explode(',',trim($user_id));
             $user_id=array_unique($user_id);
+
+            //演示限制
+            if(system_isDemo()){
+                return $this->demo_system();
+            }
+
             foreach ($user_id as $id){
                 if($id){
                     $this->model->add(['admin_id'=>$id,'role_id'=>$role_id]);

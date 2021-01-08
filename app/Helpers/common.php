@@ -1,12 +1,42 @@
 <?php
-// 此文件为系统框架核心公共函数文件，为了系统的稳定与安全，未经允许不得擅自改动
-function adminLoginInfo($key=null){
-    $session=session(config('app.admin_session'));
-    if(is_null($key)){
-        return $session;
-    }else{
-        if(empty($session)) return false;
-        return \Illuminate\Support\Arr::get($session,$key,false);
+// +----------------------------------------------------------------------
+// | B5LaravelCMF
+// +----------------------------------------------------------------------
+// | Author: 李恒 <357145480@qq.com>
+// +----------------------------------------------------------------------
+
+if (!function_exists('adminLoginInfo')) {
+    /**
+     * 获取管理员登录信息
+     * @param null $key
+     * @return bool|\Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed
+     */
+    function adminLoginInfo($key = null)
+    {
+        $session = session(config('app.admin_session'));
+        if (is_null($key)) {
+            return $session;
+        } else {
+            if (empty($session)) return false;
+            return \Illuminate\Support\Arr::get($session, $key, false);
+        }
+    }
+}
+if (!function_exists('system_isDemo')) {
+    /**
+     * 获取系统是否开启演示模式
+     * @return bool
+     */
+    function system_isDemo()
+    {
+        $status=\App\Cache\ConfigCache::get('sys_config_demo');
+        $status=='1'?true:false;
+        $loginId=adminLoginInfo('info.id');
+        $isAdmin=$loginId=='1'?true:false;
+        if($isAdmin){
+            return false;
+        }
+        return $status;
     }
 }
 if (!function_exists('get_password')) {

@@ -18,6 +18,15 @@
     <link href="{{asset('static/admin/css/style.css')}}" rel="stylesheet"/>
     <link href="{{asset('static/admin/css/skins.css')}}" rel="stylesheet"/>
     <link href="{{asset('static/admin/css/iframe-ui.css')}}" rel="stylesheet"/>
+    <script>
+        if (window !== top) top.location.replace(location.href);
+        var _M_ = '{{$group}}'
+        var _C_ = '{{$app}}';
+        var _A_ = '{{$act}}';
+        var rootUrl ="/";
+        var mUrl = rootUrl+_M_;
+        var cUrl = mUrl+"/" + _C_;
+    </script>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg theme-dark skin-blue" style="overflow: hidden">
 <div id="wrapper">
@@ -42,7 +51,7 @@
                             </div>
                         </a>
                         <div class="pull-left info">
-                            <p>管理员</p>
+                            <p style="height: 15px;line-height: 16px;width: 100%;overflow: hidden;font-size: 12px">{{$adminInfo['struct']}}</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                             <a href="/admin/logout" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
                         </div>
@@ -84,13 +93,13 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
-                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="http://doc.ruoyi.vip/ruoyi" target="_blank"><i class="fa fa-question-circle"></i> 文档</a></li>
+                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="javascript:alert('暂无');"><i class="fa fa-question-circle"></i> 文档</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="锁定屏幕" href="#" id="lockScreen"><i class="fa fa-lock"></i> 锁屏</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>
                     <li class="dropdown user-menu">
                         <a href="javascript:;" class="dropdown-toggle" data-hover="dropdown">
                             <img src="{{asset('static/admin/images/profile.jpg')}}" class="user-image">
-                            <span class="hidden-xs">管理员</span>
+                            <span class="hidden-xs">{{$adminInfo['info']['name']}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="mt5">
@@ -132,7 +141,7 @@
         </div>
 
         <div class="footer">
-            <div class="pull-right">© 2013 RuoYi Copyright </div>
+            <div class="pull-right">© 2021 b5net.com Copyright </div>
         </div>
     </div>
     <!--右侧部分结束-->

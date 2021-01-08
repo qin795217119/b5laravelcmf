@@ -3,6 +3,7 @@
 
 @section('content')
 
-    Sdasdasdasdasda
+    首页
 
 @endsection
+

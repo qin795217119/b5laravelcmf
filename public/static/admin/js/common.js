@@ -1,6 +1,7 @@
 /**
  * 通用方法封装处理
  */
+
 $(function() {
     $(document).on("click","*[b5-event]",function () {
         b5event($(this));
