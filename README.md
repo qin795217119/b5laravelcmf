@@ -11,6 +11,7 @@
 还单独列出了验证类Validate和缓存类Cache
 基本是一个表 对应一个Model、Service、Validate及Cache。当然在后面开发的功能你可以根据自己的喜好写。
 
+演示地址：<a href="http://b5laravelcmf.b5net.com/" target="_blank">点击进入</a>
 
 #### 使用说明
 
