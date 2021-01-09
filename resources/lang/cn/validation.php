@@ -103,7 +103,7 @@ return [
     'required_with_all' => ':attribute 字段是必须的当 :values 是存在的',
     'required_without' => ':attribute 字段是必须的当 :values 是不存在的',
     'required_without_all' => ':attribute 字段是必须的当 没有一个 :values 是存在的',
-    'same' => ':attribute 和 :other 必须匹配',
+    'same' => ':attribute 和 :other 必须一致',
     'size' => [
         'numeric' => ':attribute 必须是 :size 位',
         'file' => ':attribute 必须是 :size KB',

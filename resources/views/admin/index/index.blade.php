@@ -106,7 +106,7 @@
                                 <a href="" class="menuItem"><i class="fa fa-user"></i> 个人中心</a>
                             </li>
                             <li>
-                                <a href=""><i class="fa fa-key"></i> 修改密码</a>
+                                <a href="javascript:rePass();"><i class="fa fa-key"></i> 修改密码</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -189,8 +189,15 @@
                 }
             }
         }
+        $("[data-toggle='tooltip']").tooltip();
     });
-    $("[data-toggle='tooltip']").tooltip();
+
+
+    /* 修改密码 */
+    function rePass() {
+        var url = mUrl + '/common/repass';
+        $.modal.open("修改密码", url, '770', '380');
+    }
 </script>
 </body>
 </html>

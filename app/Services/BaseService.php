@@ -35,7 +35,7 @@ class BaseService
     }
 
     //设置验证类
-    public function setValidate(ValidateBase $validate)
+    public function setValidate($validate)
     {
         $this->validate = $validate;
     }
@@ -227,7 +227,12 @@ class BaseService
             if ($result) {
                 $data[$this->model->getprimaryKey()] = $result;
                 $this->after_add($data);
-                return message('保存成功', true, [], null, 'closeopen_refresh');
+                $url=$argList[1] ?? '';
+                if(!$url){
+                    return message('保存成功', true);
+                }else{
+                    return message('保存成功', true,[],null,$url);
+                }
             }
         }
         return message('操作失败', false);
@@ -270,7 +275,13 @@ class BaseService
             $result = $this->model->edit($data);
             if ($result !== false) {
                 $this->after_edit($data);
-                return message('保存成功', true, [], null, 'closeopen_refresh');
+                $url=$argList[1] ?? '';
+                if(!$url){
+                    return message('保存成功', true);
+                }else{
+                    return message('保存成功', true,[],null,$url);
+                }
+
             }
         }
         return message('操作失败', false);
@@ -314,7 +325,12 @@ class BaseService
         $result = $this->model->drop($data['ids'], $field);
         if ($result) {
             $this->after_drop($data);
-            return message('删除成功', true, [], null, 'reload');
+            $url=$argList[2] ?? '';
+            if(!$url){
+                return message('删除成功', true);
+            }else{
+                return message('删除成功', true,[],null,$url);
+            }
         }
         return message('删除失败', false);
     }
@@ -357,7 +373,8 @@ class BaseService
         $result = $this->model->edit($update);
         $title = $data['status'] ? '启用' : '停用';
         if ($result) {
-            return message('', true, [], null, 'reload');
+
+            return message('', true);
         }
         return message($title . '失败', false);
     }

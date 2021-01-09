@@ -23,6 +23,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/noauth','PublicController@noauth');
     Route::any('/lockscreen','CommonController@lockscreen');
     Route::any('/common/uploadimg', 'CommonController@uploadimg');
+    Route::any('/common/repass','CommonController@repass');
 //组织架构
     Route::any('/struct/index', 'StructController@index');
     Route::any('/struct/add', 'StructController@add');

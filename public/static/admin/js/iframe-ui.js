@@ -1470,7 +1470,11 @@ var table = {
                         parent.$.modal.msgSuccess(result.msg);
                         parent.$.treeTable.refresh();
                     } else {
-                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                        if(result.url!==''){
+                            $.modal.msgSuccess('保存成功',result.url);
+                        }else{
+                            $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                        }
                     }
                 } else if (result.code == web_status.WARNING) {
                     $.modal.alertWarning(result.msg)
@@ -1782,6 +1786,9 @@ var table = {
                         break;
                     case 'preload':
                         parent.location.reload();
+                        break;
+                    case 'closeOpen':
+                        $.modal.close();
                         break;
                 }
             },

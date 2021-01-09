@@ -8,6 +8,7 @@ namespace App\Services;
 
 use App\Models\Admin;
 use App\Validates\AdminValidate;
+use Illuminate\Support\Facades\Validator;
 
 
 /**
@@ -22,16 +23,26 @@ class AdminService extends BaseService
         $this->setModel(new Admin());
         $loadValidate && $this->setValidate(new AdminValidate());
     }
+    //登录
     public function login(){
+        $validator = Validator::make(request()->input(),
+            [
+                'username' => 'bail|required',
+                'password' => 'bail|required',
+                'captcha' => 'bail|required'
+            ],
+            [],
+            ['username'=>'登录名称','password'=>'登录密码','captcha'=>'验证码']
+        );
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            $error = $error ?: '提交数据错误';
+            return message($error,false);
+        }
         $username=request()->input('username','');
         $password=request()->input('password','');
         $captcha=request()->input('captcha','');
-        $remember=request()->input('remember','');
-        if(empty($username) || empty($password) || empty($captcha)){
-            return $this->loginResult($username,'请输入表单信息',false);
-        }
         if(!captcha_check($captcha)){
-
             return $this->loginResult($username,'验证码错误',false);
         }
         $userinfo=$this->info([['username','=',$username]],true,false);
@@ -76,6 +87,39 @@ class AdminService extends BaseService
         return $this->loginResult($username,'登陆成功',true);
     }
 
+    //修改密码
+    public function repass(){
+        $validator = Validator::make(request()->input(),
+            [
+                'oldpass' => 'bail|required|min:6|max:20|alpha_dash',
+                'newpass' => 'bail|required|min:6|max:20',
+                'confirmpass' => 'bail|required|min:6|max:20|same:newpass'
+            ],
+            [],
+            ['oldpass'=>'旧密码','newpass'=>'新密码','confirmpass'=>'确认密码']
+        );
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            $error = $error ?: '提交数据错误';
+            return message($error,false);
+        }
+        //演示限制
+        if(system_isDemo() && get_class($this)!='App\Services\LoginlogService'){
+            return $this->demo_system();
+        }
+        $oldpass=request()->input('oldpass','');
+        $newpass=request()->input('newpass','');
+        $adminId=adminLoginInfo('info.id');
+        if(!$adminId) return message('登录信息错误',false);
+        $adminInfo=$this->info($adminId,true,false);
+        if(!$adminInfo) return message('登录信息错误',false);
+        if($adminInfo['password']!=get_password($oldpass)){
+            return message('旧密码错误',false);
+        }
+        $this->setValidate(null);
+        $saveData=['id'=>$adminId,'password'=>get_password($newpass)];
+        return parent::edit($saveData,'closeOpen');
+    }
     /**
      * 返回登录信息 并添加登录记录
      * @param $username
@@ -88,7 +132,7 @@ class AdminService extends BaseService
         return message($msg,$success);
     }
 
-
+    //退出邓丽
     public function logout(){
         app('session')->flush();
         return redirect('admin');

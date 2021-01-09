@@ -17,6 +17,10 @@ use App\Services\AdminService;
 class CommonController extends Backend
 {
 
+    /**
+     * 图片上传
+     * @return array
+     */
     public function uploadimg(){
         $upload=new UploadApi();
         $upload->cat=request()->input('cat','images');
@@ -26,6 +30,10 @@ class CommonController extends Backend
         return message($res['msg'],$res['status']?true:false,$res['data']);
     }
 
+    /**
+     * 锁屏
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function lockscreen(){
         if (IS_POST){
             $password=request()->input('password','');
@@ -53,6 +61,13 @@ class CommonController extends Backend
             $user=adminLoginInfo('info');
             return $this->render('',['user'=>$user]);
         }
+    }
 
+    //修改密码
+    public function repass(){
+        if(IS_POST){
+            return (new AdminService())->repass();
+        }
+        return $this->render('',['name'=>adminLoginInfo('info.name')]);
     }
 }
