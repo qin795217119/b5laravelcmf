@@ -37,7 +37,7 @@ gitee: https://gitee.com/b5net/b5-laravel-cmf
               try_files $uri $uri/ /index.php?$query_string;
     }
 4. 网站目录指向Public，.user.ini 去掉public，open_basedir=网站根目录/:/tmp/:/proc/
-
+5. ip获取一直是局域网Ip时，App\Http\Middleware\TrustProxies中的protected $proxies='网关地址|例如：10.1.1.1';
 
 #### 内置功能
 
