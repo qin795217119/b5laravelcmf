@@ -15,7 +15,8 @@
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
-        "mews/captcha": "^3.2"
+        "mews/captcha": "^3.2",
+        "simplesoftwareio/simple-qrcode": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
