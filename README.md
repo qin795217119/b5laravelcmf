@@ -3,15 +3,24 @@
 #### 介绍
 之前一直使用的是基于thinkphp3.2和Yii2自己封装的一套cmf基础功能。laravel处于刚开始阶段，网上找了一些laravel的管理系统，感觉不够漂亮，也怎么适合我的开发习惯，我喜欢所有源码都能看到，并且可以随时修改，不用再去研究别人的封装思想。发现java的若依系统很不错，页面代码都没有封装，可以想怎么开发就怎么开发，于是将其前端代码拿了下来，做了一些改动与laravel结合，做了一点简单封装，构架了这套CMF系统。
 
-本系统只是经过简单测试，还未正式使用。若有问题或建议，请多多指教。
+
+本系统只是经过简单测试，还未正式使用，若有问题或建议，请多多指教。
 
 #### 软件架构
 基于laravel 6 + bootstrap 3，其中使用了bootrstrap-table来进行列表的展示，以及一些较为流行js插件做各种效果，页面简洁、响应式。
+
 系统在MVC的基础上加了已成Service，用来处理业务逻辑。
 还单独列出了验证类Validate和缓存类Cache
 基本是一个表 对应一个Model、Service、Validate及Cache。当然在后面开发的功能你可以根据自己的喜好写。
 
-演示地址：<a href="http://b5laravelcmf.b5net.com/" target="_blank">点击进入</a>
+系统完全开源，数据库文件在database目录下，超管默认为：admin，123456。
+
+#### 系统演示
+地址：<a href="http://b5laravelcmf.b5net.com/" target="_blank">http://b5laravelcmf.b5net.com</a>
+
+账号：ceshi
+
+密码：123456
 
 #### 使用说明
 
@@ -38,4 +47,11 @@
 9. 推荐信息：又称广告，对应推荐位置，可以添加一或多条信息，包含 标题、图片、文本及富文本信息、跳转链接等信息
 10. 通知公告：系统通知公告信息发布维护。
 11. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+
+#### 系统截图
+![](https://cdn.learnku.com/uploads/images/202101/10/75809/KKRIWj7fz2.jpg!large)
+![](https://cdn.learnku.com/uploads/images/202101/10/75809/K8fHd8sYvR.jpg!large)
+![](https://cdn.learnku.com/uploads/images/202101/10/75809/lprhnSBoUt.jpg!large)
+![](https://cdn.learnku.com/uploads/images/202101/10/75809/FDJIx4j5HG.jpg!large)
+![](https://cdn.learnku.com/uploads/images/202101/10/75809/w4m0QDyTk6.jpg!large)
 

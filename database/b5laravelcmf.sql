@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-09 00:08:14
+Date: 2021-01-10 10:45:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,14 +58,13 @@ CREATE TABLE `b5net_admin` (
   `last_ip` varchar(30) DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of b5net_admin
 -- ----------------------------
-INSERT INTO `b5net_admin` VALUES ('1', 'admin', '0e596f9edae9278f517710a3a5b89464', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-08 10:40:49', null, null);
+INSERT INTO `b5net_admin` VALUES ('1', 'admin', '41b67b282ed0709f70bdebce8a70c90c', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-10 02:44:03', null, null);
 INSERT INTO `b5net_admin` VALUES ('2', 'ceshi', '41b67b282ed0709f70bdebce8a70c90c', '测试1111', '1', '测试账号', '2020-12-24 13:14:57', '2021-01-08 11:05:05', null, null);
-INSERT INTO `b5net_admin` VALUES ('6', 'cs222', '41b67b282ed0709f70bdebce8a70c90c', 'cs222', '0', 'asdasd', '2021-01-02 10:28:55', '2021-01-08 11:08:24', null, null);
 
 -- ----------------------------
 -- Table structure for `b5net_admin_role`
@@ -77,14 +76,13 @@ CREATE TABLE `b5net_admin_role` (
   `role_id` int(10) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin_id` (`admin_id`,`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='用户和角色关联表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户和角色关联表';
 
 -- ----------------------------
 -- Records of b5net_admin_role
 -- ----------------------------
-INSERT INTO `b5net_admin_role` VALUES ('9', '2', '2');
-INSERT INTO `b5net_admin_role` VALUES ('6', '6', '2');
-INSERT INTO `b5net_admin_role` VALUES ('8', '1', '1');
+INSERT INTO `b5net_admin_role` VALUES ('1', '2', '2');
+INSERT INTO `b5net_admin_role` VALUES ('2', '6', '2');
 
 -- ----------------------------
 -- Table structure for `b5net_admin_struct`
@@ -95,17 +93,16 @@ CREATE TABLE `b5net_admin_struct` (
   `admin_id` int(10) NOT NULL COMMENT '用户ID',
   `struct_id` int(10) NOT NULL COMMENT '组织ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COMMENT='用户与组织架构关联表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='用户与组织架构关联表';
 
 -- ----------------------------
 -- Records of b5net_admin_struct
 -- ----------------------------
-INSERT INTO `b5net_admin_struct` VALUES ('32', '1', '100');
-INSERT INTO `b5net_admin_struct` VALUES ('30', '6', '103');
-INSERT INTO `b5net_admin_struct` VALUES ('29', '6', '104');
-INSERT INTO `b5net_admin_struct` VALUES ('6', '7', '105');
-INSERT INTO `b5net_admin_struct` VALUES ('7', '7', '104');
-INSERT INTO `b5net_admin_struct` VALUES ('33', '2', '103');
+INSERT INTO `b5net_admin_struct` VALUES ('1', '6', '103');
+INSERT INTO `b5net_admin_struct` VALUES ('2', '6', '104');
+INSERT INTO `b5net_admin_struct` VALUES ('3', '7', '105');
+INSERT INTO `b5net_admin_struct` VALUES ('4', '7', '104');
+INSERT INTO `b5net_admin_struct` VALUES ('5', '2', '103');
 
 -- ----------------------------
 -- Table structure for `b5net_adposition`
@@ -122,7 +119,7 @@ CREATE TABLE `b5net_adposition` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`type`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='推荐位置表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='推荐位置表';
 
 -- ----------------------------
 -- Records of b5net_adposition
@@ -223,20 +220,11 @@ CREATE TABLE `b5net_loginlog` (
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of b5net_loginlog
 -- ----------------------------
-INSERT INTO `b5net_loginlog` VALUES ('1', 'admin', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 11:49:02');
-INSERT INTO `b5net_loginlog` VALUES ('2', 'admin', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 12:16:02');
-INSERT INTO `b5net_loginlog` VALUES ('3', 'admin', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 12:40:11');
-INSERT INTO `b5net_loginlog` VALUES ('4', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '0', '验证码错误', '2021-01-08 13:38:59');
-INSERT INTO `b5net_loginlog` VALUES ('5', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 13:39:04');
-INSERT INTO `b5net_loginlog` VALUES ('6', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 13:42:37');
-INSERT INTO `b5net_loginlog` VALUES ('7', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '0', '验证码错误', '2021-01-08 13:42:54');
-INSERT INTO `b5net_loginlog` VALUES ('8', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 13:42:59');
-INSERT INTO `b5net_loginlog` VALUES ('9', 'ceshi', '127.0.0.1', '', 'Chrome 86.0.4240.198', 'Windows 10.0', '1', '登陆成功', '2021-01-08 13:55:28');
 
 -- ----------------------------
 -- Table structure for `b5net_menu`
@@ -260,7 +248,7 @@ CREATE TABLE `b5net_menu` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `listsort` (`listsort`)
-) ENGINE=MyISAM AUTO_INCREMENT=100007 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=MyISAM AUTO_INCREMENT=11004 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of b5net_menu
