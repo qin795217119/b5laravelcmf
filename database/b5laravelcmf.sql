@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-10 10:45:32
+Date: 2021-01-10 21:21:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,7 +39,7 @@ CREATE TABLE `b5net_adlist` (
 -- ----------------------------
 -- Records of b5net_adlist
 -- ----------------------------
-INSERT INTO `b5net_adlist` VALUES ('2', '测试大苏打大苏打', 'web_index_banner', 'func', 'notice', '', '1', '1', 'asdsadasd', '<p><br></p><p><br></p><p><br></p><p><img src=\"http://www.laravel6.my/uploads/editor/2021/01/08/4a273c2897df1c8481e2fd2fc5b1647c.jpg\" data-filename=\"timg (2).jpg\" style=\"width: 50%; float: left;\" class=\"note-float-left\"></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>asdasdsadasd</p><p>asdasdasdasd</p>', '/uploads/adlist/2021/01/08/6b8984a88347c29f97563853c47985f8.jpg', '2021-01-05 03:33:07', '2021-01-08 09:17:08');
+INSERT INTO `b5net_adlist` VALUES ('2', '测试大苏打大苏打', 'web_index_banner', 'func', 'notice', '', '1', '1', 'asdsadasd', '<p><br></p><p><img src=\"http://www.laravel6.my/uploads/editor/2021/01/10/b6300d0e87928166450e2dd2c1b5a6f2.jpg\" data-filename=\"timg (2).jpg\" style=\"width: 50%;\"><br></p><p><br></p><p></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>asdasdsadasd</p><p>asdasdasdasd</p>', '/uploads/adlist/2021/01/08/6b8984a88347c29f97563853c47985f8.jpg', '2021-01-05 03:33:07', '2021-01-10 03:15:11');
 
 -- ----------------------------
 -- Table structure for `b5net_admin`
@@ -63,7 +63,7 @@ CREATE TABLE `b5net_admin` (
 -- ----------------------------
 -- Records of b5net_admin
 -- ----------------------------
-INSERT INTO `b5net_admin` VALUES ('1', 'admin', '41b67b282ed0709f70bdebce8a70c90c', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-10 02:44:03', null, null);
+INSERT INTO `b5net_admin` VALUES ('1', 'admin', '3f92e20e7e36e3b00cded333be8efbbc', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-10 02:46:06', null, null);
 INSERT INTO `b5net_admin` VALUES ('2', 'ceshi', '41b67b282ed0709f70bdebce8a70c90c', '测试1111', '1', '测试账号', '2020-12-24 13:14:57', '2021-01-08 11:05:05', null, null);
 
 -- ----------------------------
@@ -216,6 +216,7 @@ CREATE TABLE `b5net_loginlog` (
   `login_location` varchar(255) DEFAULT '' COMMENT '登录地点',
   `browser` varchar(100) DEFAULT '' COMMENT '浏览器类型',
   `os` varchar(100) DEFAULT '' COMMENT '操作系统',
+  `net` varchar(50) DEFAULT '' COMMENT '营运',
   `status` char(1) DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
