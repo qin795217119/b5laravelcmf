@@ -36,14 +36,20 @@ class LoginlogService extends BaseService
         $login_time = date('Y-m-d H:i:s', time());
         $ipaddr = Request::ip();
         $login_location = '';
+        $net='';
         if ($ipaddr) {
             $ipLocation = new IpLocation();
             $location = $ipLocation->getlocation($ipaddr);
-            if ($location && $location['country']) {
-                $login_location = iconv('GBK','UTF-8',$location['country']);
+            if ($location){
+                if($location['country']) {
+                    $login_location = iconv('GBK', 'UTF-8', $location['country']);
+                }
+                if($location['area']) {
+                    $net = iconv('GBK', 'UTF-8', $location['area']);
+                }
             }
         }
-        $this->add(['login_name' => $login_name, 'ipaddr' => $ipaddr, 'browser' => $browser, 'os' => $os, 'status' => $status, 'msg' => $msg, 'login_time' => $login_time, 'login_location' => $login_location]);
+        $this->add(['login_name' => $login_name, 'ipaddr' => $ipaddr, 'browser' => $browser, 'os' => $os, 'status' => $status, 'msg' => $msg, 'login_time' => $login_time, 'login_location' => $login_location,'net'=>$net]);
     }
 
     public function trash()

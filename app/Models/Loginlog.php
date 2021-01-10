@@ -21,6 +21,7 @@ class Loginlog extends BaseModel
         'login_location'=>'',
         'browser'=>'',
         'os'=>'',
+        'net'=>'',
         'status'=>'0',
         'msg'=>'',
         'login_time'=>''
