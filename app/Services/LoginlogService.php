@@ -7,6 +7,7 @@
 namespace App\Services;
 
 use App\Models\Loginlog;
+use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
 
 /**
@@ -31,7 +32,7 @@ class LoginlogService extends BaseService
        $os=$agent->platform().' '.$agent->version($agent->platform());
        $browser=$agent->browser().' '.$agent->version($agent->browser());
        $login_time=date('Y-m-d H:i:s',time());
-       $ipaddr=implode(',',request()->getClientIps());
+       $ipaddr=Request::ip();
        $this->add(['login_name'=>$login_name,'ipaddr'=>$ipaddr,'browser'=>$browser,'os'=>$os,'status'=>$status,'msg'=>$msg,'login_time'=>$login_time]);
    }
 
