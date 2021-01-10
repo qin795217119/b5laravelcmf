@@ -2,10 +2,7 @@
 /public/hot
 /public/storage
 /public/uploads
-/storage/app/*
-/storage/debugbar/*
-/storage/framework/*
-/storage/logs/*
+/storage
 /vendor
 /tests
 /.idea
