@@ -22,6 +22,11 @@
 
 密码：123456
 
+### 下载地址：
+github: https://github.com/qin795217119/b5laravelcmf
+
+gitee: https://gitee.com/b5net/b5-laravel-cmf
+
 #### 使用说明
 
 1. 环境推荐使用 PHP 7.4 + Mysql 5.7 +Nginx 
@@ -48,10 +53,5 @@
 10. 通知公告：系统通知公告信息发布维护。
 11. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
 
-#### 系统截图
-![](https://cdn.learnku.com/uploads/images/202101/10/75809/KKRIWj7fz2.jpg!large)
-![](https://cdn.learnku.com/uploads/images/202101/10/75809/K8fHd8sYvR.jpg!large)
-![](https://cdn.learnku.com/uploads/images/202101/10/75809/lprhnSBoUt.jpg!large)
-![](https://cdn.learnku.com/uploads/images/202101/10/75809/FDJIx4j5HG.jpg!large)
-![](https://cdn.learnku.com/uploads/images/202101/10/75809/w4m0QDyTk6.jpg!large)
+
 
