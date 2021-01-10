@@ -35,6 +35,7 @@
                     {checkbox: true},
                     {field: 'id', title: '日志ID', align: 'center', sortable: true},
                     {field: 'login_name', title: '登录名称'},
+                    {field: 'login_location', title :'登录地点'},
                     {field: 'ipaddr', title: '登录地址'},
                     {field: 'browser', title: '浏览器'},
                     {field: 'os', title: '操作系统'},

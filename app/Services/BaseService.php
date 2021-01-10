@@ -78,14 +78,14 @@ class BaseService
             if (!empty($param['between']) && is_array($param['between'])) {
                 foreach ($param['between'] as $paramField => $paramValue) {
                     if (is_array($paramValue) && count($paramValue) > 1) {
-                        $start=$paramValue['start'];
-                        $end=$paramValue['end'];
-                        if($start || $end){
-                            if($start && $end){
+                        $start = $paramValue['start'];
+                        $end = $paramValue['end'];
+                        if ($start || $end) {
+                            if ($start && $end) {
                                 $map[] = [$paramField, 'between', [$start, $end]];
-                            }elseif ($start){
+                            } elseif ($start) {
                                 $map[] = [$paramField, '>', $start];
-                            }elseif ($end){
+                            } elseif ($end) {
                                 $map[] = [$paramField, '<', $end];
                             }
                         }
@@ -133,7 +133,13 @@ class BaseService
             }
             $count = $this->model->where($map)->count();
         }
+        $list = $this->after_getList($list);
         return message('操作成功', true, $list, 0, '', ['total' => $count]);
+    }
+
+    public function after_getList($list)
+    {
+        return $list;
     }
 
     /**
@@ -145,10 +151,12 @@ class BaseService
      * @param array $sort
      * @return array
      */
-    public function getAll(array $map = [], array $select = [], array $pageData = [], string $listKey = '', array $sort = [['id', 'asc']]){
+    public function getAll(array $map = [], array $select = [], array $pageData = [], string $listKey = '', array $sort = [['id', 'asc']])
+    {
         $list = $this->model->getList($map, $select, $pageData, $listKey, $sort);
-        return $list?:[];
+        return $list ?: [];
     }
+
     /**
      * 获取单条信息
      * @param $id
@@ -219,7 +227,7 @@ class BaseService
             }
 
             //演示限制
-            if(system_isDemo() && get_class($this)!='App\Services\LoginlogService'){
+            if (system_isDemo() && get_class($this) != 'App\Services\LoginlogService') {
                 return $this->demo_system();
             }
 
@@ -227,11 +235,11 @@ class BaseService
             if ($result) {
                 $data[$this->model->getprimaryKey()] = $result;
                 $this->after_add($data);
-                $url=$argList[1] ?? '';
-                if(!$url){
+                $url = $argList[1] ?? '';
+                if (!$url) {
                     return message('保存成功', true);
-                }else{
-                    return message('保存成功', true,[],null,$url);
+                } else {
+                    return message('保存成功', true, [], null, $url);
                 }
             }
         }
@@ -268,27 +276,30 @@ class BaseService
                 $data = $validate->get();
             }
             //演示限制
-            if(system_isDemo()){
+            if (system_isDemo()) {
                 return $this->demo_system();
             }
 
             $result = $this->model->edit($data);
             if ($result !== false) {
                 $this->after_edit($data);
-                $url=$argList[1] ?? '';
-                if(!$url){
+                $url = $argList[1] ?? '';
+                if (!$url) {
                     return message('保存成功', true);
-                }else{
-                    return message('保存成功', true,[],null,$url);
+                } else {
+                    return message('保存成功', true, [], null, $url);
                 }
 
             }
         }
         return message('操作失败', false);
     }
-    public function demo_system(){
+
+    public function demo_system()
+    {
         return message('演示环境无法此操作', false);
     }
+
     /**
      * 编辑成功后
      * @param $data
@@ -318,18 +329,18 @@ class BaseService
         $field = $argList[1] ?? '';
 
         //演示限制
-        if(system_isDemo()){
+        if (system_isDemo()) {
             return $this->demo_system();
         }
 
         $result = $this->model->drop($data['ids'], $field);
         if ($result) {
             $this->after_drop($data);
-            $url=$argList[2] ?? '';
-            if(!$url){
+            $url = $argList[2] ?? '';
+            if (!$url) {
                 return message('删除成功', true);
-            }else{
-                return message('删除成功', true,[],null,$url);
+            } else {
+                return message('删除成功', true, [], null, $url);
             }
         }
         return message('删除失败', false);
@@ -365,7 +376,7 @@ class BaseService
         }
 
         //演示限制
-        if(system_isDemo()){
+        if (system_isDemo()) {
             return $this->demo_system();
         }
 
