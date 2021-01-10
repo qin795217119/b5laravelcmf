@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-10 21:21:59
+Date: 2021-01-10 21:25:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,7 +63,7 @@ CREATE TABLE `b5net_admin` (
 -- ----------------------------
 -- Records of b5net_admin
 -- ----------------------------
-INSERT INTO `b5net_admin` VALUES ('1', 'admin', '3f92e20e7e36e3b00cded333be8efbbc', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-10 02:46:06', null, null);
+INSERT INTO `b5net_admin` VALUES ('1', 'admin', '41b67b282ed0709f70bdebce8a70c90c', '超管', '1', '超级管理员', '2020-12-24 10:50:56', '2021-01-10 21:25:41', null, null);
 INSERT INTO `b5net_admin` VALUES ('2', 'ceshi', '41b67b282ed0709f70bdebce8a70c90c', '测试1111', '1', '测试账号', '2020-12-24 13:14:57', '2021-01-08 11:05:05', null, null);
 
 -- ----------------------------
