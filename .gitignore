@@ -16,8 +16,3 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /database/b5laravelcmf.sql
-/app/Services/BaseService.php
-/app/Validates/ValidateBase.php
-/app/Models/BaseModel.php
-/app/Http/Controllers/Admin/Backend.php
-/app/Http/Controllers/BaseController.php
