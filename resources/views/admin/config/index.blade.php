@@ -27,12 +27,12 @@
 
 @section('script')
     <script>
-        var stylelist={!! json_encode($stylelist) !!};
-        var grouplist={!! json_encode($grouplist) !!};
+        var stylelist=@json($stylelist);
+        var grouplist=@json($grouplist);
         $(function () {
             var options = {
                 modalName: "配置",
-                sortName:'listsort',
+                sortName:'groups',
                 columns: [
                     {checkbox: true},
                     {field: 'id', title: '配置ID',  sortable: true},
@@ -65,13 +65,12 @@
                         title: '分组',
                         field: 'groups',
                         sortable: true,
-                        visible: false,
                         formatter: function (value, row, index) {
                             return grouplist.hasOwnProperty(value)?grouplist[value]:'-';
                         }
                     },
                     {field: 'listsort', title: '显示顺序',align: 'center', sortable: true},
-                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true},
+                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true,visible: false},
                     {field: 'update_time', title: '更新时间', align: 'center', sortable: true,visible: false},
                     {field: 'note', title: '备注',visible: false},
                     {

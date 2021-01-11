@@ -232,15 +232,19 @@ class BaseService
             }
 
             $result = $this->model->add($data);
+            $title=$argList[2] ?? '保存';
             if ($result) {
                 $data[$this->model->getprimaryKey()] = $result;
                 $this->after_add($data);
                 $url = $argList[1] ?? '';
+
                 if (!$url) {
-                    return message('保存成功', true);
+                    return message($title.'成功', true);
                 } else {
-                    return message('保存成功', true, [], null, $url);
+                    return message($title.'成功', true, [], null, $url);
                 }
+            }else{
+                return message($title.'失败', true);
             }
         }
         return message('操作失败', false);

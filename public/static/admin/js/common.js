@@ -6,7 +6,34 @@ $(function() {
     $(document).on("click","*[b5-event]",function () {
         b5event($(this));
     });
+    //表单自动提交
+    $(".b5submit_btn").click(function () {
+        var target=$(this).attr("data-target");
+        var url=$(this).attr("data-url");
+        var title=$(this).attr("data-title");
+        if($.common.isEmpty(target)){
+            $.modal.msgError('未配置表单target');
+            return false;
+        }
+        if($.common.isEmpty(url)){
+            url=window.location.href;
+        }
+        if($.common.isFunction('b5submit_btn_before')){
+            var before=b5submit_btn_before();
+            if(!before){
+                return false;
+            }
+        }
 
+        var data=$("#"+target).serialize();
+        if(title){
+            $.modal.confirm(title,function () {
+                $.operate.saveModal(url,data)
+            });
+        }else{
+            $.operate.saveModal(url,data)
+        }
+    });
     // 回到顶部绑定
     if ($.fn.toTop !== undefined) {
         $('#scroll-up').toTop();

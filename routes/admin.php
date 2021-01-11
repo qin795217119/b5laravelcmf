@@ -66,7 +66,7 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/dictdata/edit', 'DictdataController@edit');
     Route::any('/dictdata/drop', 'DictdataController@drop');
 //参数配置
-    Route::any('/config/web', 'ConfigController@web');
+    Route::any('/config/site', 'ConfigController@site');
     Route::any('/config/index', 'ConfigController@index');
     Route::any('/config/add', 'ConfigController@add');
     Route::any('/config/edit', 'ConfigController@edit');

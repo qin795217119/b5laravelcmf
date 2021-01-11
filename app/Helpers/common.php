@@ -186,7 +186,6 @@ if (!function_exists('paramSet')) {
     }
 }
 if (!function_exists('arr_keymap')) {
-
     /**
      * 将二维数组 变成一维 以某个值为键或以某个值为值
      * @param array $arr
@@ -210,5 +209,86 @@ if (!function_exists('arr_keymap')) {
 
         }
         return $reArr;
+    }
+}
+if (!function_exists('b5curl_post')) {
+    /**
+     * curl的POST请求
+     * @param $url
+     * @param $array
+     * @return bool|string
+     */
+    function b5curl_post($url, $array)
+    {
+        $curl = curl_init();
+        //设置提交的url
+        curl_setopt($curl, CURLOPT_URL, $url);
+        //设置头文件的信息作为数据流输出
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //设置post方式提交
+        curl_setopt($curl, CURLOPT_POST, 1);
+        //设置post数据
+        $post_data = $array;
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        //执行命令
+        $data = curl_exec($curl);
+        //关闭URL请求
+        curl_close($curl);
+        //获得数据并返回
+        return $data;
+    }
+}
+if (!function_exists('time_ago')) {
+    /**
+     * 时间处理
+     * @param $timestamp
+     * @return false|string
+     */
+    function time_ago($timestamp)
+    {
+        //相差时间戳
+        $counttime = time() - $timestamp;
+        //进行时间转换
+        if ($counttime <= 60) {
+            return '刚刚';
+        } else if ($counttime < 3600) {
+            return intval(($counttime / 60)) . '分钟前';
+        } else if ($counttime >= 3600 && $counttime < 3600 * 24) {
+            return intval(($counttime / 3600)) . '小时前';
+        } else if ($counttime <= 3600 * 24 * 10) {
+            return intval(($counttime / (3600 * 24))) . '天前';
+        } else {
+            return date('Y-m-d', $timestamp);
+        }
+    }
+}
+if (!function_exists('b5get_age')) {
+    /**
+     * 获取年龄
+     * @param $start
+     * @param $end
+     * @return bool|int|mixed
+     */
+    function b5get_age($start, $end = '')
+    {
+        if (!$start) return false;
+        $start = strtotime($start);
+        if ($start === false) return false;
+
+        if ($end) {
+            $end = strtotime($end);
+            if ($end === false) return false;
+        } else {
+            $end = time();
+        }
+        if ($end < $start) return false;
+        list($y1, $m1, $d1) = explode("-", date("Y-m-d", $start));
+        list($y2, $m2, $d2) = explode("-", date("Y-m-d", $end));
+        $age = $y2 - $y1;
+        if ((int)($m2 . $d2) < (int)($m1 . $d1))
+            $age -= 1;
+        return $age;
     }
 }

@@ -20,4 +20,12 @@ class ConfigController extends Backend
             view()->share('grouplist',$this->service->getConfig('sys_config_group'));
         }
     }
+
+    public function site(){
+        if(IS_POST){
+            return $this->service->siteSave();
+        }
+        $lists=$this->service->getListByGroup();
+        return $this->render('',['lists'=>$lists]);
+    }
 }
