@@ -132,7 +132,7 @@ class AdminService extends BaseService
         return message($msg,$success);
     }
 
-    //退出邓丽
+    //退出登录
     public function logout(){
         app('session')->flush();
         return redirect('admin');

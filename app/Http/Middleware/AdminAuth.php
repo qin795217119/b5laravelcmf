@@ -56,7 +56,7 @@ class AdminAuth
         $controller_name = strtolower(CONTROLLER_NAME);
         $action_name = strtolower(ACTION_NAME);
         $permission = $module_name . ':' . $controller_name . ':' . $action_name;
-        if($permission=='admin:common:lockscreen'){
+        if($permission=='admin:common:lockscreen' || $permission=='admin:public:logout'){
             return false;
         }
         return true;
