@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-10 21:25:56
+Date: 2021-01-11 23:45:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -144,14 +144,20 @@ CREATE TABLE `b5net_config` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置表';
 
 -- ----------------------------
 -- Records of b5net_config
 -- ----------------------------
-INSERT INTO `b5net_config` VALUES ('1', '配置分组', 'sys_config_group', 'array', '0', '', 'site:基本设置\r\nwx:微信设置', '', '系统配置的分组配置', '0', '2020-12-30 16:17:10', '2021-01-08 12:22:54');
-INSERT INTO `b5net_config` VALUES ('2', '系统名称', 'sys_config_sysname', 'text', '0', 'site', 'B5LaravleCMF', '', '系统后台显示的名称', '0', '2020-12-31 14:01:18', '2020-12-31 14:01:18');
-INSERT INTO `b5net_config` VALUES ('3', '演示模式', 'sys_config_demo', 'select', '0', 'site', '1', '0:关闭\r\n1:开启', '', '0', '2021-01-08 05:58:25', '2021-01-08 10:46:01');
+INSERT INTO `b5net_config` VALUES ('1', '配置分组', 'sys_config_group', 'array', '0', '', 'site:基本设置\r\nwx:微信设置\r\nsms:短信配置', '', '系统配置的分组配置', '0', '2020-12-30 16:17:10', '2021-01-11 23:39:24');
+INSERT INTO `b5net_config` VALUES ('2', '系统名称', 'sys_config_sysname', 'text', '0', 'site', 'B5LaravleCMF', '', '系统后台显示的名称', '0', '2020-12-31 14:01:18', '2021-01-11 23:32:04');
+INSERT INTO `b5net_config` VALUES ('3', '演示模式', 'sys_config_demo', 'select', '0', 'site', '1', '1:开启\r\n0:关闭', '开启后，除超管外不可进行非查询操作', '0', '2021-01-08 05:58:25', '2021-01-11 23:32:22');
+INSERT INTO `b5net_config` VALUES ('4', '阿里accessKeyId', 'sms_ali_key', 'text', '0', 'sms', '', '', '阿里短信-AccessKey ID', '0', '2021-01-11 19:26:13', '2021-01-11 23:45:06');
+INSERT INTO `b5net_config` VALUES ('5', '阿里accessSecret', 'sms_ali_secret', 'text', '0', 'sms', '', '', '阿里短信-AccessKey Secret', '1', '2021-01-11 19:26:45', '2021-01-11 23:45:06');
+INSERT INTO `b5net_config` VALUES ('6', '阿里signName', 'sms_ali_signname', 'text', '0', 'sms', '', '', '阿里短信-签名', '2', '2021-01-11 19:27:53', '2021-01-11 23:45:06');
+INSERT INTO `b5net_config` VALUES ('7', '阿里tempId', 'sms_ali_temp', 'text', '0', 'sms', '', '', '阿里短信-tempId模板', '3', '2021-01-11 19:30:21', '2021-01-11 23:45:06');
+INSERT INTO `b5net_config` VALUES ('8', '聚合appkey', 'sms_juhe_appkey', 'text', '0', 'sms', '', '', '聚合短信-APPKEY', '10', '2021-01-11 19:33:27', '2021-01-11 23:45:06');
+INSERT INTO `b5net_config` VALUES ('9', '聚合tempId', 'sms_juhe_temp', 'text', '0', 'sms', '', '', '聚合短信-TPLID模板', '11', '2021-01-11 19:34:26', '2021-01-11 23:45:06');
 
 -- ----------------------------
 -- Table structure for `b5net_dict_data`
@@ -249,7 +255,7 @@ CREATE TABLE `b5net_menu` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `listsort` (`listsort`)
-) ENGINE=MyISAM AUTO_INCREMENT=11004 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=MyISAM AUTO_INCREMENT=11005 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of b5net_menu
@@ -316,6 +322,7 @@ INSERT INTO `b5net_menu` VALUES ('10800', '跳转新增', '108', '1', '', '0', '
 INSERT INTO `b5net_menu` VALUES ('10801', '跳转编辑', '108', '2', '', '0', 'F', '1', '0', 'admin:redtype:edit', '', '2021-01-08 07:29:26', '2021-01-08 07:29:26', '跳转编辑');
 INSERT INTO `b5net_menu` VALUES ('10802', '跳转删除', '108', '3', '', '0', 'F', '1', '0', 'admin:redtype:drop', '', '2021-01-08 07:29:26', '2021-01-08 07:29:26', '跳转删除');
 INSERT INTO `b5net_menu` VALUES ('10803', '清除缓存', '108', '4', '', '0', 'F', '1', '0', 'admin:redtype:delcache', '', '2021-01-08 07:29:26', '2021-01-08 07:29:26', '清除缓存');
+INSERT INTO `b5net_menu` VALUES ('10505', '网站设置', '1', '0', '/admin/config/site', '0', 'C', '1', '0', 'admin:config:site', 'fa fa-object-group', '2021-01-11 22:17:31', '2021-01-11 22:39:46', '');
 
 -- ----------------------------
 -- Table structure for `b5net_notice`
@@ -490,6 +497,28 @@ INSERT INTO `b5net_role_menu` VALUES ('2', '11000');
 INSERT INTO `b5net_role_menu` VALUES ('2', '11001');
 INSERT INTO `b5net_role_menu` VALUES ('2', '11002');
 INSERT INTO `b5net_role_menu` VALUES ('2', '11003');
+
+-- ----------------------------
+-- Table structure for `b5net_smscode`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_smscode`;
+CREATE TABLE `b5net_smscode` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `code` varchar(20) NOT NULL DEFAULT '' COMMENT '验证码',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '例如：1注册 2登录 3忘记密码',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0未验证 1已验证',
+  `os` varchar(20) NOT NULL DEFAULT '' COMMENT '运营商',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of b5net_smscode
+-- ----------------------------
+INSERT INTO `b5net_smscode` VALUES ('1', '13325088710', '758827', '1', '0', 'ali', '2021-01-01 22:14:26', '2021-01-11 22:11:26');
+INSERT INTO `b5net_smscode` VALUES ('2', '13325088710', '842454', '1', '0', 'ali', '2021-01-11 22:14:35', '2021-01-11 22:14:35');
 
 -- ----------------------------
 -- Table structure for `b5net_struct`
