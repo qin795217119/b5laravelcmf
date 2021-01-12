@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-11 23:45:40
+Date: 2021-01-12 11:04:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -150,8 +150,8 @@ CREATE TABLE `b5net_config` (
 -- Records of b5net_config
 -- ----------------------------
 INSERT INTO `b5net_config` VALUES ('1', '配置分组', 'sys_config_group', 'array', '0', '', 'site:基本设置\r\nwx:微信设置\r\nsms:短信配置', '', '系统配置的分组配置', '0', '2020-12-30 16:17:10', '2021-01-11 23:39:24');
-INSERT INTO `b5net_config` VALUES ('2', '系统名称', 'sys_config_sysname', 'text', '0', 'site', 'B5LaravleCMF', '', '系统后台显示的名称', '0', '2020-12-31 14:01:18', '2021-01-11 23:32:04');
-INSERT INTO `b5net_config` VALUES ('3', '演示模式', 'sys_config_demo', 'select', '0', 'site', '1', '1:开启\r\n0:关闭', '开启后，除超管外不可进行非查询操作', '0', '2021-01-08 05:58:25', '2021-01-11 23:32:22');
+INSERT INTO `b5net_config` VALUES ('2', '系统名称', 'sys_config_sysname', 'text', '0', 'site', 'B5LaravleCMF', '', '系统后台显示的名称', '0', '2020-12-31 14:01:18', '2021-01-12 00:02:59');
+INSERT INTO `b5net_config` VALUES ('3', '演示模式', 'sys_config_demo', 'select', '0', 'site', '1', '1:开启\r\n0:关闭', '开启后，除超管外不可进行非查询操作', '0', '2021-01-08 05:58:25', '2021-01-12 00:02:59');
 INSERT INTO `b5net_config` VALUES ('4', '阿里accessKeyId', 'sms_ali_key', 'text', '0', 'sms', '', '', '阿里短信-AccessKey ID', '0', '2021-01-11 19:26:13', '2021-01-11 23:45:06');
 INSERT INTO `b5net_config` VALUES ('5', '阿里accessSecret', 'sms_ali_secret', 'text', '0', 'sms', '', '', '阿里短信-AccessKey Secret', '1', '2021-01-11 19:26:45', '2021-01-11 23:45:06');
 INSERT INTO `b5net_config` VALUES ('6', '阿里signName', 'sms_ali_signname', 'text', '0', 'sms', '', '', '阿里短信-签名', '2', '2021-01-11 19:27:53', '2021-01-11 23:45:06');
@@ -255,7 +255,7 @@ CREATE TABLE `b5net_menu` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `listsort` (`listsort`)
-) ENGINE=MyISAM AUTO_INCREMENT=11005 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=MyISAM AUTO_INCREMENT=11004 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of b5net_menu
@@ -512,13 +512,11 @@ CREATE TABLE `b5net_smscode` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='验证码表';
 
 -- ----------------------------
 -- Records of b5net_smscode
 -- ----------------------------
-INSERT INTO `b5net_smscode` VALUES ('1', '13325088710', '758827', '1', '0', 'ali', '2021-01-01 22:14:26', '2021-01-11 22:11:26');
-INSERT INTO `b5net_smscode` VALUES ('2', '13325088710', '842454', '1', '0', 'ali', '2021-01-11 22:14:35', '2021-01-11 22:14:35');
 
 -- ----------------------------
 -- Table structure for `b5net_struct`
@@ -549,6 +547,48 @@ INSERT INTO `b5net_struct` VALUES ('104', '市场部门', '101', '0,100,101', '2
 INSERT INTO `b5net_struct` VALUES ('105', '测试部门', '101', '0,100,101', '3', '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2021-01-08 11:06:36');
 INSERT INTO `b5net_struct` VALUES ('110', '山东分公司', '100', '0,100', '2', '冰舞', '1888888', '', '1', '2021-01-08 11:11:33', '2021-01-08 11:11:33');
 INSERT INTO `b5net_struct` VALUES ('111', '销售部门', '110', '0,100,110', '1', '', '', '', '1', '2021-01-08 11:11:48', '2021-01-08 11:11:48');
+
+-- ----------------------------
+-- Table structure for `b5net_wechat_access`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_wechat_access`;
+CREATE TABLE `b5net_wechat_access` (
+  `appid` varchar(50) NOT NULL DEFAULT '',
+  `access_token` varchar(255) NOT NULL DEFAULT '',
+  `jsapi_ticket` varchar(255) NOT NULL DEFAULT '',
+  `access_token_add` int(10) NOT NULL DEFAULT '0',
+  `jsapi_ticket_add` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`appid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='微信jsapi和access';
+
+-- ----------------------------
+-- Records of b5net_wechat_access
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `b5net_wechat_users`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_wechat_users`;
+CREATE TABLE `b5net_wechat_users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) NOT NULL DEFAULT '' COMMENT '唯一标识',
+  `appid` varchar(50) NOT NULL DEFAULT '' COMMENT '公众号参数',
+  `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '昵称',
+  `headimg` varchar(255) NOT NULL DEFAULT '' COMMENT '头像地址',
+  `update_time` datetime DEFAULT NULL COMMENT '资料更新时间',
+  `create_time` datetime DEFAULT NULL COMMENT '添加时间',
+  `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别',
+  `city` varchar(50) NOT NULL DEFAULT '' COMMENT '城市',
+  `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家',
+  `province` varchar(50) NOT NULL DEFAULT '' COMMENT '省份',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `openid` (`openid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='微信用户信息表';
+
+-- ----------------------------
+-- Records of b5net_wechat_users
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `failed_jobs`
