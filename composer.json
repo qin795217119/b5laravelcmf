@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-ide-helper": "2.8.2",
         "facade/ignition": "^1.16.4",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.0",

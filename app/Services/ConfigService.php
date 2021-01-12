@@ -143,6 +143,10 @@ class ConfigService extends BaseService
     public function siteSave(){
         $input=request()->input();
         if(empty($input)) return message('无更新数据',false);
+        //演示限制
+        if (system_isDemo()) {
+            return $this->demo_system();
+        }
         foreach ($input as $id=>$value){
             $data=['id'=>$id,'value'=>$value];
             $this->model->edit($data);

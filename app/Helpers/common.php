@@ -240,6 +240,25 @@ if (!function_exists('b5curl_post')) {
         return $data;
     }
 }
+if (!function_exists('b5curl_get')) {
+    /**curl的GET请求
+     * @param $url
+     * @return bool|string
+     */
+    function b5curl_get($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $r = curl_exec($ch);
+        curl_close($ch);
+        return $r;
+    }
+}
 if (!function_exists('time_ago')) {
     /**
      * 时间处理

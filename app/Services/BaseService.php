@@ -234,7 +234,9 @@ class BaseService
             $result = $this->model->add($data);
             $title=$argList[2] ?? '保存';
             if ($result) {
-                $data[$this->model->getprimaryKey()] = $result;
+                if($this->model->incrementing){
+                    $data[$this->model->getprimaryKey()] = $result;
+                }
                 $this->after_add($data);
                 $url = $argList[1] ?? '';
 
