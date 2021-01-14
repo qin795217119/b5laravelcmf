@@ -26,7 +26,7 @@ class AdminAuth
             $islock=$this->checkLock();
             if($islock){
                 if(IS_GET && !IS_AJAX){
-                    return redirect('/admin/lockscreen');
+                    return redirect(adminUrl('lockscreen'));
                 }else{
                     return response(message('锁屏中，无法此操作',false),200);
                 }
@@ -35,7 +35,7 @@ class AdminAuth
             $hasPerms = $this->checkAuth($adminId);
             if(!$hasPerms){
                 if(IS_GET && !IS_AJAX){
-                    return redirect('/admin/noauth');
+                    return redirect(adminUrl('noauth'));
                 }else{
                     return response(message('无权访问',false),200);
                 }

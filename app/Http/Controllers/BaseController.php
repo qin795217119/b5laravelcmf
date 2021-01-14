@@ -65,10 +65,6 @@ class BaseController extends Controller
         // 方法名
         defined('ACTION_NAME') or define('ACTION_NAME', $method);
 
-        // 控制器名
-        view()->share("app", strtolower(CONTROLLER_NAME));
-        // 方法名
-        view()->share("act", strtolower(ACTION_NAME));
     }
 
     /**

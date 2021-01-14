@@ -38,7 +38,11 @@ class Backend extends BaseController
 
         defined('PAGE_LIMIT') or define('PAGE_LIMIT', 10);
 
-        view()->share('group', strtolower(MODULES_NAME));
+        if(IS_GET && !IS_AJAX){
+            view()->share('group', strtolower(MODULES_NAME));
+            view()->share("app", strtolower(CONTROLLER_NAME));
+            view()->share("act", strtolower(ACTION_NAME));
+        }
     }
 
 

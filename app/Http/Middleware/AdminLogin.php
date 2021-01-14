@@ -26,7 +26,7 @@ class AdminLogin
 
         if(!$adminId && !in_array($controller,$notLoginConArr)){
             if(IS_GET && !IS_AJAX){
-                return redirect('/admin/login');
+                return redirect(adminUrl('login'));
             }else{
                 return response(message('请先登录',false,[],101),200);
             }

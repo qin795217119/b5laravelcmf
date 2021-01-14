@@ -27,7 +27,7 @@ class PublicController extends Backend
             return (new AdminService())->login();
         }
         if(adminLoginInfo('info.id')){
-            return redirect('/admin');
+            return redirect(adminUrl(''));
         }
         return $this->render();
     }

@@ -22,6 +22,17 @@ if (!function_exists('adminLoginInfo')) {
         }
     }
 }
+if(!function_exists('adminUrl')){
+    /**
+     * 对后台链接自动拼接module名
+     * @param $route
+     * @return string
+     */
+    function adminUrl($route){
+        $module=strtolower(MODULES_NAME);
+        return '/'.$module.'/'.ltrim($route,'/');
+    }
+}
 if (!function_exists('system_isDemo')) {
     /**
      * 获取系统是否开启演示模式
