@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-12 11:06:37
+Date: 2021-01-15 11:02:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -76,13 +76,12 @@ CREATE TABLE `b5net_admin_role` (
   `role_id` int(10) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin_id` (`admin_id`,`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户和角色关联表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户和角色关联表';
 
 -- ----------------------------
 -- Records of b5net_admin_role
 -- ----------------------------
 INSERT INTO `b5net_admin_role` VALUES ('1', '2', '2');
-INSERT INTO `b5net_admin_role` VALUES ('2', '6', '2');
 
 -- ----------------------------
 -- Table structure for `b5net_admin_struct`
@@ -416,13 +415,13 @@ CREATE TABLE `b5net_role` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rolekey` (`rolekey`),
   KEY `listsort` (`listsort`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
 
 -- ----------------------------
 -- Records of b5net_role
 -- ----------------------------
 INSERT INTO `b5net_role` VALUES ('1', '超管', 'administrator', '0', '1', '2020-12-28 07:42:31', '2020-12-28 07:42:31', '超级管理员');
-INSERT INTO `b5net_role` VALUES ('2', '测试角色', 'common', '1', '1', '2020-12-28 07:44:00', '2021-01-05 06:11:52', '');
+INSERT INTO `b5net_role` VALUES ('2', '普通用户', 'common', '1', '1', '2021-01-15 10:58:24', '2021-01-15 10:58:24', '');
 
 -- ----------------------------
 -- Table structure for `b5net_role_menu`
@@ -476,6 +475,7 @@ INSERT INTO `b5net_role_menu` VALUES ('2', '10500');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10501');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10502');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10504');
+INSERT INTO `b5net_role_menu` VALUES ('2', '10505');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10600');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10601');
 INSERT INTO `b5net_role_menu` VALUES ('2', '10602');

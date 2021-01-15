@@ -101,4 +101,37 @@ class ValidateApi
         }
         return false;
     }
+    /**
+     * 验证只能是字母
+     * @param $str
+     * @return bool
+     */
+    public static function isAlpha($str){
+        if(preg_match('/^[A-Za-z]+$/',$str)){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 验证只能是字母、数字、下划线和破折号
+     * @param $str
+     * @return bool
+     */
+    public static function isAlphaDash($str){
+        if(preg_match('/^[A-Za-z0-9_-]+$/',$str)){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 验证只能是字母、数字
+     * @param $str
+     * @return bool
+     */
+    public static function isAlphaNum($str){
+        if(preg_match('/^[A-Za-z0-9]+$/',$str)){
+            return true;
+        }
+        return false;
+    }
 }

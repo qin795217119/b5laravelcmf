@@ -148,7 +148,7 @@
     float: left;
 }
 /* 上传文件 */
-.b5uploadmainbox .uploadimg_link{display: inline-block;width: 100%;max-width: 330px;padding-right: 50px;position: relative}
+.b5uploadmainbox .uploadimg_link{display: inline-block;width: 100%;max-width: 330px;padding-right: 60px;position: relative}
 .b5uploadmainbox .uploadimg_link input{display: inline-block;}
 .b5uploadmainbox .uploadimg_link .btn{position: absolute;top: 0;right: 0}
 .b5uploadlistbox{overflow: hidden}
