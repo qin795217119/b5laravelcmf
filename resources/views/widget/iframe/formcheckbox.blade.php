@@ -10,7 +10,7 @@
                                    id="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}"
                                    name="{{$widget_data['name']}}"
                                    value="{{$val[$widget_data['showvalue']]}}"
-                                   text="{{$val["$showname"]}}"
+                                   text="{{$val[$widget_data['showname']]}}"
                                    @if (in_array($val[$widget_data['showvalue']],is_array($widget_data['value'])?$widget_data['value']:explode(',',$widget_data['value']))) checked="true" @endif
                                    @if (isset($widget_data['required']) && $loop->first) required @endif
                             >
@@ -19,14 +19,14 @@
                                    id="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}"
                                    name="{{$widget_data['name']}}"
                                    value="{{$val[$widget_data['showvalue']]}}"
-                                   text="{{$val["$showname"]}}"
+                                   text="{{$val[$widget_data['showname']]}}"
                                    @if (in_array($val[$widget_data['showvalue']],is_array($widget_data['info'][$widget_data['name']])?$widget_data['info'][$widget_data['name']]:explode(',',$widget_data['info'][$widget_data['name']]))) checked="true" @endif
                                    @if (isset($widget_data['required']) && $loop->first) required @endif
                             >
                         @else
-                            <input type="checkbox" id="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}" name="{{$widget_data['name']}}" value="{{$val[$widget_data['showvalue']]}}" text="{{$val["$showname"]}}" @if (isset($widget_data['required']) && $loop->first) required @endif>
+                            <input type="checkbox" id="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}" name="{{$widget_data['name']}}" value="{{$val[$widget_data['showvalue']]}}" text="{{$val[$widget_data['showname']]}}" @if (isset($widget_data['required']) && $loop->first) required @endif>
                         @endif
-                            {{$val["$showname"]}}
+                            {{$val[$widget_data['showname']]}}
                     </label>
                 @else
                     <label class="check-box" for="{{$widget_data['name']}}_{{$key}}">

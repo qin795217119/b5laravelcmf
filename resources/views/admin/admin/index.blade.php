@@ -85,7 +85,8 @@
                 onClick : zOnClick
             };
             $.tree.init(options);
-
+            $("#structId").val('');
+            $.table.search();
             function zOnClick(event, treeId, treeNode) {
                 $("#structId").val(treeNode.id);
                 $.table.search();

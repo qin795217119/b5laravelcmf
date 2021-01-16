@@ -1761,7 +1761,7 @@ var table = {
             zOnClick:function (event, ztreeId, treeNode) {
                 if($.tree._option.check.enable){//多选
                     $._tree.checkNode(treeNode, !treeNode.checked, true);
-                    $._tree.updateNode(treeNode)
+                    $.tree.zOnCheck();
                 }else{
                     //单选
                     var treeIdArr = [];

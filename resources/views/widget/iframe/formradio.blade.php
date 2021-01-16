@@ -24,7 +24,7 @@
                         <input type="radio" id="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}" name="{{$widget_data['name']}}" value="{{$val[$widget_data['showvalue']]}}"  @if (isset($widget_data['required']) && $loop->first) required @endif>
                     @endif
 
-                    <label for="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}">{{$val["$showname"]}}</label>
+                    <label for="{{$widget_data['name']}}_{{$val[$widget_data['showvalue']]}}">{{$val[$widget_data['showname']]}}</label>
                 @else
                     @if(isset($widget_data['value']))
                         <input type="radio"
