@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 namespace App\Helpers\Util;
 
-
 use App\Cache\ConfigCache;
 use App\Services\WechatAccessService;
 use App\Services\WechatUsersService;

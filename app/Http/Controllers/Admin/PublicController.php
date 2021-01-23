@@ -6,8 +6,13 @@
 // +----------------------------------------------------------------------
 namespace App\Http\Controllers\Admin;
 
+use App\Jobs\TestJob;
+use App\Mail\TestMail;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 /**
  * 公共操作控制器
@@ -38,5 +43,16 @@ class PublicController extends Backend
 
     public function noauth(){
         return $this->render('admin.public.error',['msg'=>'未获取授权','code'=>400]);
+    }
+
+    public function vemail(){
+        $token=\request()->input('token');
+        $data=decrypt(base64_decode($token),true);
+        var_dump($data);
+    }
+    public function test(){
+//        $this->dispatch(new TestJob([]));
+        TestJob::dispatch(['id'=>111,'name' => '测试用户', 'email' => '357145480@qq.com', 'type' => 'vemail'])->delay(now()->addSeconds(20));
+
     }
 }

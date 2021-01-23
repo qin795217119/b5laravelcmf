@@ -56,14 +56,38 @@ if (!function_exists('get_password')) {
      * 获取双MD5加密密码
      * @param string $password 加密字符串
      * @return string 输出MD5加密字符串
-     * @author 牧羊人
-     * @date 2019/5/23
      */
     function get_password($password)
     {
         return md5(md5($password).'b5net');
     }
+}
+if (!function_exists('b5UrlCreate')) {
+    /**
+     * Url拼接
+     * @param $url
+     * @param $param
+     * @return string
+     */
+    function b5UrlCreate($url,$param)
+    {
+        if(!$url || !$param) return $url;
+        $paramstr='';
+        if(is_array($param)){
+            $paramArr=[];
+            foreach ($param as $pkey=>$pval){
+                $paramArr[]=$pkey.'='.$pval;
+            }
+            $paramstr=implode('&',$paramArr);
+        }
 
+        if(strpos($url,'?')===false){
+            $url.='?'.$paramstr;
+        }else{
+            $url.='&'.$paramstr;
+        }
+        return $url;
+    }
 }
 if (!function_exists('message')) {
     /**

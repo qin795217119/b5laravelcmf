@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 //后台管理路由
 Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(function (){
-
-
+    Route::get('/test', 'PublicController@test');
+    Route::get('/public/vemail', 'PublicController@vemail');
     Route::get('/', 'IndexController@index');
     Route::get('/home', 'IndexController@home');
 //公共操作

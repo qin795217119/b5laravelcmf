@@ -6,7 +6,6 @@
 // +----------------------------------------------------------------------
 namespace App\Helpers\Util;
 
-
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
