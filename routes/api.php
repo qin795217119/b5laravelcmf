@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::namespace('Api\Mapply\V1')->prefix('mapply/v1')->middleware(['api','api.mapply'])->group(function (){
+    Route::post('/index', 'IndexController@index');
+});
 Route::namespace('Api\V1')->prefix('v1')->middleware('api')->group(function (){
-    Route::get('/', 'IndexController@index');
+    Route::post('/', 'IndexController@index');
 });
 

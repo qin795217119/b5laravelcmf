@@ -14,16 +14,19 @@ use Illuminate\Support\Facades\Route;
 //后台管理路由
 Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(function (){
     Route::get('/test', 'PublicController@test');
-    Route::get('/public/vemail', 'PublicController@vemail');
+
     Route::get('/', 'IndexController@index');
     Route::get('/home', 'IndexController@home');
-//公共操作
+//public操作
     Route::any('/login', 'PublicController@login');
     Route::any('/logout', 'PublicController@logout');
     Route::any('/noauth','PublicController@noauth');
+    Route::get('/public/vemail', 'PublicController@vemail');
+//公共操作
     Route::any('/lockscreen','CommonController@lockscreen');
     Route::any('/common/uploadimg', 'CommonController@uploadimg');
     Route::any('/common/repass','CommonController@repass');
+    Route::any('/common/mapselect','CommonController@mapselect');
 //组织架构
     Route::any('/struct/index', 'StructController@index');
     Route::any('/struct/add', 'StructController@add');
@@ -99,6 +102,11 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/loginlog/index', 'LoginlogController@index');
     Route::any('/loginlog/drop', 'LoginlogController@drop');
     Route::any('/loginlog/trash', 'LoginlogController@trash');
+//预约报名
+    Route::any('/mapply/index', 'MapplyController@index');
+    Route::any('/mapply/add', 'MapplyController@add');
+    Route::any('/mapply/edit', 'MapplyController@edit');
+    Route::any('/mapply/drop', 'MapplyController@drop');
 });
 
 

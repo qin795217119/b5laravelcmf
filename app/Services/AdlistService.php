@@ -39,7 +39,7 @@ class AdlistService extends BaseService
         $list=$this->getAll([['adtype','=',$type],['status','=',1]],['title','redtype','redfunc','redinfo','text_text','text_rich','imglist'],$pagation,'',[['listsort','asc'],['id','asc']]);
         if($list){
             foreach ($list as $val){
-                $val['imglist']=get_image_url($val['imglist'],[]);
+                $val['imglist']=get_image_url($val['imglist']);
                 $reArr[]=$val;
             }
         }

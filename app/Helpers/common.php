@@ -121,29 +121,33 @@ if (!function_exists('get_image_url')) {
 
     /**
      * 获取图片地址
-     * @param $image_url 图片地址
+     * @param mixed $image_url 图片地址
+     * @param bool $isArray
      * @return string 返回图片网络地址
      */
-    function get_image_url($image_url,$default='')
+
+    function get_image_url($image_url,bool $isArray=true)
     {
-        if(!$image_url) return $default;
-        if(strpos($image_url,',')){
-            $image_url=explode(',',$image_url);
-        }
-        if(is_array($image_url)){
-            $reInfo=[];
+        $rearr=[];
+        if($image_url){
+            if(is_array($image_url)){
+
+            }elseif (strpos($image_url,',')){
+                $image_url=explode(',',$image_url);
+            }else{
+                $image_url=(array)$image_url;
+            }
             foreach ($image_url as $img){
                 if($img){
-                    $reInfo[]=get_image_url($img);
+                    if(strpos($img,'http')===0){
+                        $rearr[]=$img;
+                    }else{
+                        $rearr[]= IMG_URL . $img;
+                    }
                 }
             }
-            return $reInfo;
         }
-        if(strpos($image_url,'http')===0){
-            return $image_url;
-        }else{
-            return IMG_URL . $image_url;
-        }
+        return $isArray?$rearr:implode(',',$rearr);
     }
 }
 

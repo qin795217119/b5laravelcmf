@@ -12,6 +12,7 @@
         value=""
     @endif
     @if ($widget_data['id']) id="{{$widget_data['id']}}" @endif
+    @if (isset($widget_data['style'])) style="{{$widget_data['style']}}" @endif
     @if ($widget_data['class']) class="{{$widget_data['class']}}" @endif
     @if(isset($widget_data['place']) && $widget_data['place'])
         placeholder="{{$widget_data['place']}}"

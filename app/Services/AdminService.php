@@ -8,6 +8,7 @@ namespace App\Services;
 
 use App\Models\Admin;
 use App\Validates\AdminValidate;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -42,6 +43,7 @@ class AdminService extends BaseService
         $username=request()->input('username','');
         $password=request()->input('password','');
         $captcha=request()->input('captcha','');
+        $remember=request()->input('remember',0);
         if(!captcha_check($captcha)){
             return $this->loginResult($username,'验证码错误',false);
         }
@@ -83,7 +85,9 @@ class AdminService extends BaseService
         ];
         app('session')->flush();
         app('session')->put(config('app.admin_session'),$sessionData);
-
+        if($remember){
+            Cookie::queue(config('app.admin_session').'_cookie',$userinfo['id'],30*24*3600);
+        }
         return $this->loginResult($username,'登陆成功',true);
     }
 
@@ -135,6 +139,7 @@ class AdminService extends BaseService
     //退出登录
     public function logout(){
         app('session')->flush();
+        Cookie::forget(config('app.admin_session').'_cookie');
         return redirect('admin');
     }
     /**

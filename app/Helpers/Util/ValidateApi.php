@@ -133,4 +133,16 @@ class ValidateApi
         }
         return false;
     }
+
+    /**
+     * 验证只能是整数
+     * @param $str
+     * @return bool
+     */
+    public static function isInteger($str){
+        if(preg_match('/^[1-9][0-9]*$/',$str)){
+            return true;
+        }
+        return false;
+    }
 }

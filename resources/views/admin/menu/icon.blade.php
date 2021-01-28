@@ -13,6 +13,7 @@
         color: #ffffff;}
 </style>
 <div class="ico-list">
+    <i class="fa fa-weixin" aria-hidden="true"></i>
      <i class="fa fa-address-book" aria-hidden="true"></i>
      <i class="fa fa-address-book-o" aria-hidden="true"></i>
      <i class="fa fa-address-card" aria-hidden="true"></i>

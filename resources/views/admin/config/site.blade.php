@@ -1,19 +1,9 @@
 @extends('admin.public.layout')
 
 @section('content')
-    <style>
-        .nav-tabs>li>a {
-            color: #999;
-            font-weight: 500;
-            padding: 6px 18px 6px 20px;
-        }
-        .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
-            color: #000;
-        }
-    </style>
     <div class="mt10" style="background-color: #fff;padding: 10px">
         @if(!empty($lists))
-            <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+            <div class="bs-example bs-example-tabs b5navtab" data-example-id="togglable-tabs">
                 <ul class="nav nav-tabs" role="tablist">
                     @foreach($lists as $groupkey=>$groups)
                         <li role="presentation" class="@if ($loop->first) active @endif"><a href="#{{$groupkey}}" id="{{$groupkey}}-tab" role="tab" data-toggle="tab" aria-controls="{{$groupkey}}" aria-expanded="true">{{$groups['title']}}</a></li>

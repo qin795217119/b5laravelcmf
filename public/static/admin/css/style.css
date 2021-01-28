@@ -40,7 +40,14 @@ a:hover{
 a:focus {
     outline: none;
 }
-
+.b5navtab .nav-tabs>li>a {
+    color: #999;
+    font-weight: 500;
+    padding: 6px 18px 6px 20px;
+}
+.b5navtab .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    color: #000;
+}
 /**laydate修改**/
 .layui-laydate-header i{font-size: 16px !important;}
 .layui-laydate-footer {height: 38px !important;padding: 6px 20px !important;}

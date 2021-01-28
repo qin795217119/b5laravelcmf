@@ -82,7 +82,7 @@ class UploadApi
             $rearr['status'] = 1;
             $rearr['data'] = [
                 'path' => $filePath,
-                'url' => get_image_url($filePath),
+                'url' => get_image_url($filePath,false),
                 'originName' => $originName,
                 'ext' => $ext,
                 'size' => $size,
@@ -195,7 +195,7 @@ class UploadApi
             $rearr['status'] = 1;
             $rearr['data'] = [
                 'path' => $filePath,
-                'url' => get_image_url($filePath),
+                'url' => get_image_url($filePath,false),
                 'originName' => $originName,
                 'ext' => $ext,
                 'size' => $size,

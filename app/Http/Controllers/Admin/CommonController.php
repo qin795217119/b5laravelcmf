@@ -6,6 +6,7 @@
 // +----------------------------------------------------------------------
 namespace App\Http\Controllers\Admin;
 
+use App\Cache\ConfigCache;
 use App\Helpers\Util\UploadApi;
 use App\Services\AdminService;
 
@@ -69,5 +70,21 @@ class CommonController extends Backend
             return (new AdminService())->repass();
         }
         return $this->render('',['name'=>adminLoginInfo('info.name')]);
+    }
+
+    public function mapselect(){
+        $address=request()->input("keyword",'');
+        $lat=request()->input("lat",0);
+        $lng=request()->input("lng",0);
+
+        $keyfirst=0;
+        $lat=round($lat,7);
+        $lng=round($lng,7);
+        if(empty($lat) || empty($lng)){
+            $keyfirst=1;
+            $lat=35.0615473;
+            $lng=118.3404347;
+        }
+        return $this->render('',['keyfirst' => $keyfirst,'keyword'=>$address,'lat'=>$lat,'lng'=>$lng,'mapkey'=>ConfigCache::get('sys_map_qqkey')]);
     }
 }

@@ -33,7 +33,7 @@
             <img onclick="this.src='/captcha/admin?'+Math.random()" src="{{ captcha_src('admin') }}" width="130px" height="48px" class="login-captcha" alt="点击刷新验证码"/>
         </div>
         <div class="layui-form-item">
-            <input type="checkbox" id="remember" name="remember" value="1" title="记住密码" lay-skin="primary" checked>
+            <input type="checkbox" id="remember" name="remember" value="1" title="下次自动登录" lay-skin="primary" checked>
         </div>
         <div class="layui-form-item">
             <button class="layui-btn layui-btn-fluid" lay-filter="loginSubmit" lay-submit id="subBtn">登录</button>
