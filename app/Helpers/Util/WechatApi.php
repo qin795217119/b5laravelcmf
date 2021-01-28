@@ -168,12 +168,13 @@ class WechatApi
      * @return array
      */
     private function getJsApiTicket() {
-        $service=new WechatAccessService();
         if(empty($this->appid)){
             return message('微信配置错误',false);
         }
+        $service=new WechatAccessService();
         $info = $service->info($this->appid,true);
         $lasttime=time()-7000;
+
         if (empty($info) || $info['jsapi_ticket_add']<$lasttime || empty($info['jsapi_ticket'])) {
             $accessTokenResult = $this->global_getAccessToken($info);
             if(!$accessTokenResult['success']){
@@ -194,8 +195,8 @@ class WechatApi
                     'jsapi_ticket'=>$res['ticket'],
                     'appid'=>$this->appid
                 ];
-                $res=(new WechatAccessService())->edit($saveData);
-                if(!$res['success']){
+                $save_res=(new WechatAccessService())->edit($saveData);
+                if(!$save_res['success']){
                     return message('保存jsapi_ticket失败',false);
                 }
                 $ticket = $res['ticket'];
@@ -214,11 +215,11 @@ class WechatApi
      * @return array
      */
     private function global_getAccessToken($info=null) {
-        if(empty($appid) || empty($secret)){
+        if(empty($this->appid) || empty($this->secret)){
             return message('微信配置错误',false);
         }
         if(is_null($info)){
-            $info = (new WechatAccessService())->info($appid,true);
+            $info = (new WechatAccessService())->info($this->appid,true);
         }
         $lasttime=time()-7000;
         if(empty($info) || empty($info['access_token']) || $info['access_token_add']<$lasttime){
@@ -237,12 +238,13 @@ class WechatApi
                     'access_token'=>$res['access_token'],
                     'appid'=>$this->appid
                 ];
+
                 if(empty($info)){
-                    $res=(new WechatAccessService())->add($saveData);
+                    $save_res=(new WechatAccessService())->add($saveData);
                 }else{
-                    $res=(new WechatAccessService())->edit($saveData);
+                    $save_res=(new WechatAccessService())->edit($saveData);
                 }
-                if(!$res['success']){
+                if(!$save_res['success']){
                     return message('保存access_token失败',false);
                 }
                 $access_token = $res['access_token'];

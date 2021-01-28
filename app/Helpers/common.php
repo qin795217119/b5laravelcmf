@@ -40,14 +40,17 @@ if (!function_exists('system_isDemo')) {
      */
     function system_isDemo()
     {
-        $status=\App\Cache\ConfigCache::get('sys_config_demo');
-        $status=='1'?true:false;
-        $loginId=adminLoginInfo('info.id');
-        $isAdmin=$loginId=='1'?true:false;
-        if($isAdmin){
-            return false;
+        if(MODULES_NAME=='admin'){
+            $status=\App\Cache\ConfigCache::get('sys_config_demo');
+            $status=='1'?true:false;
+            $loginId=adminLoginInfo('info.id');
+            $isAdmin=$loginId=='1'?true:false;
+            if($isAdmin){
+                return false;
+            }
+            return $status;
         }
-        return $status;
+        return false;
     }
 }
 if (!function_exists('get_password')) {

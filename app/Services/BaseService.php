@@ -217,6 +217,7 @@ class BaseService
         if (!$data) {
             $data = request()->all();
         }
+
         if ($data) {
             if ($this->validate) {
                 $validate = $this->validate->data($data)->type('add')->run();
