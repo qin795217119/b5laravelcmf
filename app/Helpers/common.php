@@ -142,6 +142,7 @@ if (!function_exists('get_image_url')) {
             }
             foreach ($image_url as $img){
                 if($img){
+
                     if(strpos($img,'http')===0){
                         $rearr[]=$img;
                     }else{
