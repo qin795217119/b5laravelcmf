@@ -14,7 +14,7 @@ class ApiController extends BaseController
     public function __construct(Request $request)
     {
         parent::__construct($request);
-
+        header('Access-Control-Allow-Origin:*');
         defined('MODULES_NAME') or define('MODULES_NAME', 'api');
     }
 }

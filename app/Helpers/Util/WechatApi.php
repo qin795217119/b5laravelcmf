@@ -14,7 +14,7 @@ use App\Services\WechatUsersService;
 
 class WechatApi
 {
-    public $state='';
+    private $state='b5net_auth';
     public $is_info=true;//是否获取用户信息
     public $appid='';
     public $secret='';
@@ -25,14 +25,21 @@ class WechatApi
         $this->secret=ConfigCache::get('wechat_appsecret');
     }
 
+    public function getOpenId($redirecturl){
+        $wechaturl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->appid."&redirect_uri=".urlencode($redirecturl)."&response_type=code&scope=snsapi_userinfo&state=".$this->state."#wechat_redirect";
+        return redirect()->away($wechaturl);
+    }
     /**
      * 微信授权获取用户信息
      * @return array
      */
     public function authInfo(){
         $input=request()->input();
+
         $code=$input['code']??'';
         $state=$input['state']??'';
+        $mtype=$input['mtype']??'';
+        $b5reduri=$input['b5reduri']??'';
         if(empty($code) || $state!=$this->state){
             return message('授权参数错误',false);
         }
@@ -61,13 +68,14 @@ class WechatApi
                 'province'=>$getResult['data']['province'],
                 'city'=>$getResult['data']['city'],
                 'country'=>$getResult['data']['country'],
+                'type'=>$mtype
             ];
             $res=$userService->add($usersInfo,'','用户信息保存');
             if(!$res['success']){
                 return $res;
             }
         }
-        return message('获取成功',true,$usersInfo);
+        return message('获取成功',true,['url'=>$b5reduri,'openid'=>$usersInfo['openid']]);
     }
 
     /**
@@ -143,7 +151,7 @@ class WechatApi
         if(empty($rearr) || !is_array($rearr)){
             return message('获取用户信息失败：2',false);
         }
-        if($rearr['errcode'] || empty($rearr['openid'])){
+        if((isset($rearr['errcode']) && $rearr['errcode']) || empty($rearr['openid'])){
             return message('获取用户信息失败：2',false);
         }
         return message('获取用户信息成功',true,$rearr);

@@ -354,3 +354,33 @@ if (!function_exists('b5get_age')) {
         return $age;
     }
 }
+if (!function_exists('urlCreate')) {
+    /**
+     * 地址参数拼接
+     * @param $url
+     * @param $params
+     * @return string
+     */
+    function urlCreate($url, $params)
+    {
+        if (!$params) return $url;
+        if (is_array($params)) {
+            $tempParam = [];
+            foreach ($params as $key => $val) {
+                $tempParam[] = $key . '=' . $val;
+            }
+            $params = implode('&', $tempParam);
+        }
+        $check_str = $url;
+        $last = strpos($url, '/');
+        if ($last !== false) {
+            $check_str = substr($url, $last);
+        }
+        if (strpos($check_str, '?') === false) {
+            $url = $url . '?' . $params;
+        } else {
+            $url = $url . '&' . $params;
+        }
+        return $url;
+    }
+}

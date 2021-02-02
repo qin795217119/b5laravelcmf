@@ -15,7 +15,7 @@ class ValidateApi
      * @param string $idcard 身份证号
      * @return bool 返回结果true或false
      */
-    public static function is_idcard($idcard)
+    public static function isIdcard($idcard)
     {
         $idcard = strtoupper($idcard);
         $idcard_len=strlen($idcard);
@@ -144,5 +144,53 @@ class ValidateApi
             return true;
         }
         return false;
+    }
+
+    /**
+     * 判断是否为日期格式
+     * @param $time
+     * @param string $type
+     * @param string $format
+     * @return bool
+     */
+    public static function isDate($time,$type='date',$format='Y-m-d'){
+        if(!$time) return false;
+        $timestamp=strtotime($time);
+        if($timestamp===false || !is_numeric($timestamp)) return false;
+        $year=date('Y',$timestamp);
+        $month=date('m',$timestamp);
+        $day=date('d',$timestamp);
+        $hour=date('H',$timestamp);
+        $minute=date('i',$timestamp);
+        $second=date('s',$timestamp);
+        if(!checkdate($month,$day,$year)) return false;
+        if($type=='date'){
+            return true;
+        }else{
+            if($hour<=0 || $hour>23 || $minute<0 || $minute>60 || $second<0 || $second>60){
+                return false;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * 判断字符长度
+     * @param $str
+     * @param $rule
+     * @return bool
+     */
+    public static function checkLen($str,$rule){
+        $length=\Illuminate\Support\Str::length($str);
+        if(strpos($rule,',')) { // 长度区间
+            list($min,$max)   =  explode(',',$rule);
+            if($max=="*"){
+                return $length >= $min ;
+            }else{
+                return $length >= $min && $length <= $max;
+            }
+        }else{// 指定长度
+            return $length == $rule;
+        }
     }
 }
