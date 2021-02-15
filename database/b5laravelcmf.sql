@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-01-23 16:33:56
+Date: 2021-02-15 12:30:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -145,12 +145,12 @@ CREATE TABLE `b5net_config` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='系统配置表';
 
 -- ----------------------------
 -- Records of b5net_config
 -- ----------------------------
-INSERT INTO `b5net_config` VALUES ('1', '配置分组', 'sys_config_group', 'array', '0', '', 'site:基本设置\r\nwx:微信设置\r\nsms:短信配置\r\nemail:邮箱配置', '', '系统配置的分组配置', '0', '2020-12-30 16:17:10', '2021-01-23 14:01:34');
+INSERT INTO `b5net_config` VALUES ('1', '配置分组', 'sys_config_group', 'array', '0', '', 'site:基本设置\r\nwx:微信设置\r\nsms:短信配置\r\nemail:邮箱配置\r\nmap:地图相关', '', '系统配置的分组配置', '0', '2020-12-30 16:17:10', '2021-01-25 19:54:42');
 INSERT INTO `b5net_config` VALUES ('2', '系统名称', 'sys_config_sysname', 'text', '0', 'site', 'B5LaravleCMF', '', '系统后台显示的名称', '0', '2020-12-31 14:01:18', '2021-01-12 00:02:59');
 INSERT INTO `b5net_config` VALUES ('3', '演示模式', 'sys_config_demo', 'select', '0', 'site', '1', '1:开启\r\n0:关闭', '开启后，除超管外不可进行非查询操作', '0', '2021-01-08 05:58:25', '2021-01-12 00:02:59');
 INSERT INTO `b5net_config` VALUES ('4', '阿里accessKeyId', 'sms_ali_key', 'text', '0', 'sms', '', '', '阿里短信-AccessKey ID', '0', '2021-01-11 19:26:13', '2021-01-11 23:45:06');
@@ -159,13 +159,14 @@ INSERT INTO `b5net_config` VALUES ('6', '阿里signName', 'sms_ali_signname', 't
 INSERT INTO `b5net_config` VALUES ('7', '阿里tempId', 'sms_ali_temp', 'text', '0', 'sms', '', '', '阿里短信-tempId模板', '3', '2021-01-11 19:30:21', '2021-01-11 23:45:06');
 INSERT INTO `b5net_config` VALUES ('8', '聚合appkey', 'sms_juhe_appkey', 'text', '0', 'sms', '', '', '聚合短信-APPKEY', '10', '2021-01-11 19:33:27', '2021-01-11 23:45:06');
 INSERT INTO `b5net_config` VALUES ('9', '聚合tempId', 'sms_juhe_temp', 'text', '0', 'sms', '', '', '聚合短信-TPLID模板', '11', '2021-01-11 19:34:26', '2021-01-11 23:45:06');
-INSERT INTO `b5net_config` VALUES ('10', '公众号appid', 'wechat_appid', 'text', '0', 'wx', '', '', '微信公众号的AppId', '0', '2021-01-12 11:05:50', '2021-01-12 11:05:50');
-INSERT INTO `b5net_config` VALUES ('11', '公众号secret', 'wechat_appsecret', 'text', '0', 'wx', '', '', '微信公众号-AppSecret', '1', '2021-01-12 11:06:24', '2021-01-12 11:06:24');
+INSERT INTO `b5net_config` VALUES ('10', '公众号appid', 'wechat_appid', 'text', '0', 'wx', 'wx2ba634598c7df708', '', '微信公众号的AppId', '0', '2021-01-12 11:05:50', '2021-01-28 13:58:52');
+INSERT INTO `b5net_config` VALUES ('11', '公众号secret', 'wechat_appsecret', 'text', '0', 'wx', 'e82cdf89c396b1dd88f1632eaf70fb2d', '', '微信公众号-AppSecret', '1', '2021-01-12 11:06:24', '2021-01-28 13:58:52');
 INSERT INTO `b5net_config` VALUES ('12', '服务地址', 'sys_email_host', 'text', '0', 'email', 'smtp.163.com', '', '', '1', '2021-01-23 14:01:57', '2021-01-23 14:01:57');
 INSERT INTO `b5net_config` VALUES ('13', '邮箱地址', 'sys_email_username', 'text', '0', 'email', 'lyyd_lh@163.com', '', '', '2', '2021-01-23 14:02:14', '2021-01-23 14:02:20');
 INSERT INTO `b5net_config` VALUES ('14', '授权密码', 'sys_email_password', 'text', '0', 'email', 'UCSMPMHNDJSALQVW', '', '', '3', '2021-01-23 14:02:40', '2021-01-23 14:02:40');
 INSERT INTO `b5net_config` VALUES ('15', '服务端口', 'sys_email_port', 'text', '0', 'email', '465', '', '', '4', '2021-01-23 14:02:58', '2021-01-23 14:02:58');
 INSERT INTO `b5net_config` VALUES ('16', '是否SSL', 'sys_email_ssl', 'select', '0', 'email', '1', '0:否\r\n1:是', '', '5', '2021-01-23 14:03:20', '2021-01-23 14:03:20');
+INSERT INTO `b5net_config` VALUES ('17', '腾讯地图Key', 'sys_map_qqkey', 'text', '0', 'map', 'ZZFBZ-ZUBY6-URGSB-MKE3Q-FUMGK-ZPB7S', '', '', '0', '2021-01-25 19:55:48', '2021-01-25 21:10:28');
 
 -- ----------------------------
 -- Table structure for `b5net_dict_data`
@@ -235,7 +236,7 @@ CREATE TABLE `b5net_loginlog` (
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of b5net_loginlog
@@ -248,6 +249,139 @@ INSERT INTO `b5net_loginlog` VALUES ('5', 'admin', '127.0.0.1', '本机地址', 
 INSERT INTO `b5net_loginlog` VALUES ('6', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-19 11:02:40');
 INSERT INTO `b5net_loginlog` VALUES ('7', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-22 14:17:24');
 INSERT INTO `b5net_loginlog` VALUES ('8', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-23 14:01:05');
+INSERT INTO `b5net_loginlog` VALUES ('9', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-24 22:26:52');
+INSERT INTO `b5net_loginlog` VALUES ('10', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-25 10:22:11');
+INSERT INTO `b5net_loginlog` VALUES ('11', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-25 10:24:07');
+INSERT INTO `b5net_loginlog` VALUES ('12', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '0', '验证码错误', '2021-01-25 13:53:29');
+INSERT INTO `b5net_loginlog` VALUES ('13', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-25 13:53:35');
+INSERT INTO `b5net_loginlog` VALUES ('14', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-25 13:55:07');
+INSERT INTO `b5net_loginlog` VALUES ('15', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '0', '验证码错误', '2021-01-25 14:13:06');
+INSERT INTO `b5net_loginlog` VALUES ('16', 'admin', '127.0.0.1', '本机地址', 'Chrome 86.0.4240.198', 'Windows 10.0', '', '1', '登陆成功', '2021-01-25 14:13:13');
+
+-- ----------------------------
+-- Table structure for `b5net_mapply`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_mapply`;
+CREATE TABLE `b5net_mapply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '活动标题',
+  `banner` text COMMENT '顶部Banner',
+  `share_title` varchar(50) DEFAULT '' COMMENT '分享标题',
+  `share_desc` varchar(150) DEFAULT '' COMMENT '分享简介',
+  `share_img` varchar(255) DEFAULT '' COMMENT '分享图片',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '预约金额',
+  `rules` text COMMENT '活动规则',
+  `agreement` text COMMENT '参与协议',
+  `themecolor` varchar(10) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `is_multi` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否允许提交多个',
+  `com_name` varchar(150) DEFAULT '' COMMENT '门店名称',
+  `com_address` varchar(255) DEFAULT '' COMMENT '门店地址',
+  `com_phone` varchar(50) DEFAULT '' COMMENT '门店电话',
+  `com_lat` decimal(10,7) DEFAULT '0.0000000' COMMENT '纬度',
+  `com_lng` decimal(10,7) DEFAULT '0.0000000' COMMENT '经度',
+  `regfield` text,
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='微预约-活动表';
+
+-- ----------------------------
+-- Records of b5net_mapply
+-- ----------------------------
+INSERT INTO `b5net_mapply` VALUES ('1', '全民健身中心年卡预约大优惠', '/uploads/mapply/2021/01/27/00f7807e94117c99b032befd521025ff.jpg', '阿萨大', '撒大', '/uploads/mapply/2021/01/25/48b1b32c30bd012d94b3ca27e8bac8c0.jpg', '11.00', '活动介绍：活动介绍：活动介绍：活动介绍：活动介绍：活动介绍：活动介绍：活动介绍：\r\n活动介绍：活动介绍：活动介绍：', '阿三大苏打', 'FF4F1E', '1', '1', '主办单位主办单位', '活动地址活动地址', '联系电话联系电话联系电话', '35.0615473', '118.3404347', '{\"name\":{\"title\":\"\\u59d3\\u540d\",\"require\":1},\"phone\":{\"title\":\"\\u8054\\u7cfb\\u7535\\u8bdd\",\"require\":1}}', '2021-01-26 00:00:00', '2021-02-06 00:00:00', '2021-01-25 22:55:19', '2021-01-27 19:58:36');
+
+-- ----------------------------
+-- Table structure for `b5net_mapply_count`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_mapply_count`;
+CREATE TABLE `b5net_mapply_count` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` int(10) NOT NULL DEFAULT '0' COMMENT '活动ID',
+  `click` int(10) NOT NULL DEFAULT '0' COMMENT '点击次数',
+  `number` int(10) NOT NULL DEFAULT '0' COMMENT '订单数量',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '支付金额',
+  `daytime` int(10) NOT NULL DEFAULT '0' COMMENT '时间',
+  `paynumber` int(10) NOT NULL COMMENT '支付数量',
+  PRIMARY KEY (`id`),
+  KEY `pid` (`mid`,`daytime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微预约-活动统计';
+
+-- ----------------------------
+-- Records of b5net_mapply_count
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `b5net_mapply_order`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_mapply_order`;
+CREATE TABLE `b5net_mapply_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` int(10) NOT NULL DEFAULT '0' COMMENT '活动ID',
+  `order_sn` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '订单号',
+  `trade_no` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `openid` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '用户id',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `is_pay` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支付',
+  `paytime` int(11) NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `order_title` varchar(100) DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否使用',
+  `use_time` int(11) NOT NULL DEFAULT '0' COMMENT '使用时间',
+  `user_name` varchar(20) DEFAULT '' COMMENT '姓名',
+  `user_birthday` varchar(20) DEFAULT '' COMMENT '出生日期',
+  `user_sex` varchar(10) DEFAULT '' COMMENT '用户性别',
+  `user_mobile` varchar(20) DEFAULT '' COMMENT '手机号码',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `ip` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_sn` (`order_sn`),
+  KEY `pid` (`mid`),
+  KEY `openid` (`openid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微预约-预约订单';
+
+-- ----------------------------
+-- Records of b5net_mapply_order
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `b5net_mapply_order_ext`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_mapply_order_ext`;
+CREATE TABLE `b5net_mapply_order_ext` (
+  `mid` int(10) NOT NULL COMMENT '活动ID',
+  `oid` int(10) NOT NULL COMMENT '订单ID',
+  `fieldkey` varchar(30) NOT NULL DEFAULT '' COMMENT '字段标识',
+  `fieldname` varchar(30) NOT NULL DEFAULT '' COMMENT '字段名称',
+  `fieldval` varchar(100) NOT NULL DEFAULT '' COMMENT '字段值'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微预约-预约提交信息表';
+
+-- ----------------------------
+-- Records of b5net_mapply_order_ext
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `b5net_mapply_order_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_mapply_order_log`;
+CREATE TABLE `b5net_mapply_order_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) NOT NULL COMMENT '订单ID',
+  `title` varchar(100) NOT NULL COMMENT '操作名称',
+  `optype` tinyint(1) NOT NULL COMMENT '操作用户 1用户 2 商户 3 管理员',
+  `opname` varchar(50) NOT NULL COMMENT '操作人',
+  `remark` varchar(255) NOT NULL,
+  `mid` int(10) NOT NULL DEFAULT '0',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微预约-订单操作记录';
+
+-- ----------------------------
+-- Records of b5net_mapply_order_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `b5net_menu`
@@ -271,7 +405,7 @@ CREATE TABLE `b5net_menu` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `listsort` (`listsort`)
-) ENGINE=MyISAM AUTO_INCREMENT=11004 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=MyISAM AUTO_INCREMENT=11104 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of b5net_menu
@@ -339,6 +473,11 @@ INSERT INTO `b5net_menu` VALUES ('10801', '跳转编辑', '108', '2', '', '0', '
 INSERT INTO `b5net_menu` VALUES ('10802', '跳转删除', '108', '3', '', '0', 'F', '1', '0', 'admin:redtype:drop', '', '2021-01-08 07:29:26', '2021-01-08 07:29:26', '跳转删除');
 INSERT INTO `b5net_menu` VALUES ('10803', '清除缓存', '108', '4', '', '0', 'F', '1', '0', 'admin:redtype:delcache', '', '2021-01-08 07:29:26', '2021-01-08 07:29:26', '清除缓存');
 INSERT INTO `b5net_menu` VALUES ('10505', '网站设置', '1', '0', '/admin/config/site', '0', 'C', '1', '0', 'admin:config:site', 'fa fa-object-group', '2021-01-11 22:17:31', '2021-01-11 22:39:46', '');
+INSERT INTO `b5net_menu` VALUES ('4', '微信应用', '0', '4', '', '0', 'M', '1', '0', '', 'fa fa-weixin', '2021-01-25 10:23:01', '2021-01-25 16:25:46', '');
+INSERT INTO `b5net_menu` VALUES ('111', '预约报名', '4', '1', '/admin/mapply/index', '0', 'C', '1', '0', 'admin:mapply:index', '', '2021-01-25 10:25:09', '2021-01-25 10:25:40', '');
+INSERT INTO `b5net_menu` VALUES ('11101', '添加预约', '111', '1', '', '0', 'F', '1', '0', 'admin:mapply:add', '', '2021-01-25 10:26:18', '2021-01-25 10:27:12', '');
+INSERT INTO `b5net_menu` VALUES ('11102', '编辑预约', '111', '2', '', '0', 'F', '1', '0', 'admin:mapply:edit', '', '2021-01-25 10:27:00', '2021-01-25 10:27:19', '');
+INSERT INTO `b5net_menu` VALUES ('11103', '删除预约', '111', '3', '', '0', 'F', '1', '0', 'admin:mapply:drop', '', '2021-01-25 10:27:45', '2021-01-25 10:27:45', '');
 
 -- ----------------------------
 -- Table structure for `b5net_notice`
@@ -581,6 +720,7 @@ CREATE TABLE `b5net_wechat_access` (
 -- ----------------------------
 -- Records of b5net_wechat_access
 -- ----------------------------
+INSERT INTO `b5net_wechat_access` VALUES ('wx2ba634598c7df708', '41_X9lM-Bsa8JRP0jFX2BoxaW4m13QTeqRmoofHHivgyRi422cntroFfIzjXAROB6ZoUzzfcjfWNcsQhu1OixKIGfg4PfHAfpgibr76t1mLCdQ_7UQ1_3-D22UVVSwfAMM6Tui0LOo1quY_hoNpCCAcADAHHF', 'sM4AOVdWfPE4DxkXGEs8VEHh_EQ4eLTYEqfB5PSBsfiYfaSbAWFzJK3nE46fz2n6P3dfH9gUfQ3GKG1cLNCDCQ', '1612276418', '1612276418');
 
 -- ----------------------------
 -- Table structure for `b5net_wechat_users`
@@ -599,6 +739,7 @@ CREATE TABLE `b5net_wechat_users` (
   `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家',
   `province` varchar(50) NOT NULL DEFAULT '' COMMENT '省份',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `type` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `openid` (`openid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='微信用户信息表';

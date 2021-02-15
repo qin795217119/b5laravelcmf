@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\MenuService;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class IndexController extends Backend
 {
@@ -28,6 +29,7 @@ class IndexController extends Backend
    }
 
     public function home(){
+       return QrCode::encoding('UTF-8')->size(100)->generate('aaa');
        return $this->render();
    }
     public function test(){

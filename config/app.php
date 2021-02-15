@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
 
     ],
 
@@ -230,7 +231,8 @@ return [
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Agent' => Jenssegers\Agent\Facades\Agent::class
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
     ],
 
 ];

@@ -4,16 +4,14 @@
 // +----------------------------------------------------------------------
 // | Author: 李恒 <357145480@qq.com>
 // +----------------------------------------------------------------------
-namespace App\Http\Controllers\Api;
+namespace App\Models;
 
-
-use Illuminate\Http\Request;
-
-class WechatController extends ApiController
+/**
+ * 微信预约报名订单
+ * Class MapplyOrder
+ * @package App\Models
+ */
+class MapplyOrder extends BaseModel
 {
-
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
+    protected $table = 'b5net_mapply_order';
 }

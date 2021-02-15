@@ -53,7 +53,7 @@ class WechatApi
 
         //查看数据库中是否有该openid的为微信信息  不存在插入
         $userService=new WechatUsersService();
-        $usersInfo=$userService->info([['openid','=',$accessTokenResult['data']['openid']]],true);
+        $usersInfo=$userService->info([['openid','=',$accessTokenResult['data']['openid']],['type','=',$mtype]],true);
         if(!$usersInfo) {
             $getResult=$this->auth_getUserinfo($accessTokenResult['data']['access_token'],$accessTokenResult['data']['openid']);
             if(!$getResult['success']){

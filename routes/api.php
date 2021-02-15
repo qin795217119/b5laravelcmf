@@ -22,5 +22,6 @@ Route::namespace('Api\Mapply\V1')->prefix('mapply/v1')->middleware(['api','api.m
 });
 Route::namespace('Api\V1')->prefix('v1')->middleware('api')->group(function (){
     Route::post('/', 'IndexController@index');
+    Route::get('/payback', 'PaybackController@index')->name('payback');
 });
 

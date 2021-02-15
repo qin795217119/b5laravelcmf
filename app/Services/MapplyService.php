@@ -7,8 +7,10 @@
 namespace App\Services;
 
 use App\Cache\MapplyCache;
+use App\Helpers\Util\ValidateApi;
 use App\Models\Mapply;
 use App\Validates\MapplyValidate;
+use Illuminate\Support\Str;
 
 /**
  * 微信预约报名
@@ -38,6 +40,34 @@ class MapplyService extends BaseService
             $reArr[$key]=$value['title'];
         }
         return $reArr;
+    }
+
+    public function checkExtField($key,$val,$title,$require=0){
+        $val=trim($val);
+        $extField=$this->extField();
+        if(!array_key_exists($key,$extField)) return message($key.':'.$title.'参数错误',false);
+        if($require && !$val)  return message($title.'不能为空',false);
+        if($val){
+            switch ($key){
+                case 'name':
+                    if(!ValidateApi::isChinese($val)) return message($title.'必须为汉字',false);
+                    if(!ValidateApi::checkLen($val,'2,4')) return message($title.'长度为2-4',false);
+                    break;
+                case 'phone':
+                    if(!ValidateApi::is_mobile_phone($val)) return message($title.'格式不正确',false);
+                    break;
+                case 'idcard':
+                    if(!ValidateApi::isIdcard($val)) return message($title.'格式不正确',false);
+                    break;
+                case 'birthday':
+                    if(!ValidateApi::isDate($val)) return message($title.'格式不正确',false);
+                    break;
+                case 'sex':
+                    if($val!='男' && $val!='女') return message($title.'错误',false);
+                    break;
+            }
+        }
+        return message('',true);
     }
 
     public function info($id, bool $isArray = true)
