@@ -139,7 +139,7 @@ class AdminService extends BaseService
     //退出登录
     public function logout(){
         app('session')->flush();
-        Cookie::forget(config('app.admin_session').'_cookie');
+        Cookie::queue(Cookie::forget(config('app.admin_session').'_cookie'));
         return redirect('admin');
     }
     /**
