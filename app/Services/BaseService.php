@@ -34,6 +34,10 @@ class BaseService
         $this->model = $model;
     }
 
+    public function setModelTable($table){
+        $this->model=$this->model->setTable($table);
+    }
+
     //设置验证类
     public function setValidate($validate)
     {
@@ -133,11 +137,11 @@ class BaseService
             }
             $count = $this->model->where($map)->count();
         }
-        $list = $this->after_getList($list);
+        $list = $this->after_getList($list,$param);
         return message('操作成功', true, $list, 0, '', ['total' => $count]);
     }
 
-    public function after_getList($list)
+    public function after_getList($list,$param)
     {
         return $list;
     }
@@ -219,20 +223,21 @@ class BaseService
         }
 
         if ($data) {
+            $insertData=$data;
             if ($this->validate) {
                 $validate = $this->validate->data($data)->type('add')->run();
                 if ($validate->error) {
                     return message($validate->error, false);
                 }
-                $data = $validate->get();
+                $insertData = $validate->get();
             }
 
             //演示限制
             if (system_isDemo() && get_class($this) != 'App\Services\LoginlogService') {
                 return $this->demo_system();
             }
-
-            $result = $this->model->add($data);
+            $data=array_merge($data,$insertData);
+            $result = $this->model->add($insertData);
             $title=$argList[2] ?? '保存';
             if ($result) {
                 if($this->model->incrementing){
@@ -275,19 +280,20 @@ class BaseService
             $data = request()->all();
         }
         if ($data) {
+            $updateData=$data;
             if ($this->validate) {
                 $validate = $this->validate->data($data)->type('edit')->run();
                 if ($validate->error) {
                     return message($validate->error, false);
                 }
-                $data = $validate->get();
+                $updateData = $validate->get();
             }
             //演示限制
             if (system_isDemo()) {
                 return $this->demo_system();
             }
-
-            $result = $this->model->edit($data);
+            $data=array_merge($data,$updateData);
+            $result = $this->model->edit($updateData);
             if ($result !== false) {
                 $this->after_edit($data);
                 $url = $argList[1] ?? '';
@@ -342,7 +348,7 @@ class BaseService
 
         $result = $this->model->drop($data['ids'], $field);
         if ($result) {
-            $this->after_drop($data);
+            $this->after_drop($data,$field);
             $url = $argList[2] ?? '';
             if (!$url) {
                 return message('删除成功', true);
@@ -358,7 +364,7 @@ class BaseService
      * @param $data
      * @return bool
      */
-    protected function after_drop($data)
+    protected function after_drop($data,$field)
     {
         return true;
     }

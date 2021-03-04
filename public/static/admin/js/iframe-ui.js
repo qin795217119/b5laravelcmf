@@ -567,6 +567,8 @@ var table = {
                     createUrl: cUrl + "/add?id={id}",
                     updateUrl: cUrl + "/edit?id={id}",
                     removeUrl: cUrl + "/drop",
+                    clearCacheUrl: cUrl + '/delcache',
+                    cleanUrl: cUrl + "/trash",
                     code: "id",
                     parentCode: "parent_id",
                     uniqueId: "id",
@@ -579,12 +581,15 @@ var table = {
                     expandColumn: 1,
                     showSearch: true,
                     showRefresh: true,
-                    showColumns: true
+                    showColumns: true,
+                    loadInit:true
                 };
                 var options = $.extend(defaults, options);
                 table.options = options;
                 table.config[options.id] = options;
-                $.table.initEvent();
+                // if(options.loadInit){
+                    $.table.initEvent();
+                // }
                 $.bttTable = $('#' + options.id).bootstrapTreeTable({
                     code: options.code,                                 // 用于设置父子关系
                     parentCode: options.parentCode,                     // 用于设置父子关系
@@ -1091,7 +1096,7 @@ var table = {
         // 操作封装处理
         operate: {
             //ajax提交
-            b5ajax:function(url, type, dataType, data, callback){
+            b5ajax:function(url, type, dataType, data, callback,completecallback){
                 var config = {
                     url: url,
                     type: type,
@@ -1120,6 +1125,15 @@ var table = {
                                 $.modal.msg(result.msg,'',result.url);
                             }
                         }
+                    },
+                    complete:function () {
+                        if($.common.isFunction(completecallback)){
+                            if(typeof callback ==='string'){
+                                eval(callback+"()");
+                            }else{
+                                callback();
+                            }
+                        }
                     }
                 };
                 $.ajax(config);
@@ -1128,7 +1142,7 @@ var table = {
                 $.operate.b5ajax(url, "post", "json", data, callback,completecallback);
             },
             b5get:function(url,data,callback,completecallback){
-                $.operate.b5ajax(url, get, "json", data, callback,completecallback);
+                $.operate.b5ajax(url, 'get', "json", data, callback,completecallback);
             },
             // 提交数据
             submit: function(url, type, dataType, data, callback) {
@@ -1212,9 +1226,10 @@ var table = {
                 return url;
             },
             //清除缓存
-            clearcache:function(){
+            clearcache:function(param){
                 table.set();
                 var url=table.options.clearCacheUrl;
+                if(param) url=urlcreate(url,param);
                 $.operate.submit(url, "post");
             },
             // 删除信息
@@ -1272,6 +1287,24 @@ var table = {
                 }
                 $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id),width,height);
             },
+            //添加额外信息
+            addExt: function(args,obj,isFull,name){
+                table.set();
+                var width='';
+                var height='';
+                if(obj){
+                    width=$(obj).data('width');
+                    height=$(obj).data('height');
+                }
+                var url=table.options.createUrl.replace("id={id}", "");
+                url=url+args;
+                if(isFull){
+                    $.modal.openFull("添加" + (name?name:table.options.modalName), url);
+                }else{
+                    $.modal.open("添加" + (name?name:table.options.modalName), url);
+                }
+            },
+
             // 添加信息，以tab页展现
             addTab: function (id) {
                 table.set();
@@ -1766,12 +1799,15 @@ var table = {
                     //单选
                     var treeIdArr = [];
                     var treeIdName = [];
+                    var treeNodeInput=[];
                     $._tree.getSelectedNodes().forEach(function (item) {
                         treeIdArr.push(item.id);
                         treeIdName.push(item.name);
+                        treeNodeInput.push(JSON.stringify(item));
                     });
                     $("#treeId").val(treeIdArr.join(','));
                     $("#treeName").val(treeIdName.join(','));
+                    $("#treeNodeInput").val(treeNodeInput.join(','))
                 }
 
             }

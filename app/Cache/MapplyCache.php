@@ -26,8 +26,9 @@ class MapplyCache
         $mapply=Cache::rememberForever($key,function () use ($id){
             $info = (new MapplyService())->info($id);
             if($info){
+                $info['share_title']=$info['share_title']?:$info['title'];
                 $info['banner']=get_image_url($info['banner']);
-                $info['share_img']=get_image_url($info['share_img']);
+                $info['share_img']=get_image_url($info['share_img'],false);
             }
             return $info ?: [];
         });

@@ -93,6 +93,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
+                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="清除缓存" href="javascript:clearCacheAll();"><i class="fa fa-question-circle"></i> 清除缓存</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="javascript:alert('暂无');"><i class="fa fa-question-circle"></i> 文档</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="锁定屏幕" href="#" id="lockScreen"><i class="fa fa-lock"></i> 锁屏</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>
@@ -197,6 +198,10 @@
     function rePass() {
         var url = mUrl + '/common/repass';
         $.modal.open("修改密码", url, '770', '380');
+    }
+
+    function clearCacheAll() {
+        $.operate.b5get('/admin/cacheclear');
     }
 </script>
 </body>

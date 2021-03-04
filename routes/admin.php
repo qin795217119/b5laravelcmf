@@ -17,13 +17,16 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
 
     Route::get('/', 'IndexController@index');
     Route::get('/home', 'IndexController@home');
+
+
 //public操作
     Route::any('/login', 'PublicController@login');
     Route::any('/logout', 'PublicController@logout');
     Route::any('/noauth','PublicController@noauth');
     Route::get('/public/vemail', 'PublicController@vemail');
 //公共操作
-    Route::any('/lockscreen','CommonController@lockscreen');
+    Route::get('/home', 'IndexController@home');
+    Route::any('/cacheclear','CommonController@cacheclear');
     Route::any('/common/uploadimg', 'CommonController@uploadimg');
     Route::any('/common/repass','CommonController@repass');
     Route::any('/common/mapselect','CommonController@mapselect');
@@ -107,6 +110,35 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/mapply/add', 'MapplyController@add');
     Route::any('/mapply/edit', 'MapplyController@edit');
     Route::any('/mapply/drop', 'MapplyController@drop');
+//网站系统
+    Route::any('/website/index', 'WebSiteController@index');
+    Route::any('/website/add', 'WebSiteController@add');
+    Route::any('/website/edit', 'WebSiteController@edit');
+    Route::any('/website/drop', 'WebSiteController@drop');
+    Route::any('/website/delcache', 'WebSiteController@delcache');
+
+    Route::any('/webcat/index', 'WebCatController@index');
+    Route::any('/webcat/add', 'WebCatController@add');
+    Route::any('/webcat/edit', 'WebCatController@edit');
+    Route::any('/webcat/drop', 'WebCatController@drop');
+    Route::any('/webcat/tree', 'WebCatController@tree');
+    Route::any('/webcat/delcache', 'WebCatController@delcache');
+
+    Route::any('/weblist/index', 'WebListController@index');
+    Route::any('/weblist/add', 'WebListController@add');
+    Route::any('/weblist/edit', 'WebListController@edit');
+    Route::any('/weblist/drop', 'WebListController@drop');
+
+    Route::any('/webpos/index', 'WebPosController@index');
+    Route::any('/webpos/add', 'WebPosController@add');
+    Route::any('/webpos/edit', 'WebPosController@edit');
+    Route::any('/webpos/drop', 'WebPosController@drop');
+    Route::any('/webpos/delcache', 'WebPosController@delcache');
+
+    Route::any('/webad/index', 'WebAdController@index');
+    Route::any('/webad/add', 'WebAdController@add');
+    Route::any('/webad/edit', 'WebAdController@edit');
+    Route::any('/webad/drop', 'WebAdController@drop');
 });
 
 

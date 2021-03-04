@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\URL;
 
 class IndexController extends ApiController
 {
-    public $web_url='http://192.168.31.115:8080';
+    public $web_url='http://192.168.1.20:8080';
 
     /**
      * 活动首页

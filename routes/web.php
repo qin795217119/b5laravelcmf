@@ -10,8 +10,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::redirect('/', '/admin');
 
-Route::get('/', function () {
-    return redirect('/admin');
-});
+
+
+//
+$list=\App\Cache\WebSiteCache::getByCode();
+foreach ($list as $key=>$val){
+    if(!$val['status']) continue;
+//    if(isset($val['is_default']) && $val['is_default']){
+//        Route::get('/','Web\Site\\'.ucwords($key).'Controller@index');
+//    }
+    Route::namespace('Web\Site')->prefix($key)->group(function () use ($key){
+        Route::get('/',ucwords($key).'Controller@index');
+        Route::get('/index',ucwords($key).'Controller@index');
+        Route::get('/list',ucwords($key).'Controller@list');
+        Route::get('/info',ucwords($key).'Controller@info');
+    });
+
+}
 

@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Admin;
 use App\Cache\ConfigCache;
 use App\Helpers\Util\UploadApi;
 use App\Services\AdminService;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * 公共操作控制器
@@ -70,6 +71,12 @@ class CommonController extends Backend
             return (new AdminService())->repass();
         }
         return $this->render('',['name'=>adminLoginInfo('info.name')]);
+    }
+
+    //清除所有缓存
+    public function cacheclear(){
+        Artisan::call('cache:clear');
+        return message('缓存清除成功',true,[],null,'reload');
     }
 
     public function mapselect(){

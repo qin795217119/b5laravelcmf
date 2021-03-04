@@ -19,6 +19,7 @@
     @endif
     @if (isset($widget_data['maxlen']) && $widget_data['maxlen']) maxlength="{{$widget_data['maxlen']}}" @endif
     @if (isset($widget_data['required'])) required @endif
+    @if (isset($widget_data['disabled'])) disabled @endif
     @if (isset($widget_data['readonly'])) readonly="true" @endif
     autocomplete="off"
 />

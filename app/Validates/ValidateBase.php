@@ -168,12 +168,12 @@ class ValidateBase
             $this->before_validate();
 
             $rules = $this->getRules();
+
             $error = '';
             if ($rules) {
                 $validator = Validator::make($this->data, $rules, $this->message(), $this->attributes());
                 if ($validator->fails()) {
                     $error = $validator->errors()->first();
-
                     $error = $error ?: '请确定提交信息的完整';
                 }
             }

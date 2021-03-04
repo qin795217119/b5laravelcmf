@@ -80,7 +80,7 @@ class AdminAuth
         $notAuthController = ['public', 'common'];
         $notAuthAction = ['tree'];
         $notAuthPermission=['admin:index:index','admin:index:home'];
-        if (in_array($controller_name, $notAuthController) || in_array($action_name, $notAuthAction) || in_array($permission,$notAuthPermission)) {
+        if (in_array($controller_name, $notAuthController) || in_array($action_name, $notAuthAction) || in_array($permission,$notAuthPermission) || strpos($action_name,'ajax')===0) {
             return true;
         }
 

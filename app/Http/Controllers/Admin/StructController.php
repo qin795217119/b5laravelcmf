@@ -6,7 +6,6 @@
 // +----------------------------------------------------------------------
 namespace App\Http\Controllers\Admin;
 
-
 use App\Services\StructService;
 use Illuminate\Http\Request;
 

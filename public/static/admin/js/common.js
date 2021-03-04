@@ -601,6 +601,26 @@ function b5uploadimghtml(path,name){
         '      </div>';
     return html;
 }
+function GetRequest() {
+    var url = window.location.search;
+    var theRequest = new Object();
+    if(url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+function urlcreate(url,params) {
+    if( url.indexOf('?')>0 ){
+        url += '&' + params;
+    }else{
+        url += '?' + params;
+    }
+    return url;
+}
 /** 设置全局ajax处理 */
 $.ajaxSetup({
     headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

@@ -12,6 +12,7 @@
             @endif
             @if (isset($widget_data['required'])) required @endif
             @if (isset($widget_data['readonly'])) readonly="true" @endif
+            @if (isset($widget_data['disabled'])) disabled="true" @endif
             @if (isset($widget_data['mult']) && $widget_data['mult']) multiple @endif>
             @if(isset($widget_data['place']))
                 @if($widget_data['place'])

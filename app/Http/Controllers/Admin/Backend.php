@@ -108,16 +108,25 @@ class Backend extends BaseController
         $id = request()->input('id', 0);
         if ($id) {
             $info = $this->service->info($id);
-        } else {
-            $data = request()->input();
-            if ($data) {
-                view()->share('input', $data);
-            }
+        }
+        $data = request()->input();
+        if ($data) {
+            view()->share('input', $data);
         }
         view()->share('info', $info);
-        return $this->render();
+        $res=$this->edit_before($info,$data);
+        if($res===true){
+            return $this->render();
+        }else{
+            return $res;
+        }
     }
-
+    public function edit_before($info,$data){
+        if(!$info){
+            return $this->toError('信息不存在');
+        }
+        return true;
+    }
     /**
      * 删除
      * @return mixed

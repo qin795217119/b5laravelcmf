@@ -1,4 +1,4 @@
-<a class="btn btn-success"
+<a class="btn btn-success @if(isset($widget_data['disabled'])) disabled @endif"
 @if(isset($widget_data['full']))
    onclick="$.operate.addFull('@if(isset($widget_data['opid'])) {{$widget_data['opid']}} @endif',this)"
    @else

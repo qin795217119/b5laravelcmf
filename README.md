@@ -25,13 +25,13 @@
 ### 下载地址：
 github: https://github.com/qin795217119/b5laravelcmf
 
-gitee: https://gitee.com/b5net/b5-laravel-cmf
+gitee: https://gitee.com/b5net/b5-laravel-cmf      
 
 #### 使用说明
 
 1. 环境推荐使用 PHP 7.4 + Mysql 5.7 +Nginx 
 2. 开启函数 proc_open
-   开启PHP扩展  fileinfo、gd2等，若使用redis最好安装PHP的redis扩展
+   开启PHP扩展  fileinfo、gd2、imagemagick等，若使用redis最好安装PHP的redis扩展
 3.  使用nginx需要配置重写 
     location / {
               try_files $uri $uri/ /index.php?$query_string;

@@ -1,0 +1,82 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button,img{padding: 0; margin: 0;box-sizing: border-box}
+html{width: 100%;height: 100%;position: relative;margin: 0;padding: 0;}
+body{background:#fff;color:#333;font-size:12px;font-family:"微软雅黑", Helvetica,Tahoma, Arial, sans-serif;min-width: 1280px;height: 100%;}
+*{margin: 0;padding: 0;box-sizing: border-box}
+ul,ol{list-style: none}
+input { outline:none; }
+label{font-weight: normal;margin: 0;padding: 0}
+a,a:hover,a:link,a:visited{text-decoration: none;color: inherit}
+.mcenter{margin:  0 auto}
+.overhide{overflow: hidden}
+.b5main{width: 100%;height: 100%;position: relative;}
+.swiper-container{height: 100%}
+.mwid{width: 1200px;}
+.con_container{ width:1200px; margin:0 auto;zoom:1;}
+
+
+.wy_head{ height:90px;zoom:1;}
+.wy_logo{ float:left; width:240px; height:90px;display: flex;align-items: center;justify-content: flex-start}
+.wy_logo img{max-width: 100%;max-height: 100%}
+#header {position:relative; z-index:5; height:90px; float:left; width:770px;}
+#nav {position:absolute; top:0; left:0; z-index:4; height:100%;}
+#nav li {float:left; height:100%; -webkit-transition:background-color 700ms; transition:background-color 700ms; background:url(../images/icon01.png) no-repeat right bottom;position: relative;width:110px;}
+#nav li:last-child{ background:none;}
+#nav li a {position:relative; z-index:2; display:block; width:100%; height:100%; font-size:16px; line-height:90px; text-align:center; color:#555; -webkit-transition:color 200ms; transition:color 200ms; font-weight:normal;overflow: hidden}
+#nav li a.on {color:#fff;}
+#nav li a span {position:absolute; left:0; top:0; z-index:2; width:100%; height:100%;}
+#nav li a .bkg {top:100%; z-index:1; background-color:#E62B1E; -webkit-transition:top 200ms; transition:top 200ms;}
+#nav li a.on .bkg, #nav li:hover a .bkg {top:0;}
+#nav li:hover a{color: #FFF}
+
+.menuchlist{background: rgba(0,0,0,0.6);display: none;top: 90px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);position: absolute;font-size: 12px;color: #8f7c6d;line-height: 22px;width: 170px;left: 0;z-index: 2;text-align: left;box-sizing: border-box;padding: 8px 0 8px 20px}
+#nav li .menuchlist a{display: block;line-height: 38px;font-size: 14px;color: #f8f8f8;}
+#header > ul > li:hover .menuchlist{display: block}
+.menuchlist a img {padding-left: 8px;}
+.menuchlist a:hover{color: #ff6a00}
+
+.wy_search{ float:right; width:175px; height:50px; margin-top:20px;}
+.wy_text01{ background:#D4D4D4; border:none; height:22px; width:105px; padding:0 10px; display:inline-block; float:left; margin-top:14px; border-radius:11px;}
+.wy_but01{ background:url(../images/search.png) no-repeat; width:50px; height:50px; float:left; border:none; cursor:pointer;}
+
+.b5index-banner{position: relative;width: 100%;height: 500px;z-index: 0}
+.b5index-banner .swiper-slide a{display: block;width: 100%;height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover}
+
+.b5_title01{ text-align:center; font-size:30px; margin:20px auto; color:#333; height:40px; overflow:hidden;zoom:1;}
+.b5_title01 span{ color:#9A9A9A; font-size:25px; display:inline-block; margin-left:10px;}
+.b5_title01 span small{ text-transform:uppercase; font-size:16px; display:inline-block; margin-left:5px;}
+
+.b5_index_productList{width: 100%;padding: 10px 0;position: relative;overflow: hidden}
+.b5_index_productList .swiper-slide{height: 250px;width: auto}
+.b5_index_productList .index_swiper_item{width: 220px;height: 250px;border: 1px solid #DCDCDC;overflow: hidden;display: block}
+.b5_index_productList .index_swiper_img{width: 100%;height: 210px;background-size: cover;overflow: hidden;background-position: center;background-repeat: no-repeat}
+.b5_index_productList .index_swiper_title{position: relative;width: 100%;height: 40px;color: #333;font-size: 14px;text-align: center;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;line-height: 40px;padding: 0 5px}
+.b5_index_productList .index_swiper_item:hover .index_swiper_title{color: #DD4343}
+.b5_index_productList .index_swiper_item:hover .index_swiper_img{transform:scale(1.05);transition: all .3s ease-out;}
+
+.b5_index_productList .swiper-button-next,.b5_index_productList .swiper-button-prev{width: 22px;height: 36px;margin-top: -18px;background-size: contain;display: none;z-index: 1000;}
+.b5_index_productList:hover .swiper-button-next,.b5_index_productList:hover .swiper-button-prev{display: block}
+.b5_index_productList .swiper-pagination-bullet-active{width: 20px;border-radius: 4px}
+.b5_index_productList .swiper-pagination-bullet{opacity: .6}
+
+.b5_index_content02{background: #F5F5F5;padding: 20px 0;overflow: hidden;zoom: 1;}
+.b5_con2_left01{ float:left; width:658px; overflow:hidden;zoom:1;}
+.b5_con2_right01{ float:right; width:500px; overflow:hidden;zoom:1;text-align: right}
+.b5_con2_ltitle{font-size:30px; margin:20px auto; color:#333; background:url(../images/icon_cat_bottom.png) no-repeat left bottom; height:55px; overflow:hidden;zoom:1;}
+.b5_con2_ltitle span{ color:#9A9A9A; font-size:25px; display:inline-block; margin-left:10px;}
+.b5_con2_ltitle span small{ text-transform:uppercase; font-size:16px; display:inline-block; margin-left:5px;}
+.b5_con2_left01  {color: #333;font-size: 16px;line-height: 38px;text-indent: 2em;}
+a.b5_con2_more01{ display:block; background:#4D9FD5; width:120px; height:36px; line-height:36px;color:#fff; font-size:16px; border-radius:18px; margin-top:30px;}
+.b5_con2_right01 img {width: 470px;height: 405px;}
+
+.footerbox{ background:#496475; height:120px; overflow:hidden;zoom:1;}
+.footer_l01{ float:left; width:800px; overflow:hidden;zoom:1; font-size:12px; line-height:26px;  color:#fff; margin-top:20px;}
+.footer_l01 li{ float:left; margin-right:20px;}
+.footer_l01 li.footer_li01{ width:290px;}
+.footer_l01 li.footer_li02{ width:240px;}
+.footer_l01 li.footer_li03{ width:160px;}
+.footer_fimgs{ float:right; width:400px; text-align:right; font-size:12px; color:#fff;}
+.footer_fimgs div{ float:right; width:110px; height:85px; margin-top:18px; margin-left:40px; overflow:hidden;zoom:1;}
+.footer_fimgs div span{ float:left; width:18px; text-align:center; line-height:12px;}
+.footer_fimgs div img{ width:85px; height:85px;}
+
+

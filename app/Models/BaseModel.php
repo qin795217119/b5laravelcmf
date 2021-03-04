@@ -29,7 +29,6 @@ class BaseModel extends Model
     public $timestamps = true;
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
-
     /**
      * 获取主键ID
      * @return string
