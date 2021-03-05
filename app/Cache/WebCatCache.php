@@ -14,10 +14,11 @@ class WebCatCache
 
     /**
      * 获取某个站点的所有菜单
+     * @param $website
      * @param $id
      * @return |null
      */
-    public static function get($website)
+    public static function get($website,$id=null)
     {
         if (!paramSet($website) || !$website) {
             return [];
@@ -27,6 +28,9 @@ class WebCatCache
             $list=(new WebCatService())->getAll([['website','=',$website]],[],[],'id',[['parent_id','asc'],['listsort','asc'],['id','asc']]);
             return $list ?: [];
         });
+        if(!is_null($id)){
+            return $reList[$id]??[];
+        }
         return $reList;
     }
 

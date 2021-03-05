@@ -8,7 +8,6 @@
 
         @render('iframe',['name'=>'forminput|上级菜单','extend'=>['name'=>'','id'=>'treeName','readonly'=>'','addon'=>'fa-search','value'=>$parent_name]])
         @render('iframe',['name'=>'forminput|菜单名称','extend'=>['name'=>'name','class'=>'form-control','required'=>1,'place'=>'']])
-        @render('iframe',['name'=>'forminput|菜单标识','extend'=>['name'=>'catkey','class'=>'form-control','required'=>1,'place'=>'字母、数字，以及破折号 (-) 和下划线 ( _ )，唯一']])
         <div class="form-group mb0">
             <label class="col-sm-3 control-label is-required">显示顺序：</label>
             <div class="col-sm-3 mb15">
@@ -20,7 +19,16 @@
             </div>
         </div>
         @render('iframe',['name'=>'forminput|请求地址','extend'=>['name'=>'url','tips'=>'当菜单类型为外链跳转时有效']])
-        @render('iframe',['name'=>'forminput|关联菜单','extend'=>['name'=>'relcat','tips'=>'关联菜单标识，多个用逗号(,)间隔，用户取多个菜单的信息列表']])
+        <div class="form-group mb0">
+            <label class="col-sm-3 control-label">列表模板：</label>
+            <div class="col-sm-3 mb15">
+                @render('iframe',['name'=>'input','extend'=>['name'=>'template_list','class'=>'form-control']])
+            </div>
+            <label class="col-sm-2 control-label">详情模板：</label>
+            <div class="col-sm-3 mb15">
+                @render('iframe',['name'=>'input','extend'=>['name'=>'template_info','class'=>'form-control']])
+            </div>
+        </div>
         <div class="form-group mb0">
             <label class="col-sm-3 control-label">菜单状态：</label>
             <div class="col-sm-3 mb15">

@@ -26,6 +26,7 @@ foreach ($list as $key=>$val){
         Route::get('/index',ucwords($key).'Controller@index');
         Route::get('/list',ucwords($key).'Controller@list');
         Route::get('/info',ucwords($key).'Controller@info');
+        Route::get('/page',ucwords($key).'Controller@page');
     });
 
 }

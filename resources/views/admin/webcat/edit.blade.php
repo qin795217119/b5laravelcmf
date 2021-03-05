@@ -10,7 +10,6 @@
 
         @render('iframe',['name'=>'forminput|上级菜单','extend'=>['name'=>'','id'=>'treeName','readonly'=>'','addon'=>'fa-search','value'=>$info['parent_name']]])
         @render('iframe',['name'=>'forminput|菜单名称','extend'=>['name'=>'name','class'=>'form-control','required'=>1,'info'=>$info]])
-        @render('iframe',['name'=>'forminput|菜单标识','extend'=>['name'=>'catkey','class'=>'form-control','required'=>1,'place'=>'字母、数字，以及破折号 (-) 和下划线 ( _ )，唯一','info'=>$info]])
         <div class="form-group mb0">
             <label class="col-sm-3 control-label is-required">显示顺序：</label>
             <div class="col-sm-3 mb15">
@@ -22,7 +21,19 @@
             </div>
         </div>
         @render('iframe',['name'=>'forminput|请求地址','extend'=>['name'=>'url','info'=>$info,'tips'=>'当菜单类型为外链跳转时有效']])
-        @render('iframe',['name'=>'forminput|关联菜单','extend'=>['name'=>'relcat','tips'=>'关联菜单标识，多个用逗号(,)间隔，用户取多个菜单的信息列表','info'=>$info]])
+        <div class="form-group mb0">
+            <label class="col-sm-3 control-label">列表模板：</label>
+            <div class="col-sm-3">
+                @render('iframe',['name'=>'input','extend'=>['name'=>'template_list','class'=>'form-control','info'=>$info]])
+            </div>
+            <label class="col-sm-2 control-label">详情模板：</label>
+            <div class="col-sm-3">
+                @render('iframe',['name'=>'input','extend'=>['name'=>'template_info','class'=>'form-control','info'=>$info]])
+            </div>
+            <div class="mb15 col-xs-12 col-xs-offset-3">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 只有类型为图文信息、产品信息时，详情模板有效</span>
+            </div>
+        </div>
         <div class="form-group mb0">
             <label class="col-sm-3 control-label">菜单状态：</label>
             <div class="col-sm-3 mb15">

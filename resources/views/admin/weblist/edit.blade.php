@@ -35,7 +35,7 @@
         <div class="form-group mb0">
             <label class="col-sm-2 control-label">发布时间：</label>
             <div class="col-sm-3 mb15">
-                @render('iframe',['name'=>'input','extend'=>['name'=>'subtime','class'=>'form-control','id'=>'subtime','value'=>date('Y-m-d H:i:s'),'readonly'=>'','info'=>$info]])
+                @render('iframe',['name'=>'input','extend'=>['name'=>'subtime','class'=>'form-control','id'=>'subtime','readonly'=>'','info'=>$info]])
             </div>
             <label class="col-sm-3 control-label">信息状态：</label>
             <div class="col-sm-3 mb15">

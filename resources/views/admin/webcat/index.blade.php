@@ -40,6 +40,7 @@
                     field: 'selectItem',
                     radio: true
                 },
+
                 {title: '菜单名称(前端)', field: 'name'},
                 {
                     title: '菜单标题',
@@ -48,7 +49,7 @@
                         return $.table.tooltip(value,7);
                     }
                 },
-                {field: 'catkey', title: '标识'},
+                    {title: 'ID', field: 'id'},
                 {title: '排序', field: 'listsort'},
                 {title: '类型', field: 'type_name'},
                 {

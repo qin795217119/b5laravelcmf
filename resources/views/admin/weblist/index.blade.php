@@ -132,6 +132,8 @@
         function getUserList() {
             var options = {
                 modalName: "内容列表",
+                sortName:'subtime',
+                sortOrder:'desc',
                 columns: [
                     {checkbox: true},
                     {field: 'id', title: '内容ID', align: 'center', sortable: true},
@@ -152,8 +154,9 @@
                             return $.view.statusShow(row,false);
                         }
                     },
-                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true,visible: false},
-                    {field: 'update_time', title: '更新时间', align: 'center', sortable: true},
+                    {field: 'subtime', title: '发布时间', align: 'center', sortable: true},
+                    {field: 'create_time', title: '发布时间', align: 'center', sortable: true,visible: false},
+                    {field: 'update_time', title: '更新时间', align: 'center', sortable: true,visible: false},
                     {
                         title: '操作',
                         align: 'center',

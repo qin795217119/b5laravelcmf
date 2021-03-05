@@ -19,6 +19,7 @@ class WebCat extends BaseModel
         'parent_id' => 0,
         'website' => 0,
         'title' => '',
+        'catkey' => '',
         'target' => 0,
         'listsort' => 0,
         'type' => '',
@@ -27,5 +28,7 @@ class WebCat extends BaseModel
         'url' => '',
         'relcat' => '',
         'checkcode' => '',
+        'template_list' => '',
+        'template_info' => '',
     ];
 }

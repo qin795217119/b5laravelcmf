@@ -33,6 +33,7 @@ class WebCatService extends BaseService
         $arr=[
             'list' => '图文信息',
             'goods' => '产品信息',
+            'page' => '单页介绍',
             'link' => '外链跳转',
             'none' => '无类型'
         ];

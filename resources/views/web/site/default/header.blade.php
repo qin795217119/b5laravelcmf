@@ -4,15 +4,15 @@
         <div class="" id="header">
             <ul id="nav">
                 <li>
-                    <a href=""><span>首页</span><span class="bkg"></span></a>
+                    <a href="{{$home_url}}" class="{{$activeMenu=='home'?'on':''}}"><span>首页</span><span class="bkg"></span></a>
                 </li>
                 @foreach($menuList as $val)
                     <li>
-                        <a href=""><span>{{$val['name']}}</span><span class="bkg"></span></a>
+                        <a href="{{$val['url']?:'javascript:;'}}"  class="{{$activeMenu==$val['checkcode']?'on':''}}"><span>{{$val['name']}}</span><span class="bkg"></span></a>
                         @if($val['childArr'])
                             <div class="menuchlist">
                                 @foreach($val['childArr'] as $chval)
-                                    <a href="">{{$chval['name']}}</a>
+                                    <a href="{{$chval['url']?:'javascript:;'}}">{{$chval['name']}}</a>
                                 @endforeach
                             </div>
                         @endif

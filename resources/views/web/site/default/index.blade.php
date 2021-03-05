@@ -1,21 +1,34 @@
 @extends('web.site.default.layout')
 
 @section('content')
-<div class="b5index-banner">
-    <div class="swiper-container banner-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <a href="javascript:;" style="background-image: url({{asset('static/site/default/images/demo/banner_1.jpg')}})"></a>
-            </div>
-            <div class="swiper-slide">
-                <a href="javascript:;" style="background-image: url({{asset('static/site/default/images/demo/banner_2.jpg')}})"></a>
-            </div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination swiper-pagination-white"></div>
-    </div>
-</div>
 
+@if($bannerList)
+    <div class="b5index-banner">
+        <div class="swiper-container banner-container">
+            <div class="swiper-wrapper">
+                @foreach($bannerList as $banner)
+                    <div class="swiper-slide">
+                        <a href="{{$banner['linkurl']?:'javascript:;'}}" style="background-image: url({{$banner['firstimg']}})"></a>
+                    </div>
+                @endforeach
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination swiper-pagination-white"></div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            new Swiper('.banner-container', {
+                autoplay: true,
+                effect:'fade',
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        })
+    </script>
+@endif
 <div class="con_container">
     <div class="b5_title01"><a href="" target="_blank">产品中心<span>/<small>PRODUCTS</small></span></a></div>
     <div class="b5_index_productList">
@@ -85,14 +98,6 @@
 </div>
 <script>
     $(function () {
-        new Swiper('.banner-container', {
-            autoplay: true,
-            effect:'fade',
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
         new Swiper('.product-container', {
             autoplay: {
                 delay: 4000,
