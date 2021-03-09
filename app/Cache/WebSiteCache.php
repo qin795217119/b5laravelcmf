@@ -38,10 +38,12 @@ class WebSiteCache
     public static function getByCode($website=null)
     {
         $key='website_list_code';
+
         $list=Cache::rememberForever($key,function (){
-            $list = (new WebSiteService())->getAll([],['id','code','status','name','title'],[],'code',[]);
+            $list = (new WebSiteService())->getAll([],['id','code','status','name','title','template','is_default'],[],'code',[]);
             return $list ?: [];
         });
+
         if(!is_null($website)){
             return $list[$website]??[];
         }

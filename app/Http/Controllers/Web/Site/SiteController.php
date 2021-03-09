@@ -15,6 +15,7 @@ use App\Models\WebList;
 use App\Services\WebListExtService;
 use App\Services\WebListService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 //网站
 class SiteController extends BaseController
@@ -26,8 +27,12 @@ class SiteController extends BaseController
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->website_code=str_replace('controller','',strtolower(class_basename(get_class($this))));
+//        $this->website_code=str_replace('controller','',strtolower(class_basename(get_class($this))));
+        $this->website_code=strtolower(str_replace('/','',Route::current()->getPrefix()));
+
         $siteInfo=WebSiteCache::getByCode($this->website_code);
+        if($siteInfo['template']) $this->template=$siteInfo['template'];
+
         $this->website=$siteInfo['id'];
         if(IS_GET) {
             view()->share('siteInfo',$siteInfo);
@@ -49,11 +54,11 @@ class SiteController extends BaseController
      */
     public function list(){
         $id=intval(\request()->input('id',0));
-        if($id<1) return $this->render('error');
+        if($id<1) return $this->error();
         $catAllList=WebCatCache::get($this->website);
         $catInfo=$catAllList[$id]??[];
 
-        if(!$catInfo || !in_array($catInfo['type'],['list','goods']) || !$catInfo['status']) return $this->render('error');
+        if(!$catInfo || !in_array($catInfo['type'],['list','goods']) || !$catInfo['status']) return $this->error();
 
         $catList=[];
         $parentCat=[];
@@ -94,12 +99,12 @@ class SiteController extends BaseController
 
     public function info(){
         $id=intval(\request()->input('id',0));
-        if($id<1) return $this->render('error');
+        if($id<1) return $this->error();
         $info=(new WebListService())->info([['id','=',$id],['status','=',1]]);
-        if(!$info) return $this->render('error');
-        if(!$info['catid']) $this->render('error');
+        if(!$info) return $this->error();
+        if(!$info['catid']) $this->error();
         $catInfo=WebCatCache::get($this->website,$info['catid']);
-        if(!$catInfo || !in_array($catInfo['type'],['list','goods']) || !$catInfo['status']) return $this->render('error');
+        if(!$catInfo || !in_array($catInfo['type'],['list','goods']) || !$catInfo['status']) return $this->error();
         $infoExt=(new WebListExtService())->info($info['id']);
         $infoExt=$infoExt?:[];
         if($infoExt && isset($infoExt['imglist']) && $infoExt['imglist']){
@@ -114,12 +119,12 @@ class SiteController extends BaseController
      */
     public function page(){
         $id=intval(\request()->input('id',0));
-        if($id<1) return $this->render('error');
+        if($id<1) return $this->error();
         $catInfo=WebCatCache::get($this->website,$id);
-        if(!$catInfo || $catInfo['type']!='page' || !$catInfo['status']) return $this->render('error');
+        if(!$catInfo || $catInfo['type']!='page' || !$catInfo['status']) return $this->error();
         $temp=$catInfo['template_list']?:$catInfo['type'];
         $info=(new WebListService())->info([['catid','=',$id],['status','=',1]]);
-        if(!$info) return $this->render('error');
+        if(!$info) return $this->error();
         $infoExt=(new WebListExtService())->info($info['id']);
         view()->share('activeMenu',$catInfo['checkcode']);
         return $this->render($temp,['catInfo'=>$catInfo,'info'=>$info,'infoExt'=>$infoExt]);
@@ -178,5 +183,15 @@ class SiteController extends BaseController
     public function render($view = "", $data = [])
     {
         return view("web.site." .$this->template.'.'. strtolower($view), $data);
+    }
+
+    /**
+     * 跳转错误页
+     * @param string $msg
+     * @param int $code
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function error($msg='哎呦，您访问的页面不存在(⋟﹏⋞)',$code=400){
+        return view("web.site.error", ['msg'=>$msg,'code'=>$code]);
     }
 }

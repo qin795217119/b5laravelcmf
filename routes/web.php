@@ -21,13 +21,16 @@ foreach ($list as $key=>$val){
 //    if(isset($val['is_default']) && $val['is_default']){
 //        Route::get('/','Web\Site\\'.ucwords($key).'Controller@index');
 //    }
-    Route::namespace('Web\Site')->prefix($key)->group(function () use ($key){
-        Route::get('/',ucwords($key).'Controller@index');
-        Route::get('/index',ucwords($key).'Controller@index');
-        Route::get('/list',ucwords($key).'Controller@list');
-        Route::get('/info',ucwords($key).'Controller@info');
-        Route::get('/page',ucwords($key).'Controller@page');
+    $controller=ucwords($key).'Controller';
+    if(!class_exists('App\Http\Controllers\Web\Site\\'.$controller)){
+        $controller='SiteController';
+    }
+    Route::namespace('Web\Site')->prefix($key)->group(function () use ($controller){
+        Route::get('/',$controller.'@index');
+        Route::get('/index',$controller.'@index');
+        Route::get('/list',$controller.'@list');
+        Route::get('/info',$controller.'@info');
+        Route::get('/page',$controller.'@page');
     });
-
 }
 

@@ -11,6 +11,7 @@
         @render('iframe',['name'=>'forminput|站点名称','extend'=>['name'=>'name','required'=>1,'sm'=>'2','tips'=>'前端展示','info'=>$info]])
         @render('iframe',['name'=>'forminput|站点标识','extend'=>['name'=>'code','required'=>1,'sm'=>'2','tips'=>'唯一标识，小写英文或小写英文+数字,不要有特殊符号','info'=>$info]])
         @render('iframe',['name'=>'formradio|站点状态','extend'=>['name'=>'status','required'=>1,'sm'=>'2','data'=>['关闭','开启'],'class'=>'form-control','info'=>$info]])
+        @render('iframe',['name'=>'forminput|站点模板','extend'=>['name'=>'template','sm'=>'2','tips'=>'默认模板保持空，请先确认模板是否存在','info'=>$info]])
     </form>
 @stop
 

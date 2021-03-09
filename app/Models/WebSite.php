@@ -14,4 +14,8 @@ namespace App\Models;
 class WebSite extends BaseModel
 {
     protected $table = 'b5net_web_site';
+    protected $attributes = [
+        'template' => '',
+        'is_default' => 0
+    ];
 }
