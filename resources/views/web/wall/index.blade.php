@@ -68,13 +68,9 @@
                                 <div class="draw_lfooter_value">
                                     <select id="prize_id" class="prizecheck">
                                         <option value="0" data-name="请选择奖品" data-img="/site/web/wall/images/deprize.png" data-num="0">请选择奖品</option>
-                                        <?php
-                                        foreach ($prizelist as $prizeinfo){
-                                        ?>
-                                        <option value="<?=$prizeinfo['id']?>" data-name="<?=$prizeinfo['prizename']?>" data-img="<?=$prizeinfo['thumbimg']?>" data-num="<?=$prizeinfo['prizenum']?>"><?=$prizeinfo['title']?></option>
-                                        <?php
-                                        }
-                                        ?>
+                                        @foreach($prizeList as $prizeinfo)
+                                        <option value="{{$prizeinfo['id']}}" data-name="{{$prizeinfo['name']}}" data-img="{{$prizeinfo['thumbimg']}}" data-num="{{$prizeinfo['number']}}">{{$prizeinfo['title']}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -161,7 +157,7 @@
 
         //更换奖品信息显示，并查询中将人列表
         $("#prize_id").change(function (e) {
-            prizeChangeShow()
+            prizeChangeShow();
         });
 
         //更新可抽奖参与人数
@@ -173,9 +169,9 @@
             showlist=[];
             $(".draw_ruser_list .draw_ruser_item").each(function () {
                 var headimg=$(this).attr('data-img');
-                var nickname=$(this).attr('data-title')
-                var thisuser={headimg:headimg,nickname:nickname}
-                showlist.push(thisuser)
+                var nickname=$(this).attr('data-title');
+                var thisuser={headimg:headimg,nickname:nickname};
+                showlist.push(thisuser);
             });
             bigshowuser();
         });
@@ -196,14 +192,11 @@
                 b5tips('用户参数错误');
                 return false;
             }
-            layer.confirm('确定删除该中奖用户吗？', {
-                btn: ['确定','取消']
-            }, function(confirmindex){
-                layer.close(confirmindex);
-                var ldindex=showloading();
+            b5confirm('确定删除该中奖用户吗?',function () {
+                var ldindex=b5showloading();
                 $.ajax({
                     type: "GET",
-                    url: "<?=\yii\helpers\Url::toRoute(['delprizeusers', 'token' => $this->params['token']])?>",
+                    url: "",
                     data: {prize_id:prize_id,openid:openid},
                     dataType: "json",
                     success: function(data){
@@ -216,14 +209,12 @@
                         }
                     },
                     complete:function(){
-                        hideloading(ldindex);
+                        b5hideloading(ldindex);
                     },
                     error:function(){
                         b5tips("网络链接错误");
                     }
                 });
-            },function (confirmindex) {
-                layer.close(confirmindex);
             });
         });
 
@@ -294,7 +285,7 @@
         var prize_id=parseInt($("#prize_id").val());
         $.ajax({
             type: "GET",
-            url: "<?=\yii\helpers\Url::toRoute(['getdraw', 'token' => $this->params['token']])?>",
+            url: "/wall/getdraw?wall_id={{$wallInfo['id']}}",
             data: {openid:info.openid,prize_id:prize_id},
             dataType: "json",
             success: function(data){
@@ -369,10 +360,10 @@
     }
     //更新参与人数列表及数量
     function getInactUserNum() {
-        var index=showloading();
+        var index=b5showloading();
         $.ajax({
             type: "GET",
-            url: "<?=\yii\helpers\Url::toRoute(['inactusernum', 'token' => $this->params['token']])?>",
+            url: "/wall/inactusernum?wall_id={{$wallInfo['id']}}",
             data: {},
             dataType: "json",
             success: function(data){
@@ -382,7 +373,7 @@
                 }
             },
             complete:function(){
-                hideloading(index);
+                b5hideloading(index);
             }
         });
     }
@@ -393,10 +384,10 @@
             $(".draw_ruser_list").html('');
             $("#hasnumber").html('0人');
         }else{
-            var index=showloading();
+            var index=b5showloading();
             $.ajax({
                 type: "GET",
-                url: "<?=\yii\helpers\Url::toRoute(['prizegetuser', 'token' => $this->params['token']])?>",
+                url: "/wall/prizegetuser?wall_id={{$wallInfo['id']}}",
                 data: {prize_id:prize_id},
                 dataType: "json",
                 success: function(data){
@@ -420,7 +411,7 @@
                     }
                 },
                 complete:function(){
-                    hideloading(index);
+                    b5hideloading(index);
                 },
                 error:function(){
                     b5tips("网络链接错误");

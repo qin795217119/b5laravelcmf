@@ -47,7 +47,12 @@
                 data: $("#subform").serialize(),
                 dataType: "json",
                 success: function(data){
-                    b5tips(data.msg,data.url);
+                    if(data.code!==0){
+                        b5tips(data.msg);
+                    }else{
+                        b5tips(data.msg,'reload');
+                    }
+
                 },
                 complete:function(){
                     islogin=false;

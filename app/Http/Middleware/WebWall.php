@@ -25,6 +25,9 @@ class WebWall
      */
     public function handle($request, Closure $next)
     {
+        //所有请求都要带有wall_id
+
+        //判断是否有wall_id和活动信息正确性
         $error='';
         $wall_id=intval(request()->input('wall_id',0));
 
@@ -38,7 +41,6 @@ class WebWall
         }else{
             $error='参数错误';
         }
-
         if($error){
             if(IS_GET && !IS_AJAX){
                 return redirect('/error?msg='.$error);
@@ -47,7 +49,8 @@ class WebWall
             }
         }
 
-        $isLogin=session('wall_pc_login');
+        //判断是否登录
+        $isLogin=session('wall_pc_login_'.$wall_id);
         if(!$isLogin && strtolower(ACTION_NAME)!='login'){
             if(IS_GET && !IS_AJAX){
                 return redirect('/wall/login?wall_id='.$wall_id);
@@ -55,6 +58,15 @@ class WebWall
                 return response(message('请先登录',false,[],101),200);
             }
         }
+
+        if($isLogin && strtolower(ACTION_NAME)=='login'){
+            if(IS_GET && !IS_AJAX){
+                return redirect('/wall?wall_id='.$wall_id);
+            }else{
+                return response(message('登陆成功',true),200);
+            }
+        }
+
         $request->attributes->add(['wallInfo'=>$wallInfo]);
         if(IS_GET && !IS_AJAX){
             view()->share('wallInfo',$wallInfo);
