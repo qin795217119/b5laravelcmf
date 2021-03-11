@@ -12,15 +12,14 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', '/admin');
 
+Route::get('/error',function (){
+   return view('web.error',['msg'=>request()->input('msg','')]);
+});
 
-
-//
+//网站路由匹配
 $list=\App\Cache\WebSiteCache::getByCode();
 foreach ($list as $key=>$val){
     if(!$val['status']) continue;
-//    if(isset($val['is_default']) && $val['is_default']){
-//        Route::get('/','Web\Site\\'.ucwords($key).'Controller@index');
-//    }
     $controller=ucwords($key).'Controller';
     if(!class_exists('App\Http\Controllers\Web\Site\\'.$controller)){
         $controller='SiteController';
@@ -33,4 +32,13 @@ foreach ($list as $key=>$val){
         Route::get('/page',$controller.'@page');
     });
 }
+
+//微现场PC
+Route::namespace('Web\Wall')->prefix('wall')->middleware('web.wall')->group(function (){
+    Route::get('/','IndexController@index');
+    Route::any('/login','IndexController@login');
+    Route::get('/list','IndexController@list');
+    Route::get('/info','IndexController@info');
+    Route::get('/page','IndexController@page');
+});
 

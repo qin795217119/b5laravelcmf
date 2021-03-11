@@ -139,6 +139,20 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/webad/add', 'WebAdController@add');
     Route::any('/webad/edit', 'WebAdController@edit');
     Route::any('/webad/drop', 'WebAdController@drop');
+
+//微现场抽奖
+    Route::any('/wall/index', 'Wall\WallController@index');
+    Route::any('/wall/add', 'Wall\WallController@add');
+    Route::any('/wall/edit', 'Wall\WallController@edit');
+    Route::any('/wall/drop', 'Wall\WallController@drop');
+
+    Route::any('/wallprize/index', 'Wall\WallPrizeController@index');
+    Route::any('/wallprize/add', 'Wall\WallPrizeController@add');
+    Route::any('/wallprize/edit', 'Wall\WallPrizeController@edit');
+    Route::any('/wallprize/drop', 'Wall\WallPrizeController@drop');
+
+    Route::any('/wallusers/index', 'Wall\WallUsersController@index');
+    Route::any('/wallusers/setstatus','Wall\WallUsersController@setstatus');
 });
 
 

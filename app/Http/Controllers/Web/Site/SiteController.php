@@ -10,7 +10,7 @@ use App\Cache\WebAdCache;
 use App\Cache\WebCatCache;
 use App\Cache\WebSiteCache;
 use App\Helpers\Util\PageApi;
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Web\WebController;
 use App\Models\WebList;
 use App\Services\WebListExtService;
 use App\Services\WebListService;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //网站
-class SiteController extends BaseController
+class SiteController extends WebController
 {
     public $website;
     public $website_code='';
@@ -42,7 +42,6 @@ class SiteController extends BaseController
     }
 
     public function index(){
-
         view()->share('bannerList',WebAdCache::get(1));
         view()->share('activeMenu','home');
         return $this->render('index');
@@ -183,15 +182,5 @@ class SiteController extends BaseController
     public function render($view = "", $data = [])
     {
         return view("web.site." .$this->template.'.'. strtolower($view), $data);
-    }
-
-    /**
-     * 跳转错误页
-     * @param string $msg
-     * @param int $code
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function error($msg='哎呦，您访问的页面不存在(⋟﹏⋞)',$code=400){
-        return view("web.site.error", ['msg'=>$msg,'code'=>$code]);
     }
 }

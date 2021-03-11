@@ -86,7 +86,7 @@ class AdminService extends BaseService
         app('session')->flush();
         app('session')->put(config('app.admin_session'),$sessionData);
         if($remember){
-            Cookie::queue(config('app.admin_session').'_cookie',$userinfo['id'],30*24*3600);
+            Cookie::queue(config('app.admin_session').'_cookie',$userinfo['id'],1*24*3600);
         }
         return $this->loginResult($username,'登陆成功',true);
     }

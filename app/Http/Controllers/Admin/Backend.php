@@ -18,6 +18,7 @@ class Backend extends BaseController
 {
     // 服务
     protected $service;
+    protected $view_group='';
 
     /**
      * 构造函数
@@ -162,7 +163,7 @@ class Backend extends BaseController
     {
         if (empty($view)) {
             // 获取请求地址
-            return view(strtolower(MODULES_NAME) . "." . strtolower(CONTROLLER_NAME) . '.' . strtolower(ACTION_NAME), $data);
+            return view(strtolower(MODULES_NAME) . ($this->view_group?'.'.$this->view_group:'') . "." . strtolower(CONTROLLER_NAME) . '.' . strtolower(ACTION_NAME) , $data);
         }
         return view($view, $data);
     }
