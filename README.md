@@ -55,6 +55,21 @@ gitee: https://gitee.com/b5net/b5-laravel-cmf
 10. 通知公告：系统通知公告信息发布维护。
 11. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
 
+#### 功能文档
+
+1.H5的微信授权
+    可以看中间件WallWap.php的demo
+    
+    $openid=getWapOpenId();//获取session中的openid
+    if(!$openid){
+        //b5reduri当前的url，mtype为所属应用 可以都为空
+        $url=URL::route('wap_wxauthinfo',['mtype'=>$mtype,'b5reduri'=>URL::full()]);
+        
+        //跳转授权  授权完成后通过Wap\WechatController的wxinfo获取存储微信信息，然后团转到当前url
+        return (new WechatApi())->getOpenId($url);
+    }
+   
+
 
 
 
