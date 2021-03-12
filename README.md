@@ -56,8 +56,13 @@ gitee: https://gitee.com/b5net/b5-laravel-cmf
 11. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
 
 #### 功能文档
-
-1.H5的微信授权
+1.后台添加一个功能的流程
+   ①在菜单管理中添加菜单
+   ②创建model
+   ③创建service，里面实例化对应model。若需要后台验证字段，则创建validate，在service中也进行实例化
+   ④创建controller，在初始化方法中实例化service
+   
+2.H5的微信授权
     可以看中间件WallWap.php的demo
     
     $openid=getWapOpenId();//获取session中的openid
