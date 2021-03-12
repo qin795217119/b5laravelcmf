@@ -6,10 +6,14 @@
 // +----------------------------------------------------------------------
 namespace App\Http\Middleware;
 
+use App\Helpers\Util\WechatApi;
 use App\Services\Wall\WallService;
+use App\Services\WechatUsersService;
 use Closure;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
-class WallWeb
+class WallWap
 {
     /**
      * Handle an incoming request.
@@ -44,27 +48,31 @@ class WallWeb
             }
         }
 
-        //判断是否登录
-        $isLogin=session('wall_pc_login_'.$wall_id);
-        if(!$isLogin && strtolower(ACTION_NAME)!='login'){
+        //判断是否授权获取信息
+        $openId=getWapOpenId();
+        $mtype='wall_'.$wall_id;
+        if($openId){
+            $wechatInfo=(new WechatUsersService())->info([['openid','=',$openId],['type','=',$mtype]]);
+            if(!$wechatInfo){
+                $openId='';
+                dropWapOpenId();
+            }
+        }
+        if(!$openId){
             if(IS_GET && !IS_AJAX){
-                return redirect('/wall/login?wall_id='.$wall_id);
+                //统一手机端微信授权方法
+                $url=URL::route('wap_wxauthinfo',['mtype'=>$mtype,'b5reduri'=>URL::full()]);
+                return (new WechatApi())->getOpenId($url);
+
             }else{
                 return response(message('请先登录',false,[],101),200);
             }
         }
-
-        if($isLogin && strtolower(ACTION_NAME)=='login'){
-            if(IS_GET && !IS_AJAX){
-                return redirect('/wall?wall_id='.$wall_id);
-            }else{
-                return response(message('登陆成功',true),200);
-            }
-        }
-
+        $request->attributes->add(['wechatInfo'=>$wechatInfo]);
         $request->attributes->add(['wallInfo'=>$wallInfo]);
         if(IS_GET && !IS_AJAX){
             view()->share('wallInfo',$wallInfo);
+            view()->share('wechatInfo',$wechatInfo);
         }
         return $next($request);
     }

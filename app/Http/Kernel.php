@@ -64,7 +64,8 @@ class Kernel extends HttpKernel
         'admin.login' => \App\Http\Middleware\AdminLogin::class,
         'admin.auth' => \App\Http\Middleware\AdminAuth::class,
         'api.mapply' => \App\Http\Middleware\MapplyApi::class,
-        'web.wall' => \App\Http\Middleware\WebWall::class,
+        'wall.web' => \App\Http\Middleware\WallWeb::class,
+        'wall.wap' => \App\Http\Middleware\WallWap::class,
     ];
 
     /**

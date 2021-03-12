@@ -67,7 +67,7 @@
                                 <div class="draw_lfooter_title">选择奖品选项</div>
                                 <div class="draw_lfooter_value">
                                     <select id="prize_id" class="prizecheck">
-                                        <option value="0" data-name="请选择奖品" data-img="/site/web/wall/images/deprize.png" data-num="0">请选择奖品</option>
+                                        <option value="0" data-name="请选择奖品" data-img="{{asset('static/wall/web/images/deprize.png')}}" data-num="0">请选择奖品</option>
                                         @foreach($prizeList as $prizeinfo)
                                         <option value="{{$prizeinfo['id']}}" data-name="{{$prizeinfo['name']}}" data-img="{{$prizeinfo['thumbimg']}}" data-num="{{$prizeinfo['number']}}">{{$prizeinfo['title']}}</option>
                                         @endforeach
@@ -196,16 +196,16 @@
                 var ldindex=b5showloading();
                 $.ajax({
                     type: "GET",
-                    url: "",
+                    url: "/wall/delprizeuser?wall_id={{$wallInfo['id']}}",
                     data: {prize_id:prize_id,openid:openid},
                     dataType: "json",
-                    success: function(data){
-                        if (data.code==200) {
+                    success: function(result){
+                        if (result.code==0) {
                             thisobj.parents(".draw_ruser_item").remove();
                             var allnum=$(".draw_ruser_list .draw_ruser_item").length;
                             $("#hasnumber").html(allnum+'人');
                         }else{
-                            b5tips(data.msg,'');
+                            b5tips(result.msg);
                         }
                     },
                     complete:function(){
@@ -366,9 +366,9 @@
             url: "/wall/inactusernum?wall_id={{$wallInfo['id']}}",
             data: {},
             dataType: "json",
-            success: function(data){
-                if (data.code==200) {
-                    userslist=data.userlist;
+            success: function(result){
+                if (result.code==0) {
+                    userslist=result.data.list;
                     $("#inactnum").html(userslist.length)
                 }
             },
@@ -390,9 +390,9 @@
                 url: "/wall/prizegetuser?wall_id={{$wallInfo['id']}}",
                 data: {prize_id:prize_id},
                 dataType: "json",
-                success: function(data){
-                    if (data.code==200) {
-                        var list=data.list;
+                success: function(result){
+                    if (result.code==0) {
+                        var list=result.data.list;
                         var html='';
                         for (var i in list){
                             html+='<div class="draw_ruser_item"  data-img="'+list[i].headimg+'" data-title="'+list[i].nickname+'">' +
@@ -407,7 +407,7 @@
                         var allnum=$(".draw_ruser_list .draw_ruser_item").length;
                         $("#hasnumber").html(allnum+'人');
                     }else{
-                        b5tips(data.msg,data.url);
+                        b5tips(result.msg);
                     }
                 },
                 complete:function(){

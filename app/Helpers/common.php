@@ -5,6 +5,37 @@
 // | Author: 李恒 <357145480@qq.com>
 // +----------------------------------------------------------------------
 
+/**
+ * 获取手机H5授权的openid
+ * @return \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed
+ */
+function getWapOpenId(){
+    return session('b5laravelcmf_wap_wechat');
+}
+
+/**
+ * 存储手机H5授权的openid
+ * @param $openid
+ * @return bool
+ */
+function setWapOpenId($openid){
+    if($openid){
+        app('session')->put('b5laravelcmf_wap_wechat',$openid);
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * 清除手机H5的openid
+ * @return bool
+ */
+function dropWapOpenId(){
+    app('session')->forget('b5laravelcmf_wap_wechat');
+    return true;
+}
+
 if (!function_exists('adminLoginInfo')) {
     /**
      * 获取管理员登录信息
@@ -40,7 +71,7 @@ if (!function_exists('system_isDemo')) {
      */
     function system_isDemo()
     {
-        if(MODULES_NAME=='admin'){
+        if(defined('MODULES_NAME') && MODULES_NAME=='admin'){
             $status=\App\Cache\ConfigCache::get('sys_config_demo');
             $status=='1'?true:false;
             $loginId=adminLoginInfo('info.id');

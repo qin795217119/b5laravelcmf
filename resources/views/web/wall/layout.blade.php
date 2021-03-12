@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{$wallInfo['title']??''}}</title>
 <meta name="renderer" content="webkit">
@@ -17,7 +17,9 @@
 <script src="{{asset('static/plugins/screenfull.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('static/plugins/mlayer/mlayer.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="{{asset('static/common/js/common.js')}}"></script>
-
+<script>
+    var deheader="{{asset('static/wall/web/images/deheader.png')}}";
+</script>
 <body style="background-image: url({{$wallInfo['bgimg']??''}})">
     <div class="main-box">
         <header class="header extcombox">
@@ -49,7 +51,7 @@
                     <div class="col-xs-6">
                         <div class="footer_left">
                             <div class="footer_item {{(isset($menu_index) && $menu_index==='sign')?'current':''}}">
-                                <a href="">
+                                <a href="/wall/sign?wall_id={{$wallInfo['id']}}">
                                     <div class="footer_item_icon">
                                         <i class="fa fa-edit"></i>
                                     </div>
@@ -57,7 +59,7 @@
                                 </a>
                             </div>
                             <div class="footer_item {{(isset($menu_index) && $menu_index==='draw')?'current':''}}">
-                                <a href="">
+                                <a href="/wall/?wall_id={{$wallInfo['id']}}">
                                     <div class="footer_item_icon">
                                         <i class="fa fa-stack-overflow"></i>
                                     </div>
