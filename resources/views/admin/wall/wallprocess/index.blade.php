@@ -8,8 +8,7 @@
             <div class="select-list">
                 <ul>
                     <li>所属活动：<span class="search-item-text">{{$wallInfo['title']}}</span></li>
-                    <li>@render('iframe',['name'=>'input|真实姓名','extend'=>['name'=>'like[truename]']])</li>
-                    <li>@render('iframe',['name'=>'input|电话','extend'=>['name'=>'where[mobile]']])</li>
+                    <li>@render('iframe',['name'=>'input|日程标题','extend'=>['name'=>'like[title]']])</li>
                     <li>
                         @render('iframe',['name'=>'searchbtn|搜索'])
                         @render('iframe',['name'=>'resetbtn|重置'])
@@ -20,6 +19,7 @@
     </div>
     <div class="btn-group-sm" id="toolbar" role="group">
         @render('iframe',['name'=>'addbtn','extend'=>['opid'=>$wallInfo['id']]])
+        @render('iframe',['name'=>'editbtn'])
         @render('iframe',['name'=>'deletebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
@@ -31,73 +31,60 @@
     <script>
         $(function () {
             var options = {
-                modalName: "签到会员",
-                sortName:'id',
+                modalName: "活动日程",
+                sortName:'listsort',
                 columns: [
                     {checkbox: true},
-                    {field: 'id', title: 'ID', align: 'center', sortable: true},
+                    {field: 'id', title: 'ID', align: 'center', sortable: true,visible: false},
                     {
-                        field: 'headimg',
-                        title: '头像',
+                        field: '',
+                        title: '序号',
+                        sortable: false,
+                        align: "center",
+                        width: 40,
+                        formatter: function (value, row, index) {
+                            return $.table.serialNumber(index);
+                        }
+                    },
+                    {field: 'daytime', title: '日期', sortable: true},
+                    {
+                        field: 'hour',
+                        title: '时间',
                         formatter:function (value, row, index) {
-                            if(value!=''){
-                                return '<img src="'+value+'" style="height: 30px">';
-                            }else{
-                                return '-';
-                            }
+                            return value?value:'-';
                         }
                     },
                     {
-                        field: 'truename',
-                        title: '真实姓名',
+                        field: 'title',
+                        title: '标题',
                         formatter:function (value, row, index) {
-                            if(value){
-                                return value;
-                            }else{
-                                return '-';
-                            }
+                            return $.table.tooltip(value,18);
                         }
                     },
                     {
-                        field: 'mobile',
-                        title: '电话',
+                        field: 'desc',
+                        title: '介绍',
                         formatter:function (value, row, index) {
-                            if(value){
-                                return value;
-                            }else{
-                                return '-';
-                            }
+                            return $.table.tooltip(value,20);
                         }
                     },
-                    {
-                        field: 'sex',
-                        title: '性别',
-                        formatter:function (value, row, index) {
-                            if(value=='1'){
-                                return '男';
-                            }else if(value=='2'){
-                                return '女';
-                            }else{
-                                return '-';
-                            }
-                        }
-                    },
+                    {title: '排序', field: 'listsort', align: 'center', sortable: true},
                     {
                         title: '状态',
                         field: 'status',
                         align: 'center',
                         sortable: true,
                         formatter: function (value, row, index) {
-                            return $.view.statusTools(row,true);
+                            return $.view.statusShow(row,false);
                         }
                     },
-                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true},
+                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true,visible: false},
                     {field: 'update_time', title: '更新时间', align: 'center', sortable: true,visible: false},
                     {
                         title: '操作',
                         align: 'center',
                         formatter: function(value, row, index) {
-                            return '@render("iframe",["name"=>"formopbtn","extend"=>["type"=>["delete"],"rowId"=>"row.id"]])';
+                            return '@render("iframe",["name"=>"formopbtn","extend"=>["type"=>["edit","delete"],"rowId"=>"row.id"]])';
                         }
                     }
                 ]

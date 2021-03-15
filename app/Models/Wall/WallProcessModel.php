@@ -8,12 +8,13 @@ namespace App\Models\Wall;
 
 use App\Models\BaseModel;
 
-class WallPrizeUsersModel extends BaseModel
+class WallProcessModel extends BaseModel
 {
-    protected $table = 'b5net_wall_prize_users';
+    protected $table = 'b5net_wall_process';
     protected $attributes=[
-        'truename'=>'',
-        'headimg'=>'',
-        'mobile'=>'',
+        'desc'=>'',
+        'hour'=>'',
+        'status'=>1,
+        'listsort'=>0
     ];
 }

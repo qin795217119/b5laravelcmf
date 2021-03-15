@@ -153,6 +153,13 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
 
     Route::any('/wallusers/index', 'Wall\WallUsersController@index');
     Route::any('/wallusers/setstatus','Wall\WallUsersController@setstatus');
+    Route::any('/wallusers/add','Wall\WallUsersController@add');
+    Route::any('/wallusers/drop','Wall\WallUsersController@drop');
+
+    Route::any('/wallprocess/index', 'Wall\WallProcessController@index');
+    Route::any('/wallprocess/add', 'Wall\WallProcessController@add');
+    Route::any('/wallprocess/edit', 'Wall\WallProcessController@edit');
+    Route::any('/wallprocess/drop', 'Wall\WallProcessController@drop');
 });
 
 

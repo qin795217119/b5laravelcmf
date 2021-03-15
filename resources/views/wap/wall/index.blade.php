@@ -9,7 +9,7 @@
     <div class="container-fluid oplistbox">
         <div class="col-xs-4 cat_cell">
             <div class="cat_box">
-                <a href="/wallwap/myprize?wall_id={{$wallInfo['id']}}">
+                <a href="{{route('wall_wap_myprize',['wall_id'=>$wallInfo['id']])}}">
                     <div class="cat_info">
                         <div class="cat_imgbox">
                             <div class="cat_img cat_drawprize"></div>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-xs-4 cat_cell">
             <div class="cat_box">
-                <a href="/wallwap/process?wall_id={{$wallInfo['id']}}">
+                <a href="{{route('wall_wap_process',['wall_id'=>$wallInfo['id']])}}">
                     <div class="cat_info">
                         <div class="cat_imgbox">
                             <div class="cat_img cat_drawprocess"></div>
@@ -31,7 +31,7 @@
         </div>
         <div class="col-xs-4 cat_cell">
             <div class="cat_box">
-                <a href="/wallwap/sign?wall_id={{$wallInfo['id']}}">
+                <a href="{{route('wall_wap_sign',['wall_id'=>$wallInfo['id']])}}">
                     <div class="cat_info">
                         <div class="cat_imgbox">
                             <div class="cat_img cat_drawsign"></div>

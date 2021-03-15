@@ -16,7 +16,7 @@ Route::redirect('/', '/admin');
 Route::get('/error',function (){
    return view('web.error',['msg'=>request()->input('msg','')]);
 })->name('error');
-//统一微信授权链接
+//H5统一微信授权链接
 Route::get('/wap/wxauthinfo','Wap\WechatController@wxinfo')->name('wap_wxauthinfo');
 
 //网站路由匹配
@@ -43,13 +43,16 @@ Route::namespace('Web\Wall')->prefix('wall')->middleware('wall.web')->group(func
     Route::get('/','IndexController@index');
     Route::any('/login','IndexController@login');
     Route::any('/sign','IndexController@sign');
+    Route::any('/qrcode','IndexController@qrcode')->name('wall_web_qrcode');
     Route::any('/getsignlist','IndexController@getsignlist');
     Route::get('/inactusernum','IndexController@inactusernum');
     Route::get('/prizegetuser','IndexController@prizegetuser');
     Route::get('/delprizeuser','IndexController@delprizeuser');
+    Route::get('/getdraw','IndexController@getdraw');
 });
 Route::namespace('Wap\Wall')->prefix('wallwap')->middleware('wall.wap')->group(function (){
-    Route::get('/','IndexController@index');
-    Route::get('/wxauth','IndexController@wxauth');
-    Route::get('/wxinfo', 'IndexController@wxinfo')->name('wall_wap_wxinfo');
+    Route::get('/','IndexController@index')->name('wall_wap_index');
+    Route::any('/sign', 'IndexController@sign')->name('wall_wap_sign');
+    Route::get('/process', 'IndexController@process')->name('wall_wap_process');
+    Route::any('/myprize', 'IndexController@myprize')->name('wall_wap_myprize');
 });

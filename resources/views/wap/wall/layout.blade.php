@@ -10,6 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="text/javascript"  src="{{asset('static/plugins/flexible.js')}}"></script>
     <script type="text/javascript" src="{{asset('static/plugins/jquery/jquery-1.12.4.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('static/plugins/mlayer/mlayer.js')}}"></script>
+    <script type="text/javascript" src="{{asset('static/common/js/common.js')}}"></script>
     <link rel="stylesheet" href="{{asset('static/plugins/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('static/wall/wap/css/css.css')}}">
 </head>

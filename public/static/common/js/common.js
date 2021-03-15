@@ -38,7 +38,14 @@ function isExitsFunction(funcName) {
     }
     return false;
 }
-
+//判断是否为方法
+function isFunction(param) {
+    if (typeof param === "function") {
+        return true;
+    } else {
+        return false;
+    }
+}
 //判断是否为手机号
 function b5isMobil(s) {
     var patrn = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
@@ -79,7 +86,9 @@ function GetRequest(params) {
 
 //url跳转处理
 function urlProcess(url, isreplace) {
-    if (url == '') {
+    if(isFunction(url)){
+        url();
+    } else if (url == '') {
     }  else if (url == 'reload') {
         window.location.reload()
     } else if (url == 'back') {

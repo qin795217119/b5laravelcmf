@@ -29,7 +29,7 @@ class IndexController extends Backend
    }
 
     public function home(){
-       return QrCode::encoding('UTF-8')->size(100)->generate('aaa');
+//       return QrCode::encoding('UTF-8')->size(100)->generate('aaa');
        return $this->render();
    }
     public function test(){

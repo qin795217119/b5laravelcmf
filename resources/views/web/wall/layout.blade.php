@@ -43,7 +43,7 @@
         <div class="show_qrcode">
             <div class="closebutton"><i class="fa fa-close"></i></div>
             <div class="title">扫描下面的二维码参与签到</div>
-            <img class="qrcode" src="">
+            <div class="qrcode">{!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(400)->generate(\Illuminate\Support\Facades\URL::route('wall_wap_index',['wall_id'=>$wallInfo['id']])) !!}</div>
         </div>
         <footer class="footer extcombox">
             <div class="footer_box">

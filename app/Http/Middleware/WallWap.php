@@ -47,7 +47,7 @@ class WallWap
                 return response(message($error,false),200);
             }
         }
-
+//        setWapOpenId('oBi_at-f8RORVDzNs-DY42Gx2Z5Y');
         //判断是否授权获取信息
         $openId=getWapOpenId();
         $mtype='wall_'.$wall_id;

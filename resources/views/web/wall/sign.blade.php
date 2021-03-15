@@ -25,7 +25,7 @@
                     '            <div class="imgbox">' +
                     '                <div class="img" style="background-image: url('+(info.headimg==''?deheader:info.headimg)+')"></div>' +
                     '            </div>' +
-                    '            <div class="title">'+info.nickname+'</div>' +
+                    '            <div class="title">'+info.truename+'</div>' +
                     '        </li>';
                 $("#userlist").append(html);
                 var ele = document.getElementById('signbox');

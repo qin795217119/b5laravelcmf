@@ -6,15 +6,15 @@
 // +----------------------------------------------------------------------
 namespace App\Services\Wall;
 
-use App\Models\Wall\WallUsersModel;
+use App\Models\Wall\WallProcessModel;
 use App\Services\BaseService;
-use App\Validates\Wall\WallUsersValidate;
+use App\Validates\Wall\WallProcessValidate;
 
-class WallUsersService extends BaseService
+class WallProcessService extends BaseService
 {
     public function __construct(bool $loadValidate = true)
     {
-        $this->setModel(new WallUsersModel());
-        $loadValidate && $this->setValidate(new WallUsersValidate());
+        $this->setModel(new WallProcessModel());
+        $loadValidate && $this->setValidate(new WallProcessValidate());
     }
 }

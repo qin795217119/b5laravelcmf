@@ -4,23 +4,7 @@
 <div class="draw_bigshow">
     <div class="draw_bigshow_header"></div>
     <div class="draw_bigshow_mian scrollbox">
-        <div class="draw_bigshow_list">
-            <!--            <div class="draw_bigshow_itembox">-->
-            <!--                <div class="draw_bigshow_itemboxm">-->
-            <!--                    <div class="draw_bigshow_itemmain">-->
-            <!--                        <div class="draw_bigshow_itemmainbox">-->
-            <!--                            <div class="draw_bigshow_itemimgbox">-->
-            <!--                                <div class="draw_bigshow_itemimg"></div>-->
-            <!--                            </div>-->
-            <!--                            <div class="draw_bigshow_imgbord1"></div>-->
-            <!--                            <div class="draw_bigshow_imgbord"></div>-->
-            <!--                        </div>-->
-            <!---->
-            <!--                    </div>-->
-            <!--                    <div class="draw_bigshow_itemtitle"></div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-        </div>
+        <div class="draw_bigshow_list"></div>
     </div>
     <div class="draw_bigshow_bgimg"></div>
     <div class="draw_bigshow_bottom">
@@ -169,8 +153,8 @@
             showlist=[];
             $(".draw_ruser_list .draw_ruser_item").each(function () {
                 var headimg=$(this).attr('data-img');
-                var nickname=$(this).attr('data-title');
-                var thisuser={headimg:headimg,nickname:nickname};
+                var truename=$(this).attr('data-title');
+                var thisuser={headimg:headimg,truename:truename};
                 showlist.push(thisuser);
             });
             bigshowuser();
@@ -235,7 +219,7 @@
                 showlist=[];
                 drawprizeIndex=setInterval(function () {
                     drawPrize();
-                },500);
+                },100);
             }else{
                 var drawnumber=parseInt($("#drawnumber").val());
                 if(userslist.length<1 || userslist.length<drawnumber){
@@ -263,7 +247,7 @@
                 '                   <div class="draw_bigshow_imgbord"></div>' +
                 '               </div>' +
                 '           </div>' +
-                '           <div class="draw_bigshow_itemtitle">'+showlist[i].nickname+'</div>' +
+                '           <div class="draw_bigshow_itemtitle">'+showlist[i].truename+'</div>' +
                 '       </div>' +
                 '   </div>'
         }
@@ -288,29 +272,29 @@
             url: "/wall/getdraw?wall_id={{$wallInfo['id']}}",
             data: {openid:info.openid,prize_id:prize_id},
             dataType: "json",
-            success: function(data){
-                if (data.code==200) {
+            success: function(result){
+                if (result.code==0) {
                     userslist.splice(index,1);
                     clearInterval(interIndex);
                     $("#inactnum").html(userslist.length);
-                    var allnum=$(".draw_user_list .draw_user_itembox").length
+                    var allnum=$(".draw_user_list .draw_user_itembox").length;
                     var leftlen=drawsetInterIndex.length;
                     var thisindex=allnum-leftlen-1;
                     var obj=$(".draw_user_list").find(".draw_user_itembox").eq(thisindex);
                     obj.find(".draw_user_itemimg").css('background-image','url('+info.headimg+')');
-                    obj.find(".draw_user_itemtitle").html(info.nickname);
+                    obj.find(".draw_user_itemtitle").html(info.truename);
 
-                    var html='<div class="draw_ruser_item" data-img="'+info.headimg+'" data-title="'+info.nickname+'">  ' +
+                    var html='<div class="draw_ruser_item" data-img="'+info.headimg+'" data-title="'+info.truename+'">  ' +
                         '           <div class="draw_ruser_imgbox">    ' +
                         '               <div class="draw_ruser_img" style="background-image: url('+info.headimg+')"></div>      ' +
                         '           </div>    ' +
-                        '           <div class="draw_ruser_info">'+info.nickname+'</div>    ' +
+                        '           <div class="draw_ruser_info">'+info.truename+'</div>    ' +
                         '           <div class="draw_ruser_delete" data-openid="'+info.openid+'"><i class="fa fa-close"></i></div>  ' +
                         '    </div>';
                     $(".draw_ruser_list").prepend(html);
                     var allnum=$(".draw_ruser_list .draw_ruser_item").length;
                     $("#hasnumber").html(allnum+'人');
-                    showlist.push({headimg:info.headimg,nickname:info.nickname});
+                    showlist.push({headimg:info.headimg,truename:info.truename});
                     if(leftlen<1){
                         bigshowuser();
                         clearInterval(drawprizeIndex);
@@ -395,11 +379,11 @@
                         var list=result.data.list;
                         var html='';
                         for (var i in list){
-                            html+='<div class="draw_ruser_item"  data-img="'+list[i].headimg+'" data-title="'+list[i].nickname+'">' +
+                            html+='<div class="draw_ruser_item"  data-img="'+list[i].headimg+'" data-title="'+list[i].truename+'">' +
                                 '      <div class="draw_ruser_imgbox">' +
                                 '          <div class="draw_ruser_img" style="background-image: url('+list[i].headimg+')"></div>' +
                                 '      </div>' +
-                                '      <div class="draw_ruser_info">'+list[i].nickname+'</div>' +
+                                '      <div class="draw_ruser_info">'+list[i].truename+'</div>' +
                                 '      <div class="draw_ruser_delete" data-openid="'+list[i].openid+'"><i class="fa fa-close"></i></div>' +
                                 '  </div>'
                         }
@@ -429,7 +413,7 @@
                 var index=Math.floor(Math.random()*userscount);
                 var info=userslist[index];
                 that.find(".draw_user_itemimg").css('background-image','url('+info.headimg+')');
-                that.find(".draw_user_itemtitle").html(info.nickname);
+                that.find(".draw_user_itemtitle").html(info.truename);
             },100);
             i++;
         })

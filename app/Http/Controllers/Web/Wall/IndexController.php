@@ -12,6 +12,8 @@ use App\Services\Wall\WallPrizeService;
 use App\Services\Wall\WallPrizeUsersService;
 use App\Services\Wall\WallUsersService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class IndexController extends WebController
 {
@@ -20,6 +22,12 @@ class IndexController extends WebController
         parent::__construct($request);
     }
 
+    public function qrcode(Request $request){
+        $wallInfo=$request->get('wallInfo');
+//        dd(URL::route('wall_wap_index',['wall_id'=>$wallInfo['id']]));
+        return QrCode::format('png')->margin(1)->size(500)->generate('aaa');
+
+    }
     public function index(Request $request){
         $wallInfo=$request->get('wallInfo');
         $prizeList=(new WallPrizeService())->getAll([['wall_id','=',$wallInfo['id']]],['id','title','thumbimg','name','number'],[],'id',[['id','asc']]);
@@ -49,7 +57,7 @@ class IndexController extends WebController
         $wallInfo=$request->get('wallInfo');
         $lastid=intval($request->input('lastid',0));
         $count=WallUsersModel::where([['wall_id','=',$wallInfo['id']],['status','=',1]])->count();
-        $list=WallUsersModel::where([['wall_id','=',$wallInfo['id']],['status','=',1],['id','>',$lastid]])->select(['id','openid','headimg','nickname','truename'])->orderBy('id','asc')->take(10)->get()->toArray();
+        $list=WallUsersModel::where([['wall_id','=',$wallInfo['id']],['status','=',1],['id','>',$lastid]])->select(['id','openid','headimg','truename'])->orderBy('id','asc')->take(10)->get()->toArray();
         return message('返回成功',true,['list'=>$list,'count'=>$count]);
     }
 
@@ -57,7 +65,7 @@ class IndexController extends WebController
     public function inactusernum(Request $request){
         $wallInfo=$request->get('wallInfo');
         $userlist=[];
-        foreach (WallUsersModel::where([['wall_id','=',$wallInfo['id']],['status','=',1]])->select(['id','openid','nickname','truename','headimg','sex'])->cursor() as $user){
+        foreach (WallUsersModel::where([['wall_id','=',$wallInfo['id']],['status','=',1]])->select(['id','openid','truename','headimg','sex'])->cursor() as $user){
             $userlist[]=$user->toArray();
         }
         return message('操作成功',true,['list'=>$userlist]);
@@ -69,7 +77,7 @@ class IndexController extends WebController
         $prizeId=intval($request->input('prize_id',0));
         $userlist=[];
         if($prizeId>0){
-            $userlist=(new WallPrizeUsersService())->getAll([['prize_id','=',$prizeId],['wall_id','=',$wallInfo['id']]],['id','openid','truename','nickname','headimg']);
+            $userlist=(new WallPrizeUsersService())->getAll([['prize_id','=',$prizeId],['wall_id','=',$wallInfo['id']]],['id','openid','truename','headimg']);
         }
         $userlist=$userlist?$userlist:[];
         return message('成功返回',true,['list'=>$userlist]);
@@ -88,6 +96,36 @@ class IndexController extends WebController
         }else{
             return message('删除失败',false);
         }
+    }
+
+    //存储中将用户
+    public function getdraw(Request $request){
+        $wallInfo=$request->get('wallInfo');
+        $prize_id=intval(request()->input('prize_id',0));
+        $openid=trim(request()->input('openid',''));
+        if($openid && $prize_id){
+            $userinfo=(new WallUsersService())->info([['wall_id','=',$wallInfo['id']],['openid','=',$openid]]);
+            if($userinfo){
+                $data=[
+                    'wall_id'=>$wallInfo['id'],
+                    'openid'=>$userinfo['openid'],
+                    'truename'=>$userinfo['truename'],
+                    'mobile'=>$userinfo['mobile'],
+                    'headimg'=>$userinfo['headimg'],
+                    'prize_id'=>$prize_id,
+                    'status'=>0,
+                ];
+                $res=(new WallPrizeUsersService())->add($data);
+                if($res['success']){
+                    return $res;
+                }else{
+                    return message('中奖信息保存失败',false);
+                }
+            }else{
+                return message('获取用户信息错误',false);
+            }
+        }
+        return message('参数错误',false);
     }
 
 }

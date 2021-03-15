@@ -18,7 +18,6 @@
     <div class="btn-group-sm" id="toolbar" role="group">
         @render('iframe',['name'=>'addbtn'])
         @render('iframe',['name'=>'editbtn'])
-        @render('iframe',['name'=>'cachebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
         <table id="bootstrap-table"></table>
@@ -90,6 +89,10 @@
         function regUser(wall_id) {
             var url = mUrl + '/wallusers/index?wall_id=' + wall_id;
             $.modal.openTab("【"+wall_id+"】签到会员", url);
+        }
+        function processList(wall_id) {
+            var url = mUrl + '/wallprocess/index?wall_id=' + wall_id;
+            $.modal.openTab("【"+wall_id+"】活动日程", url);
         }
     </script>
 @stop

@@ -21,6 +21,7 @@
     <div class="btn-group-sm" id="toolbar" role="group">
         @render('iframe',['name'=>'addbtn','extend'=>['opid'=>$wallInfo['id']]])
         @render('iframe',['name'=>'editbtn'])
+        @render('iframe',['name'=>'deletebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
         <table id="bootstrap-table"></table>
