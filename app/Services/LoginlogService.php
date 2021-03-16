@@ -51,16 +51,4 @@ class LoginlogService extends BaseService
         }
         $this->add(['login_name' => $login_name, 'ipaddr' => $ipaddr, 'browser' => $browser, 'os' => $os, 'status' => $status, 'msg' => $msg, 'login_time' => $login_time, 'login_location' => $login_location,'net'=>$net]);
     }
-
-    public function trash()
-    {
-
-        //演示限制
-        if (system_isDemo()) {
-            return $this->demo_system();
-        }
-
-        $this->model->trash();
-        return message('操作成功', true);
-    }
 }

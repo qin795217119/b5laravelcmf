@@ -144,12 +144,16 @@ Route::namespace('Admin')->middleware(['admin.login','admin.auth'])->group(funct
     Route::any('/wall/index', 'Wall\WallController@index');
     Route::any('/wall/add', 'Wall\WallController@add');
     Route::any('/wall/edit', 'Wall\WallController@edit');
-    Route::any('/wall/drop', 'Wall\WallController@drop');
+    Route::any('/wall/initdata','Wall\WallController@initdata')->name('wall_admin_initdata');
 
     Route::any('/wallprize/index', 'Wall\WallPrizeController@index');
     Route::any('/wallprize/add', 'Wall\WallPrizeController@add');
     Route::any('/wallprize/edit', 'Wall\WallPrizeController@edit');
     Route::any('/wallprize/drop', 'Wall\WallPrizeController@drop');
+
+    Route::any('/wallprizeusers/index', 'Wall\WallPrizeUsersController@index');
+    Route::any('/wallprizeusers/setstatus', 'Wall\WallPrizeUsersController@setstatus');
+    Route::any('/wallprizeusers/drop', 'Wall\WallPrizeUsersController@drop');
 
     Route::any('/wallusers/index', 'Wall\WallUsersController@index');
     Route::any('/wallusers/setstatus','Wall\WallUsersController@setstatus');

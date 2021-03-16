@@ -728,7 +728,7 @@ label {
 	outline: none;
     padding-left: 4px;
 	height: 30px;
-    width: 200px;
+    min-width: 120px;
 }
 
 .bootstrap-select.form-control .btn-default {

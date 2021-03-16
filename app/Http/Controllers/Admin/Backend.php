@@ -56,8 +56,13 @@ class Backend extends BaseController
      */
     public function toError(string $msg = '发生错误了', int $code = 400)
     {
-        $data = ['msg' => $msg, 'code' => $code];
-        return $this->render('admin.public.error', $data);
+        if(IS_POST || IS_AJAX){
+            return message($msg,false,[],$code);
+        }else{
+            $data = ['msg' => $msg, 'code' => $code];
+            return $this->render('admin.public.error', $data);
+        }
+
     }
 
     /**

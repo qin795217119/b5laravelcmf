@@ -1,5 +1,5 @@
 @extends('admin.public.layout')
-
+@include('widget.asset.select2')
 @section('content')
 {{--    <p class="bg-primary mt10" style="padding: 10px;border-radius: 5px;">{{$wallInfo['title']}}</p>--}}
     <div class="col-sm-12 search-collapse">
@@ -7,9 +7,10 @@
             <input type="hidden" name="where[wall_id]" value="{{$wallInfo['id']}}" id="wall_id">
             <div class="select-list">
                 <ul>
-                    <li>所属活动：<span class="search-item-text">{{$wallInfo['title']}}</span></li>
-                    <li>@render('iframe',['name'=>'input|真实姓名','extend'=>['name'=>'like[truename]']])</li>
-                    <li>@render('iframe',['name'=>'input|电话','extend'=>['name'=>'where[mobile]']])</li>
+                    <li>@render('iframe',['name'=>'select|中奖奖品','extend'=>['name'=>'where[prize_id]','data'=>$prizeList,'showvalue'=>'id','showname'=>'name','place'=>'','class'=>'select2']])</li>
+                    <li>@render('iframe',['name'=>'input|人员姓名','extend'=>['name'=>'like[truename]']])</li>
+                    <li>@render('iframe',['name'=>'input|人员电话','extend'=>['name'=>'like[mobile]']])</li>
+                    <li>@render('iframe',['name'=>'select|领取状态','extend'=>['name'=>'where[status]','value'=>'','place'=>'所有','data'=>['未领取','已领取']]])</li>
                     <li>
                         @render('iframe',['name'=>'searchbtn|搜索'])
                         @render('iframe',['name'=>'resetbtn|重置'])
@@ -19,7 +20,6 @@
         </form>
     </div>
     <div class="btn-group-sm" id="toolbar" role="group">
-        @render('iframe',['name'=>'addbtn','extend'=>['opid'=>$wallInfo['id']]])
         @render('iframe',['name'=>'deletebtn'])
     </div>
     <div class="col-sm-12 select-table table-striped">
@@ -29,66 +29,38 @@
 
 @section('script')
     <script>
+        var prizeList=@json($prizeList);
         $(function () {
             var options = {
-                modalName: "签到会员",
+                modalName: "中奖信息",
                 sortName:'id',
                 columns: [
                     {checkbox: true},
                     {field: 'id', title: 'ID', align: 'center', sortable: true},
                     {
-                        field: 'headimg',
-                        title: '头像',
+                        field: 'prize_id',
+                        title: '奖品信息',
                         formatter:function (value, row, index) {
-                            if(value!=''){
-                                return '<img src="'+value+'" style="height: 30px">';
-                            }else{
-                                return '-';
+                            if(prizeList.hasOwnProperty(value)){
+                                return '<img src="'+prizeList[value].thumbimg+'" style="height: 32px"> '+prizeList[value].name+'（'+prizeList[value].title+'）';
                             }
                         }
                     },
                     {
                         field: 'truename',
-                        title: '真实姓名',
+                        title: '中奖人员',
+                        align: 'center',
                         formatter:function (value, row, index) {
-                            if(value){
-                                return value;
-                            }else{
-                                return '-';
-                            }
-                        }
-                    },
-                    {
-                        field: 'mobile',
-                        title: '电话',
-                        formatter:function (value, row, index) {
-                            if(value){
-                                return value;
-                            }else{
-                                return '-';
-                            }
-                        }
-                    },
-                    {
-                        field: 'sex',
-                        title: '性别',
-                        formatter:function (value, row, index) {
-                            if(value=='1'){
-                                return '男';
-                            }else if(value=='2'){
-                                return '女';
-                            }else{
-                                return '-';
-                            }
+                            return row.truename+'<br/>'+row.mobile;
+
                         }
                     },
                     {
                         title: '状态',
                         field: 'status',
                         align: 'center',
-                        sortable: true,
                         formatter: function (value, row, index) {
-                            return $.view.statusTools(row,true);
+                            return $.view.statusShow(row,true,['未领取','已领取']);
                         }
                     },
                     {field: 'create_time', title: '创建时间', align: 'center', sortable: true},

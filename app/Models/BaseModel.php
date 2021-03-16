@@ -186,8 +186,13 @@ class BaseModel extends Model
     /**
      * 清空表
      */
-    public function trash(){
-        DB::table($this->table)->truncate();
+    public function trash($where=null){
+        if($where){
+            $query = $this->whereFormat($this, $where);
+            $query->where($where)->delete();
+        }else{
+            DB::table($this->table)->truncate();
+        }
         return true;
     }
 

@@ -34,6 +34,18 @@ $(function() {
             $.operate.saveModal(url,data)
         }
     });
+    $(".b5ajaxget").click(function () {
+        var title=$(this).attr("data-title");
+        var data={};
+        var url=$(this).attr("data-url");
+        if(title){
+            $.modal.confirm(title,function () {
+                $.operate.saveModal(url,data)
+            });
+        }else{
+            $.operate.saveModal(url,data)
+        }
+    });
     // 回到顶部绑定
     if ($.fn.toTop !== undefined) {
         $('#scroll-up').toTop();

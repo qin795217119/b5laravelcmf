@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 15/03/2021 23:05:08
+ Date: 16/03/2021 14:08:54
 */
 
 SET NAMES utf8mb4;
@@ -925,6 +925,11 @@ INSERT INTO `b5net_loginlog` VALUES (680, 'ceshi', '183.17.127.114', '广东省�
 INSERT INTO `b5net_loginlog` VALUES (681, 'ceshi', '183.14.29.162', '广东省深圳市', 'Safari 14.0.3', 'OS X 10_15_6', '电信', '1', '登陆成功', '2021-03-15 18:08:00');
 INSERT INTO `b5net_loginlog` VALUES (682, 'ceshi', '183.11.69.16', '广东省深圳市', 'Chrome 75.0.3770.100', 'Windows 10.0', '电信', '1', '登陆成功', '2021-03-15 20:01:14');
 INSERT INTO `b5net_loginlog` VALUES (683, 'ceshi', '223.73.235.46', '广东省珠海市', 'Chrome 89.0.4389.90', 'Windows 10.0', '移动', '1', '登陆成功', '2021-03-15 20:55:34');
+INSERT INTO `b5net_loginlog` VALUES (684, 'ceshi', '60.26.25.17', '天津市西青区', 'Edge 88.0.705.74', 'OS X 11_0_1', '联通', '1', '登陆成功', '2021-03-16 09:49:04');
+INSERT INTO `b5net_loginlog` VALUES (685, 'ceshi', '59.57.172.2', '福建省厦门市思明区', 'Chrome 89.0.4389.82', 'OS X 10_15_7', '电信', '1', '登陆成功', '2021-03-16 09:54:35');
+INSERT INTO `b5net_loginlog` VALUES (686, 'ceshi', '223.22.233.132', '台湾省', 'Chrome 89.0.4389.82', 'OS X 10_15_7', '亚太电信', '0', '验证码错误', '2021-03-16 14:01:36');
+INSERT INTO `b5net_loginlog` VALUES (687, 'ceshi', '223.22.233.132', '台湾省', 'Chrome 89.0.4389.82', 'OS X 10_15_7', '亚太电信', '0', '验证码错误', '2021-03-16 14:01:43');
+INSERT INTO `b5net_loginlog` VALUES (688, 'ceshi', '223.22.233.132', '台湾省', 'Chrome 89.0.4389.82', 'OS X 10_15_7', '亚太电信', '1', '登陆成功', '2021-03-16 14:01:52');
 
 -- ----------------------------
 -- Table structure for b5net_mapply
@@ -1216,7 +1221,7 @@ INSERT INTO `b5net_menu` VALUES (11603, '删除位置', 116, 3, '', 0, 'F', '1',
 INSERT INTO `b5net_menu` VALUES (11604, '清除位置缓存', 116, 4, '', 0, 'F', '1', '0', 'admin:webpos:delcache', '', '2021-03-02 21:00:24', '2021-03-02 21:00:24', '');
 INSERT INTO `b5net_menu` VALUES (11801, '添加活动', 118, 1, '', 0, 'F', '1', '0', 'admin:wall:add', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11802, '编辑活动', 118, 2, '', 0, 'F', '1', '0', 'admin:wall:edit', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
-INSERT INTO `b5net_menu` VALUES (11803, '删除活动', 118, 3, '', 0, 'F', '1', '0', 'admin:wall:drop', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
+INSERT INTO `b5net_menu` VALUES (11803, '活动初始化', 118, 3, '', 0, 'F', '1', '0', 'admin:wall:initdata', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11805, '奖品列表', 118, 5, '', 0, 'F', '1', '0', 'admin:wallprize:index', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11806, '添加奖品', 118, 6, '', 0, 'F', '1', '0', 'admin:wallprize:add', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11807, '编辑奖品', 118, 7, '', 0, 'F', '1', '0', 'admin:wallprize:edit', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
@@ -1227,8 +1232,11 @@ INSERT INTO `b5net_menu` VALUES (11811, '日程列表', 118, 11, '', 0, 'F', '1'
 INSERT INTO `b5net_menu` VALUES (11812, '添加日程', 118, 12, '', 0, 'F', '1', '0', 'admin:wallprocess:add', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11813, '编辑日程', 118, 13, '', 0, 'F', '1', '0', 'admin:wallprocess:edit', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 INSERT INTO `b5net_menu` VALUES (11814, '删除日程', 118, 14, '', 0, 'F', '1', '0', 'admin:wallprocess:drop', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
-INSERT INTO `b5net_menu` VALUES (11815, '删除会员', 118, 10, '', 0, 'F', '1', '0', 'admin:wallusers:drop', '', NULL, NULL, '');
-INSERT INTO `b5net_menu` VALUES (11816, '会员状态', 118, 10, '', 0, 'F', '1', '0', 'admin:wallusers:setstatus', '', NULL, NULL, '');
+INSERT INTO `b5net_menu` VALUES (11815, '删除会员', 118, 10, '', 0, 'F', '1', '0', 'admin:wallusers:drop', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
+INSERT INTO `b5net_menu` VALUES (11816, '会员状态', 118, 10, '', 0, 'F', '1', '0', 'admin:wallusers:setstatus', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
+INSERT INTO `b5net_menu` VALUES (11817, '中奖列表', 118, 20, '', 0, 'F', '1', '0', 'admin:wallprizeusers:index', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
+INSERT INTO `b5net_menu` VALUES (11818, '删除中奖', 118, 21, '', 0, 'F', '1', '0', 'admin:wallprizeusers:drop', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
+INSERT INTO `b5net_menu` VALUES (11819, '中奖领取', 118, 22, '', 0, 'F', '1', '0', 'admin:wallprizeusers:setstatus', '', '2021-03-09 09:54:45', '2021-03-09 09:54:45', '');
 
 -- ----------------------------
 -- Table structure for b5net_notice
@@ -1360,6 +1368,7 @@ INSERT INTO `b5net_role_menu` VALUES (2, 114);
 INSERT INTO `b5net_role_menu` VALUES (2, 115);
 INSERT INTO `b5net_role_menu` VALUES (2, 116);
 INSERT INTO `b5net_role_menu` VALUES (2, 117);
+INSERT INTO `b5net_role_menu` VALUES (2, 118);
 INSERT INTO `b5net_role_menu` VALUES (2, 10000);
 INSERT INTO `b5net_role_menu` VALUES (2, 10001);
 INSERT INTO `b5net_role_menu` VALUES (2, 10002);
@@ -1430,6 +1439,21 @@ INSERT INTO `b5net_role_menu` VALUES (2, 11601);
 INSERT INTO `b5net_role_menu` VALUES (2, 11602);
 INSERT INTO `b5net_role_menu` VALUES (2, 11603);
 INSERT INTO `b5net_role_menu` VALUES (2, 11604);
+INSERT INTO `b5net_role_menu` VALUES (2, 11801);
+INSERT INTO `b5net_role_menu` VALUES (2, 11802);
+INSERT INTO `b5net_role_menu` VALUES (2, 11803);
+INSERT INTO `b5net_role_menu` VALUES (2, 11805);
+INSERT INTO `b5net_role_menu` VALUES (2, 11806);
+INSERT INTO `b5net_role_menu` VALUES (2, 11807);
+INSERT INTO `b5net_role_menu` VALUES (2, 11808);
+INSERT INTO `b5net_role_menu` VALUES (2, 11809);
+INSERT INTO `b5net_role_menu` VALUES (2, 11810);
+INSERT INTO `b5net_role_menu` VALUES (2, 11811);
+INSERT INTO `b5net_role_menu` VALUES (2, 11812);
+INSERT INTO `b5net_role_menu` VALUES (2, 11813);
+INSERT INTO `b5net_role_menu` VALUES (2, 11814);
+INSERT INTO `b5net_role_menu` VALUES (2, 11815);
+INSERT INTO `b5net_role_menu` VALUES (2, 11816);
 
 -- ----------------------------
 -- Table structure for b5net_smscode
@@ -1545,7 +1569,7 @@ CREATE TABLE `b5net_wall_prize_users`  (
 -- ----------------------------
 -- Records of b5net_wall_prize_users
 -- ----------------------------
-INSERT INTO `b5net_wall_prize_users` VALUES (88, 'back_4b0eea96e7f0131e1f01ceedcac0854c', '测试3333', '/static/common/images/deheader_1.jpg', '16666666666', 1, 1, 0, '2021-03-15 22:13:01', '2021-03-15 22:13:01');
+INSERT INTO `b5net_wall_prize_users` VALUES (88, 'back_4b0eea96e7f0131e1f01ceedcac0854c', '测试3333', '/static/common/images/deheader_1.jpg', '16666666666', 1, 1, 1, '2021-03-15 22:13:01', '2021-03-16 13:58:22');
 INSERT INTO `b5net_wall_prize_users` VALUES (89, 'oH7Iy1OfN7OmR2JfRImeprmgNPro', '李玉萍', 'http://thirdwx.qlogo.cn/mmopen/vi_32/1DggmWOyUFCE4SAjB2a5teDPSFGoSrXST1Q8q8SjDUxicM782CvESOXDJdtrWInLzZuM8FldYiajtuiak6fEyf5uw/132', '14193333333', 1, 1, 0, '2021-03-15 22:13:02', '2021-03-15 22:13:02');
 INSERT INTO `b5net_wall_prize_users` VALUES (90, 'oH7Iy1PAE8bkB4L11dvLHeONAoaU', '潘风广', 'http://thirdwx.qlogo.cn/mmopen/vi_32/yym0Sziaa1y3haN7iagjeEffwWDCsQsShHHMhzVb4hnicoqsp4mfesGrsn4kJeyjZ376AibHAM9F8UwxkrYujRlj9Q/132', '14403333333', 4, 1, 0, '2021-03-15 22:13:19', '2021-03-15 22:13:19');
 
@@ -1922,6 +1946,11 @@ CREATE TABLE `b5net_wechat_users`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `openid`(`openid`, `type`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信用户信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b5net_wechat_users
+-- ----------------------------
+INSERT INTO `b5net_wechat_users` VALUES (1, 'oBi_at5iKwWaNcmTEpkr_IUwxDBw', 'wx2ba634598c7df708', 'A🔥😄🇨🇳', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIiamNbeIaDHptKEkg0E90qgfQ8QnOdPoeBOYDE0UyBN0ExkCLYIAyNMQr6tnro5ssXTEwX0J8Q0icg/132', '2021-03-15 23:08:21', '2021-03-15 23:08:21', 1, '临沂', '中国', '山东', 1, 'wall_1');
 
 -- ----------------------------
 -- Table structure for failed_jobs

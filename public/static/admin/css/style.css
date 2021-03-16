@@ -48,6 +48,13 @@ a:focus {
 .b5navtab .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
     color: #000;
 }
+
+.bs-callout{ padding: 15px 20px;margin: 10px 0 0 0;border: 1px solid #eee;border-left-width: 5px;border-radius: 3px;background-color: #FFF}
+.bs-callout-danger{border-left-color: #ce4844;}
+.bs-callout-danger h4 {color: #ce4844;}
+.bs-callout h4 {margin-top: 0;margin-bottom: 8px;}
+.bs-callout p{margin-bottom: 5px}
+.bs-callout p:last-child {margin-bottom: 0;}
 /**laydate修改**/
 .layui-laydate-header i{font-size: 16px !important;}
 .layui-laydate-footer {height: 38px !important;padding: 6px 20px !important;}

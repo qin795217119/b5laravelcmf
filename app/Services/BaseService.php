@@ -402,4 +402,13 @@ class BaseService
         }
         return message($title . '失败', false);
     }
+    public function trash($where=null)
+    {
+        //演示限制
+        if (system_isDemo()) {
+            return $this->demo_system();
+        }
+        $this->model->trash($where);
+        return message('操作成功', true);
+    }
 }

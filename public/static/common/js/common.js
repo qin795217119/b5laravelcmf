@@ -1,4 +1,42 @@
 //判断是否为对象
+$(function () {
+    //ajax的GET请求
+    $(".b5ajaxget").click(function () {
+        var title=$(this).attr("data-title");
+        var data={};
+        var url=$(this).attr("data-url");
+        if(title){
+            b5confirm(title,function () {
+                b5ajax(url,data,1);
+            });
+        }else{
+            b5ajax(url,data,1);
+        }
+    });
+    $(".b5submit_btn").click(function () {
+        var target=$(this).attr("data-target");
+        var url=$(this).attr("data-url");
+        var title=$(this).attr("data-title");
+        if(url=="" || !url){
+            url=window.location.href;
+        }
+        if(isExitsFunction('b5submit_btn_before')){
+            var before=b5submit_btn_before();
+            if(!before){
+                return false;
+            }
+        }
+        var data=$("#"+target).serialize();
+        if(title){
+            b5confirm(title,function () {
+                b5ajax(url,data);
+            });
+        }else{
+            b5ajax(url,data);
+        }
+    })
+});
+
 function isJson(str) {
     if (typeof str == 'string') {
         try {
@@ -49,7 +87,7 @@ function isFunction(param) {
 //判断是否为手机号
 function b5isMobil(s) {
     var patrn = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
-    if(!patrn.exec(s)) return false
+    if(!patrn.exec(s)) return false;
     return true
 }
 
@@ -100,6 +138,37 @@ function urlProcess(url, isreplace) {
     }
 }
 
+function b5ajax(url,data,method,callback) {
+    var loadindex =b5showloading();
+    if(!method){
+        method="POST";
+    } else{
+        method="GET";
+    }
+    $.ajax({
+        type: method,
+        url: url,
+        data: data,
+        dataType: "json",
+        success: function(result){
+            if(isExitsFunction(callback)){
+                callback(result);
+            }else{
+                if (result.code==0) {
+                    b5tips(result.msg,result.url);
+                }else{
+                    b5tips(result.msg,result.url);
+                }
+            }
+        },
+        complete:function(){
+            b5hideloading(loadindex);
+        },
+        error:function(){
+            b5tips("网络链接错误");
+        }
+    });
+}
 //轻提示
 function b5tips(msg, url, shadeClose, isreplace) {
     if (shadeClose == undefined) {

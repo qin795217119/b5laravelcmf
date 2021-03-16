@@ -1,6 +1,13 @@
 @extends('admin.public.layout')
 
 @section('content')
+    <div class="bs-callout bs-callout-danger" id="callout-tables-striped-ie8">
+        <h4>使用说明</h4>
+        <p>1.点击下面的活动名称，进入PC大屏，密码123456</p>
+        <p>2.请先关注首页的二维码测试公众号</p>
+        <p>3.点击大屏下面的二维码，手机微信扫描</p>
+
+    </div>
     <div class="col-sm-12 search-collapse">
         <form id="website-form">
             <div class="select-list">
@@ -66,9 +73,9 @@
                         formatter: function(value, row, index) {
                             var actions = [];
                             actions.push('<a class="btn btn-success btn-xs" href="javascript:;" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs" href="javascript:;" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
 
                             var more = [];
+                            more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='getUser(" + row.id + ")'><i class='fa fa-user'></i> 中奖会员</a>");
                             more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='prizeSet(" + row.id + ")'><i class='fa fa-gift'></i> 奖品设置</a> ");
                             more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='regUser(" + row.id + ")'><i class='fa fa-user'></i> 签到会员</a>");
                             more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='processList(" + row.id + ")'><i class='fa fa-calendar'></i> 活动日程</a>");
@@ -93,6 +100,16 @@
         function processList(wall_id) {
             var url = mUrl + '/wallprocess/index?wall_id=' + wall_id;
             $.modal.openTab("【"+wall_id+"】活动日程", url);
+        }
+
+        function dataClear(wall_id) {
+            var url = mUrl + '/wall/initdata?wall_id=' + wall_id;
+            $.modal.openTab("【"+wall_id+"】数据初始化", url);
+        }
+
+        function getUser(wall_id) {
+            var url = mUrl + '/wallprizeusers/index?wall_id=' + wall_id;
+            $.modal.openTab("【"+wall_id+"】中奖会员", url);
         }
     </script>
 @stop
