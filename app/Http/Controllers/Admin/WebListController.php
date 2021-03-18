@@ -75,18 +75,4 @@ class WebListController extends Backend
         }
         return $this->toError('信息不存在');
     }
-
-    public function tree(){
-        if(IS_POST){
-            return $this->service->getTree();
-        }else{
-            $id = request()->input('id', 0);
-            $website = request()->input('website', '');
-            $root = request()->input('root', 1);
-            view()->share('website',$website);
-            view()->share('menuId',$id);
-            view()->share('root',$root);
-            return $this->render();
-        }
-    }
 }
