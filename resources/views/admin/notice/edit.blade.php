@@ -10,7 +10,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">公告内容：</label>
             <div class="col-sm-9">
-                @render('iframe',['name'=>'input','extend'=>['name'=>'content','type'=>'hidden','class'=>'summernote_content','info'=>$info]])
+                @render('iframe',['name'=>'textarea','extend'=>['name'=>'content','class'=>'summernote_content hide','info'=>$info]])
                 <div class="summernote" data-place="请输入公告内容"></div>
             </div>
         </div>

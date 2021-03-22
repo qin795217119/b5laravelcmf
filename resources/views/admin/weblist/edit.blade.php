@@ -47,7 +47,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">图文内容：</label>
             <div class="col-sm-9">
-                @render('iframe',['name'=>'input','extend'=>['name'=>'content','type'=>'hidden','class'=>'summernote_content','info'=>$extInfo]])
+                @render('iframe',['name'=>'textarea','extend'=>['name'=>'content','class'=>'summernote_content hide','info'=>$extInfo]])
                 <div class="summernote" data-place=""></div>
             </div>
         </div>
