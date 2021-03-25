@@ -166,6 +166,25 @@
     // 是否页签与菜单联动
     var isLinkage = true;
 
+
+    var wsUrl = "ws://b5laravelcmf.b5net.com:9502";
+    var websocket = new WebSocket(wsUrl);
+
+    //势力花对性的onopen属性
+    websocket.onopen = function(evt){};
+    //实例化 onmessage
+    websocket.onmessage = function(evt){
+        console.log("ws-server："+evt.data);
+    };
+
+    //onclose
+    websocket.onclose = function(evt){};
+    //error
+    websocket.onerror=function(evt,e){
+        console.log("error:"+evt.data);
+    };
+
+
     /** 刷新时访问路径页签 */
     function applyPath(url) {
         $('a[href$="' + decodeURI(url) + '"]').click();
