@@ -98,7 +98,7 @@ $(function() {
                 }
             });
             if(thisObj.parent().find(".summernote_content").length>0){
-                thisObj.summernote('code', thisObj.parent().find("input.summernote_content").eq(0).val());
+                thisObj.summernote('code', thisObj.parent().find(".summernote_content").eq(0).val());
             }
         })
     }
