@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/public/uploads
 /storage/app/public/*
 /storage/debugbar/*
 /storage/logs/*
@@ -12,10 +11,12 @@
 /vendor
 /tests
 /.idea
-.env
 .env.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/package.json
+/composer.lock
+/.editorconfig

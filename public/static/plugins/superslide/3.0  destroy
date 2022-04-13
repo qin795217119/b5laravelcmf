@@ -1,0 +1,5 @@
+var swiper_zdxm= jQuery("#major_project").slide({mainCell:"ul",autoPlay:true,effect:"topMarquee",vis:minNum,interTime:60,trigger:"click"});
+if(swiper_zdxm){
+    swiper_zdxm[0].destroy();
+    swiper_zdxm=null;
+}
