@@ -1,15 +1,5 @@
 /node_modules
-/public/hot
-/public/storage
-/storage/app/public/*
-/storage/debugbar/*
-/storage/logs/*
-/storage/framework/cache/data/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-/storage/framework/testing/*
 /vendor
-/tests
 /.idea
 .env.backup
 .phpunit.result.cache
@@ -17,6 +7,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/package.json
 /composer.lock
 /.editorconfig
