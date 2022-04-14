@@ -172,7 +172,7 @@ class Upload
             $fullPath = str_replace(DIRECTORY_SEPARATOR,'/',$saveRoot.$savePath.DIRECTORY_SEPARATOR.$saveName);
             $data = [
                 'path' => $fullPath,
-                'url' => $fullPath,
+                'url' => Functions::getFileUrl($fullPath),
                 'originName' => $file->getClientOriginalName(),
                 'ext' => $thisExt,
             ];
