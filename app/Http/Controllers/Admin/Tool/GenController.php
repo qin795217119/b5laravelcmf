@@ -186,13 +186,24 @@ class GenController extends Tool
                     },\r\n";
                 continue;
             }
-            if($value['COLUMN_NAME'] =='title' || $value['COLUMN_NAME'] =='name'){
+            if($value['COLUMN_NAME'] =='title' || $value['COLUMN_NAME'] =='name' || $value['COLUMN_NAME'] =='remark' || $value['COLUMN_NAME'] =='note' || $value['COLUMN_NAME'] =='desc'){
                 $html.="                    {
                         field: '".$value['COLUMN_NAME']."',
                         title: '".($value['COLUMN_COMMENT']?:$value['COLUMN_NAME'])."',
                         sortable: true,
                         formatter: function (value, row, index) {
-                            return $.table.tooltip(value,15);
+                            return $.table.tooltip(value,25);
+                        }
+                    },\r\n";
+                continue;
+            }
+            if($value['COLUMN_NAME'] =='link' || $value['COLUMN_NAME'] =='path' || $value['COLUMN_NAME'] =='url'){
+                $html.="                    {
+                        field: '".$value['COLUMN_NAME']."',
+                        title: '".($value['COLUMN_COMMENT']?:$value['COLUMN_NAME'])."',
+                        sortable: true,
+                        formatter: function (value, row, index) {
+                            return $.table.tooltip(value,25,'link');
                         }
                     },\r\n";
                 continue;

@@ -48,6 +48,13 @@
                 <x-upload type="file" name="files_upload" :extend="['cat'=>'demo','link'=>1,'multi'=>3,'exts'=>'txt|rar|doc|png', 'tips'=>'格式为txt|rar|doc|png；最大上传3个；大小不能超过100M','data'=>$info['files']]"/>
             </div>
         </div>
+
+        <div class="row m-t-md">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            </div>
+        </div>
     </form>
 @stop
 

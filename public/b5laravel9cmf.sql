@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-04-13 16:39:37
+Date: 2022-04-22 13:50:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `b5net_admin` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10010 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=10008 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of b5net_admin
@@ -86,6 +86,25 @@ INSERT INTO `b5net_admin_struct` VALUES ('10007', '104');
 INSERT INTO `b5net_admin_struct` VALUES ('10000', '100');
 
 -- ----------------------------
+-- Table structure for `b5net_app_token`
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_app_token`;
+CREATE TABLE `b5net_app_token` (
+  `token` varchar(60) NOT NULL DEFAULT '',
+  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '平台类型',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `exp_time` int(11) NOT NULL DEFAULT '0' COMMENT '过期时间',
+  PRIMARY KEY (`token`),
+  UNIQUE KEY `token` (`token`) USING BTREE,
+  UNIQUE KEY `type` (`type`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of b5net_app_token
+-- ----------------------------
+INSERT INTO `b5net_app_token` VALUES ('804e919a041bb63d99aff25545671487', 'app', '122', '1651199565');
+
+-- ----------------------------
 -- Table structure for `b5net_config`
 -- ----------------------------
 DROP TABLE IF EXISTS `b5net_config`;
@@ -114,8 +133,8 @@ INSERT INTO `b5net_config` VALUES ('4', '阿里accessKeyId', 'sms_ali_key', 'tex
 INSERT INTO `b5net_config` VALUES ('5', '阿里accessSecret', 'sms_ali_secret', 'text', '0', 'sms', '', '', '阿里短信-AccessKey Secret', '2021-01-11 19:26:45', '2021-01-17 21:27:04');
 INSERT INTO `b5net_config` VALUES ('6', '阿里signName', 'sms_ali_signname', 'text', '0', 'sms', '', '', '阿里短信-签名', '2021-01-11 19:27:53', '2021-01-17 21:27:04');
 INSERT INTO `b5net_config` VALUES ('7', '阿里tempId', 'sms_ali_temp', 'text', '0', 'sms', '', '', '阿里短信-tempId模板', '2021-01-11 19:30:21', '2021-01-17 21:27:04');
-INSERT INTO `b5net_config` VALUES ('10', '公众号appid', 'wechat_appid', 'text', '0', 'wx', 'wx2dbcd1ebf29bd18f', '', '微信公众号的AppId', '2021-01-12 11:05:50', '2021-03-27 23:06:59');
-INSERT INTO `b5net_config` VALUES ('11', '公众号secret', 'wechat_appsecret', 'text', '0', 'wx', '8f2ea486cf4182ba9211d26cdb7c343a', '', '微信公众号-AppSecret', '2021-01-12 11:06:24', '2021-03-27 23:06:59');
+INSERT INTO `b5net_config` VALUES ('10', '公众号appid', 'wechat_appid', 'text', '0', 'wx', 'wx2ba634598c7df708', '', '微信公众号的AppId', '2021-01-12 11:05:50', '2022-04-22 02:58:13');
+INSERT INTO `b5net_config` VALUES ('11', '公众号secret', 'wechat_appsecret', 'text', '0', 'wx', 'e82cdf89c396b1dd88f1632eaf70fb2d', '', '微信公众号-AppSecret', '2021-01-12 11:06:24', '2022-04-22 02:58:13');
 INSERT INTO `b5net_config` VALUES ('12', '服务地址', 'sys_email_host', 'text', '0', 'email', 'smtp.163.com', '', '类似:smtp.163.com', '2021-01-22 15:28:10', '2021-01-23 13:03:59');
 INSERT INTO `b5net_config` VALUES ('13', '邮箱地址', 'sys_email_username', 'text', '0', 'email', 'lyyd_lh@163.com', '', '发送邮件的邮箱地址', '2021-01-22 15:28:39', '2021-01-23 13:03:59');
 INSERT INTO `b5net_config` VALUES ('14', '授权密码', 'sys_email_password', 'text', '0', 'email', 'UCSMPMHNDJSALQVW', '', '', '2021-01-22 15:29:34', '2021-01-23 13:03:59');
@@ -145,11 +164,14 @@ CREATE TABLE `b5net_loginlog` (
   `create_time` datetime DEFAULT NULL COMMENT '访问时间',
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of b5net_loginlog
 -- ----------------------------
+INSERT INTO `b5net_loginlog` VALUES ('1', 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-04-14 14:09:39', '2022-04-14 14:09:39');
+INSERT INTO `b5net_loginlog` VALUES ('2', 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-04-17 15:40:42', '2022-04-17 15:40:42');
+INSERT INTO `b5net_loginlog` VALUES ('3', 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-04-22 00:45:22', '2022-04-22 00:45:22');
 
 -- ----------------------------
 -- Table structure for `b5net_menu`
@@ -243,7 +265,7 @@ CREATE TABLE `b5net_notice` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='通知公告表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='通知公告表';
 
 -- ----------------------------
 -- Records of b5net_notice
@@ -358,7 +380,7 @@ CREATE TABLE `b5net_struct` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COMMENT='组织架构';
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COMMENT='组织架构';
 
 -- ----------------------------
 -- Records of b5net_struct
@@ -385,11 +407,12 @@ CREATE TABLE `b5net_wechat_access` (
   `jsapi_ticket_add` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `appid` (`appid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信jsapi和access';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='微信jsapi和access';
 
 -- ----------------------------
 -- Records of b5net_wechat_access
 -- ----------------------------
+INSERT INTO `b5net_wechat_access` VALUES ('1', 'wx2ba634598c7df708', '56_1rs0VzqcoQD17nyWWUQMzhzRkrGgm8aYR2f6zS2Bpx22SYu7YqrsUdAf5Vd0GULJFQ1CKMaWfIqAplnP8Ks8GeYlAzbe8cgYoUF9kUVV-OQ2dJXr-BSBn50XqI0xScTCctMLRRJEComk1SvZTIPdADACRY', 'sM4AOVdWfPE4DxkXGEs8VEHh_EQ4eLTYEqfB5PSBsfjeivfj4e6h5yEFTVP-_EIn78RGwPetriPcft2bevEGcg', '1650606511', '1650606511');
 
 -- ----------------------------
 -- Table structure for `b5net_wechat_users`
@@ -411,14 +434,12 @@ CREATE TABLE `b5net_wechat_users` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `openid` (`openid`,`appid`,`type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='微信用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='微信用户信息表';
 
 -- ----------------------------
 -- Records of b5net_wechat_users
 -- ----------------------------
-INSERT INTO `b5net_wechat_users` VALUES ('2', 'oHwQ-5zzJiXhutCVWmSPfQyAx7Yk', 'wx2dbcd1ebf29bd18f', '简单', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLGqoCcD0iamzHcJDmfU4sKbpqBYxD9icXcTtxlKkia3mB2OZIrIucsnq21FwSvFvBSxsiaTtAm5ZHmeQ/132', 'scratch_1', '2021-04-08 16:47:17', '2021-04-08 16:47:17', '1', '', '中国', '', '1');
-INSERT INTO `b5net_wechat_users` VALUES ('3', 'oHwQ-5_qj1L9HHnUpclLOJPh_Z7M', 'wx2dbcd1ebf29bd18f', '九方资源ヽ赖小伙 ', 'https://thirdwx.qlogo.cn/mmopen/vi_32/fKibib5mxicWGxOgAQY0PUucIft3D243GXLMkm4vMY7cJmqzR2Zmhr9nrsTR1PFfDXlCsZ3sJcy4UGwptNu7CmSwQ/132', 'scratch_1', '2021-04-14 14:07:13', '2021-04-14 14:07:13', '1', '赣州', '中国', '江西', '1');
-INSERT INTO `b5net_wechat_users` VALUES ('4', 'oHwQ-54NH0I3WbRt77eF5-EKo-C8', 'wx2dbcd1ebf29bd18f', 'Hello World', 'https://thirdwx.qlogo.cn/mmopen/vi_32/M3PEicW5ziceOUdVDX7vQicZgvxDMPYCaiavl4l2m8IFPyzSHMTbiaeL3mtaXMiafD8CJQicFrNoHiau1ypkJo0m2HYibcw/132', 'scratch_1', '2021-04-19 21:24:36', '2021-04-19 21:24:36', '1', '', '黑山', '', '1');
+INSERT INTO `b5net_wechat_users` VALUES ('1', 'oBi_at-f8RORVDzNs-DY42Gx2Z5Y', 'wx2ba634598c7df708', '李先生', 'https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eo5thwrUYkscpLLpLc8gx4q6CL8nxm7Ciaicjc9icMYCYEsXWaGsbkjETycFAZMVUIGmiazSDiaib7XKOgw/132', '', '2022-04-22 05:44:41', '2022-04-22 05:44:41', '0', '', '', '', '1');
 
 -- ----------------------------
 -- Table structure for `demo_media`

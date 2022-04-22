@@ -24,7 +24,7 @@ class ConfigCache
      */
     public static function get(string $type=null,$default = null): mixed
     {
-        if(!$type) return false;
+        if(!$type) return $default;
         $list = self::lists();
         return isset($list[$type])?$list[$type]['value']:$default;
     }

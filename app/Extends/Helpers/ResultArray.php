@@ -8,18 +8,16 @@ declare (strict_types=1);
 
 namespace App\Extends\Helpers;
 
-use Illuminate\Http\JsonResponse;
-
-class Result
+class ResultArray
 {
      /**
      * 成功的JSON
      * @param string $msg
      * @param array $data
      * @param array $extend
-     * @return JsonResponse
+     * @return array
      */
-    public static function success(string $msg = '', array $data = [], array $extend = []): JsonResponse
+    public static function success(string $msg = '', array $data = [], array $extend = []): array
     {
         return static::message($msg, true, $data, 0, $extend);
     }
@@ -28,9 +26,9 @@ class Result
      * 失败JSON
      * @param string $msg
      * @param int $code
-     * @return JsonResponse
+     * @return array
      */
-    public static function error(string $msg = '', int $code = 500): JsonResponse
+    public static function error(string $msg = '', int $code = 500): array
     {
         return static::message($msg, false, [], $code);
     }
@@ -42,9 +40,9 @@ class Result
      * @param array $data
      * @param int $code
      * @param array $extend
-     * @return JsonResponse
+     * @return array
      */
-    public static function message(string $msg, bool $success, array $data, int $code = -1, array $extend = []): JsonResponse
+    public static function message(string $msg, bool $success, array $data, int $code = -1, array $extend = []): array
     {
         $rs = [
             'code' => $code < 0 ? ($success ? 0 : 500) : $code,
@@ -57,16 +55,6 @@ class Result
                 $rs[$key] = $value;
             }
         }
-        return response()->json($rs);
-    }
-
-    /**
-     * 返回一个数组
-     * @param array $data
-     * @return JsonResponse
-     */
-    public static function response(array $data): JsonResponse
-    {
-        return response()->json($data);
+        return $rs;
     }
 }

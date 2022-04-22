@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +12,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('v1')->group(function () {
+    Route::controller(\App\Http\Controllers\Api\V1\AppController::class)->prefix('app')->group(function (){
+       Route::any('/index','index');
+       Route::any('/login','login');
+    });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+    Route::controller(\App\Http\Controllers\Api\V1\WechatController::class)->prefix('wechat')->group(function (){
+        Route::get('/getopenid','getopenid');
+        Route::get('/getwechatcode','getwechatcode');
+        Route::get('/back','back');
+    });
 });
+
+

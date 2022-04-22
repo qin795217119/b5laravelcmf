@@ -76,5 +76,8 @@ class Kernel extends HttpKernel
         'admin.login' => \App\Extends\Middleware\AdminLogin::class,
         'admin.auth' => \App\Extends\Middleware\AdminAuth::class,
         'admin.demo' => \App\Extends\Middleware\AdminDemo::class,
+
+
+        'api.token' => \App\Extends\Middleware\ApiToken::class,
     ];
 }
