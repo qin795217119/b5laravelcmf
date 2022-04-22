@@ -26,4 +26,6 @@ Route::prefix('v1')->group(function () {
     });
 });
 
+Route::any('/test/index',[\App\Http\Controllers\Api\TestController::class,'index']);
+
 
