@@ -122,9 +122,6 @@ class IndexController extends Backend
                 if ($t['deep'] == $deep) {
                     if ($t['type'] == 'C') {
                         $url = $t['url'];
-                        if ($url && strpos($url, 'http') !== 0) {
-                            $url = url('/admin/'.$url);
-                        }
                         if ($t['parent_id'] == 0) {
                             $html .= '<li><a class="' . ($t['target'] == '1' ? 'menuBlank' : 'menuItem') . '" href="' . $url . '" data-refresh="' . ($t['is_refresh'] ? 'true' : 'false') . '">' . ($t['icon'] ? '<i class="' . $t['icon'] . '"></i>' : '') . ' <span class="nav-label">' . $t['name'] . '</span></a></li>';
                         } else {
