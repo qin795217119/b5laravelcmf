@@ -23,8 +23,14 @@ class IndexController extends Backend
      */
     public function index(): View
     {
+        //是否开启横向菜单
+        $topNav = false;
         $userInfo = LoginAuth::adminLoginInfo();
-        $menuHtml = $this->getMenuListByLogin();
+        $menuList = $this->getMenuListByLogin();
+        if($topNav){
+            return $this->render('index.indextop', ['user_info' => $userInfo,'menuList'=>$menuList]);
+        }
+        $menuHtml = $this->menuToHtml($menuList);
         return $this->render('', ['user_info' => $userInfo,'menuHtml'=>$menuHtml]);
     }
 
@@ -46,12 +52,11 @@ class IndexController extends Backend
     }
     /**
      * 根据登录session获取菜单
-     * @return string
+     * @return array
      */
-    protected function getMenuListByLogin(): string
+    protected function getMenuListByLogin(): array
     {
-        $menuHtml = '';
-        $menuList = [];
+        $menuList = $menuTree =[];
         $adminId = LoginAuth::adminLoginInfo('info.id');
         if ($adminId) {
             $isAdmin = LoginAuth::adminLoginInfo('info.is_admin');
@@ -69,11 +74,8 @@ class IndexController extends Backend
 
         if ($menuList) {
             $menuTree = $this->getMenuTree(Functions::stdToArray($menuList));
-            if ($menuTree) {
-                $menuHtml = $this->menuToHtml($menuTree);
-            }
         }
-        return $menuHtml;
+        return $menuTree;
     }
 
 
@@ -90,6 +92,14 @@ class IndexController extends Backend
         foreach ($list as $key => $row) {
             if ($row['parent_id'] == $pid) {
                 $row['deep'] = $deep;
+                if($row['type'] == 'C'){
+                    $url = $row['url'];
+                    if ($url && strpos($url, 'http') !== 0) {
+                        $url = url('/admin/'.$url);
+                    }
+                    $row['url'] = $url;
+                }
+
                 unset($list[$key]);
                 $row['child'] = $this->getMenuTree($list, $row['id'], $deep + 1);
                 $tree[] = $row;
