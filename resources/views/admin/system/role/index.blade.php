@@ -75,7 +75,7 @@
 
                                 more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='authMenu(" + row.id + ")'><i class='fa fa-check-square-o'></i>菜单权限</a> ");
                                 more.push("<a class='btn btn-default btn-xs' href='javascript:;' onclick='dataScope(" + row.id + ")'><i class='fa fa-check-square-o'></i>数据权限</a> ");
-                                actions.push('<a tabindex="0" class="btn btn-info btn-xs" data-placement="left" data-toggle="popover" data-html="true" data-trigger="focus" data-container="body" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
+                                actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-container="body" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
                             }
                             return actions.join('');
                         }

@@ -105,9 +105,9 @@ $(function() {
     }
 
     // 气泡弹出框特效
-    $(document).on("click", '.table [data-toggle="popover"]', function() {
-        $(this).popover("toggle")
-    });
+    //$(document).on("click", '.table [data-toggle="popover"]', function() {
+    //    $(this).popover("toggle")
+    //});
     // 取消回车自动提交表单
     $(document).on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
         if (event.keyCode == 13) {
