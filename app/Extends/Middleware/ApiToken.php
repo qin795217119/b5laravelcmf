@@ -37,13 +37,14 @@ class ApiToken
      * @param Closure $next
      * @param string $type 平台类型 例如 app和h5两个登录不影响彼此
      * @param string $key 验证字段 默认token
+     * @param bool $noLogin 是否允许未登录，true时未登录不会直接返回未登录，需自己根据__token进行判断，主要用于某个控制器中登录或者未登录都可以进行的操作
      * @return mixed
      */
-    public function handle(Request $request, Closure $next,string $type='',string $key=''): mixed{
+    public function handle(Request $request, Closure $next,string $type='',string $key='',bool $noLogin = false): mixed{
         $key = $key?:'token';
         $token = $request->input($key, '');
         $token_record = $this->getToken($token,$type);
-        if (!$token_record) {
+        if (!$token_record && !$noLogin) {
             if($request->isMethod('POST') || $request->ajax()){
                 return Result::error('登录失效，请重新登录',305);
             }else{
