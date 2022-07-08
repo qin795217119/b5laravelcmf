@@ -303,14 +303,21 @@ function select2Option(obj){
     return option;
 }
 //select设置默认值
-function select2Default(id,change,value){
+function select2Default(id,change,value,callback = false){
     value = value || ''
     change = value || false
     var option = select2Option($("#"+id));
+    if(callback){
+        $("#"+id).unbind("change").on("change", function () {
+            if($.common.isFunction('select2change')){
+                select2change($(this));
+            }
+        })
+    }
     if(change){
-        $("#"+id).select2(option).val(value).trigger('change');
+        $("#"+id).val(value).select2(option).trigger('change');
     }else{
-        $("#"+id).select2(option).val(value);
+        $("#"+id).val(value).select2(option);
     }
 }
 //自定义事件方法
