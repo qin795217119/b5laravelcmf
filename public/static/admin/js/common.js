@@ -305,7 +305,7 @@ function select2Option(obj){
 //select设置默认值
 function select2Default(id,change,value,callback = false){
     value = value || ''
-    change = value || false
+    change = change || false
     var option = select2Option($("#"+id));
     if(callback){
         $("#"+id).unbind("change").on("change", function () {
