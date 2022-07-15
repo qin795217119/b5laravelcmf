@@ -57,7 +57,7 @@ class AdminController extends System
         if($userIdList === false){
             $params['where']['id'] = '0';
         }elseif($userIdList){
-            $params['in']['id'] = implode(',', array_unique($userIdList));
+            $params['in']['id'] = array_unique($userIdList);
         }
         $params['like']['realname'] = $post['like']['realname']??'';
         $params['where']['status'] = '1';
