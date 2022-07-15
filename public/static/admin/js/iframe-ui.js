@@ -335,14 +335,21 @@ var table = {
                 return actions.join('');
             },
             // 图片预览
-            imageView: function (row,type) {
+             imageView: function (row,type,width,height,fit='cover') {
                 var value = row[type]
                 if ($.common.isNotEmpty(value)) {
                     var id = row.id
                     var shtml = '';
                     var list = value.split(',');
+                    var style="object-fit:"+fit+";";
+                    if(width){
+                        style+="width:"+width+"px;"
+                    }
+                    if(height){
+                        style+="height:"+height+"px;"
+                    }
                     for (let i = 0; i < list.length; i++) {
-                        shtml += $.common.sprintf("<img class='img-table-show' src='%s'/>", list[i]);
+                        shtml += $.common.sprintf("<img class='img-table-show' src='%s' style='"+style+"'/>", list[i]);
                     }
                     shtml = '<div class="photospreshow" id="'+type+'_'+id+'">'+shtml+'</div>';
                     return shtml;

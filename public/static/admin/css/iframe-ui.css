@@ -174,7 +174,7 @@
 .b5uploadfilebox .b5upload_filetype.txt{background-image: url("../images/upload/txt.png")}
 
 .search-item-text{border: 1px solid #ddd;border-radius: 4px;height: 30px;display: inline-block;padding:0 5px;vertical-align: middle;line-height: 30px}
-.img-table-show{height: 32px;margin: 2px 2px 0 0}
+.img-table-show{width:36px;height: 36px;margin: 2px 2px 0 0}
 
 .select2-container--bootstrap .select2-selection{font-size: 13px;}
 .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field{padding: 3px 3px 4px}
