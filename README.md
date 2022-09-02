@@ -7,6 +7,16 @@ B5LaravelCMF V2.0
 
 和V1和版本差距较大，该版本去除了service层的必须和前端表单的自定义标签方式，改成自己根据需要创建，只完成基本核心功能，可以快速填充功能。 对后台进行了模块区分。
 
+### 安装
+安装就是标准的laravel安装 php版本最低8.0
+1. 运行composer update 安装依赖
+2. 运行目录设为public
+3. 设置伪静态
+   location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+4.  **访问地址 域名/admin** 
+
 ### 系统演示
 地址：http://b5laravelcmf.b5net.com
 
