@@ -9,7 +9,7 @@ declare (strict_types=1);
 namespace App\Http\Controllers\Admin\System;
 
 
-use App\Extends\Helpers\DataScope;
+use App\Extends\Helpers\Admin\DataScope;
 use App\Extends\Helpers\Result;
 use App\Extends\Libs\AdminCommonAction;
 use App\Extends\Services\System\AdminRoleService;
