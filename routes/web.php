@@ -19,3 +19,7 @@ Route::get('/error', function (Request $request) {
     $code = $request->get('code','400');
     return view('error',['code'=>$code,'msg'=>$msg]);
 })->name('error');
+
+Route::get("/", function () {
+    return redirect(route("admin.index"));
+});
