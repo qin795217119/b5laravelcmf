@@ -25,5 +25,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('upload', \App\Extends\Tags\Upload::class);
+
+        // 添加模板按钮权限判断方法
+        Blade::if('hasPerm', function ($permission) {
+            return hasPerm($permission);
+        });
     }
 }
