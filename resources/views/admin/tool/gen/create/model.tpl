@@ -7,8 +7,9 @@
 namespace App\Models{$dir};
 
 use App\Extends\Libs\AdminBaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class {$model}
+class {$model} extends Model
 {
     use AdminBaseModel;
 

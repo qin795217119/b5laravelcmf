@@ -52,6 +52,15 @@ gitee: https://gitee.com/b5net/b5-laravel-cmf
 3. 系统默认使用DB查询构造器进行数据库操作，若想支持模型操作，只需将模型继承Model
 4. 封装了文件上传、图片上传等标签、快速实现上传
 5. 实现了一键导出excel功能；表单导出（参考人员管理）、全部数据导出（参考参数管理）
+6. 实现了按钮级权限控制,使用@hasPerm("分组名:模块名:动作") button @endhasPerm，如：@hasPerm("user:student:add")
+   <a class="btn btn-success">新增</a>
+   @endhasPerm
+   代码生成时已自动添加
+提示: IDE中添加指令提示如下图所示:
+
+![Image text](https://gitee.com/vip_huage/b5-laravel-cmf/raw/master/screenshots/hasPerm.jpg)
+
+![Image text](https://gitee.com/vip_huage/b5-laravel-cmf/raw/master/screenshots/endhasPerm.jpg)
 
 ### 界面截图
 ![Image text](https://gitee.com/b5net/img-folder/raw/master/user.png)
