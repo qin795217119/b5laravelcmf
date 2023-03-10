@@ -24,9 +24,10 @@ class GenController extends Tool
     {
         if ($this->request->isMethod('POST')) {
             $params = $this->request->post();
-            $table = $params['table'] ?? '';
-            $class = $params['class'] ?? '';
-            $dir = $params['dir'] ?? '';
+            $table = trim($params['table'] ?? '');
+            $class = trim($params['class'] ?? '');
+            $dir = trim($params['dir'] ?? '');
+
             if (empty($table)) return Result::error('请选择表名');
             if (empty($class)) return Result::error('请输入类名称');
 
@@ -36,13 +37,14 @@ class GenController extends Tool
             return $this->genCode($table, $class, $dir);
 
         } else {
-            $systemList = ['b5net_admin', 'b5net_admin_role', 'b5net_admin_struct', 'b5net_config', 'b5net_menu', 'b5net_role', 'b5net_role_menu', 'b5net_role_struct', 'b5net_struct'];
+            //已生成过的表
+            $systemList = ['b5net_admin','b5net_admin_role','b5net_admin_struct','b5net_config','b5net_menu','b5net_role','b5net_role_menu','b5net_role_struct','b5net_struct'];
             $tables = Db::select("show tables");
             $tableList = [];
-            foreach ($tables as $value) {
+            foreach ($tables as $value){
                 $table = current($value);
-                if (!in_array($table, $systemList)) {
-                    $tableList[] = $table;
+                if(!in_array($table,$systemList) && strpos($table,"b5net_") !==0){
+                    $tableList[]=$table;
                 }
             }
             return $this->render('', ['tableList' => $tableList]);
@@ -58,28 +60,44 @@ class GenController extends Tool
         if (!$fields) {
             return $this->toError('获取表结构失败');
         }
-        if (true !== $res = $this->createModel($fields, $table, $model_name, $dir)) {
-            return $res;
+        $create_type = intval($this->request->post('create_type',0));
+        if($create_type == 0 || $create_type == 4) {
+            if (true !== $res = $this->createModel($fields, $table, $model_name, $dir)) {
+                return $res;
+            }
+        }
+        if($create_type == 0 || $create_type == 1 || $create_type == 3) {
+            if (true !== $res = $this->createController($model_name, $dir)) {
+                return $res;
+            }
         }
 
-        if (true !== $res = $this->createController($model_name, $dir)) {
-            return $res;
+        if($create_type == 0 || $create_type == 2 || $create_type == 3) {
+            if (true !== $res = $this->createIndex($table, $fields, $model_name, $dir)) {
+                return $res;
+            }
+            if (true !== $res = $this->createAdd($fields, $model_name, $dir)) {
+                return $res;
+            }
+            if (true !== $res = $this->createEdit($fields, $model_name, $dir)) {
+                return $res;
+            }
         }
-        if (true !== $res = $this->createIndex($table,$fields, $model_name, $dir)) {
-            return $res;
+
+        $create_menu = intval($this->request->post('create_menu',0));
+        if($create_menu){
+            if (true !== $res = $this->createMenu($table, $model_name, $dir)) {
+                return $res;
+            }
         }
-        if (true !== $res = $this->createAdd($fields, $model_name, $dir)) {
-            return $res;
+
+        $create_route = intval($this->request->post('create_route',0));
+        if($create_route){
+            if (true !== $res = $this->createRoute($table, $model_name, $dir)) {
+                return $res;
+            }
         }
-        if (true !== $res = $this->createEdit($fields, $model_name, $dir)) {
-            return $res;
-        }
-        if (true !== $res = $this->createMenu($table, $model_name, $dir)) {
-            return $res;
-        }
-        if (true !== $res = $this->createRoute($table, $model_name, $dir)) {
-            return $res;
-        }
+
         return Result::success('生成完成');
     }
 
@@ -120,8 +138,7 @@ class GenController extends Tool
     private function createController($model_name, $dir)
     {
         $root = base_path();//根地址
-        $controller_name = $model_name;//生成控制器名称
-
+        $controller_name = ucfirst(strtolower($model_name));//生成控制器名称
         $base = $dir;
 
         $model_use = $model_name;

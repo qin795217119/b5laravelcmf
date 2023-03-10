@@ -37,6 +37,43 @@
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 主要完成后端的简单模块区分，影响控制器和Model的放置位置。例如system，会将控制器放在Admin/System下，Model放在Models/System下</span>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">创建模式：</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="create_type">
+                    <option value="0">全部</option>
+                    <option value="1">控制器</option>
+                    <option value="2">视图</option>
+                    <option value="3">控制器+视图</option>
+                    <option value="4">模型</option>
+                </select>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 默认创建为控制器+视图+模型</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="row">
+                    <label class="col-sm-6 control-label">生成菜单：</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" name="create_menu">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="row">
+                    <label class="col-sm-6 control-label">生成路由：</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" name="create_route">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                 </div>
+            </div>
+        </div>
         <div class="row m-t-md">
             <div class="col-sm-offset-5 col-sm-10">
                 <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>

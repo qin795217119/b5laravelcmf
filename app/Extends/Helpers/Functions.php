@@ -36,9 +36,7 @@ class Functions
         if(strpos($file,'http')!==0){
             $domain = config('b5net.fileDomain');
             if(!$domain){
-                $full = url()->current();
-                $uri =$_SERVER['REQUEST_URI'];
-                $domain = str_replace($uri,'',$full);
+                $domain = url('/');
             }
             $file = str_replace('//','/','/'.$file);
             $file =  $domain.$file;
