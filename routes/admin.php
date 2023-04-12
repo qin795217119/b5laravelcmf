@@ -18,6 +18,8 @@ Route::middleware(['admin.login','admin.auth','admin.demo'])->group(function(){
         Route::get('/', 'index')->name('admin.index');
         Route::get('/home', 'home')->name('admin.home');
         Route::get('/download', 'download')->name('admin.download');
+        Route::get('/skin', 'skin')->name('admin.skin');
+        Route::get('/nav-style', 'navStyle')->name('admin.nav-style');
     });
 
     //Public控制器

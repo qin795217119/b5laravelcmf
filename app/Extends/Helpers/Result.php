@@ -46,6 +46,11 @@ class Result
      */
     public static function message(string $msg, bool $success, array $data, int $code = -1, array $extend = []): JsonResponse
     {
+        $cookie = null;
+        if(isset($data['cookie'])){
+            $cookie = $data['cookie'];
+            unset($data['cookie']);
+        }
         $rs = [
             'code' => $code < 0 ? ($success ? 0 : 500) : $code,
             'msg' => $msg ?: ($success ? '操作成功' : '操作失败'),
@@ -57,7 +62,12 @@ class Result
                 $rs[$key] = $value;
             }
         }
-        return response()->json($rs);
+        if($cookie){
+            return response()->json($rs)->withCookie($cookie);
+        }else{
+            return response()->json($rs);
+        }
+
     }
 
     /**

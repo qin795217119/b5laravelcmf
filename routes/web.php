@@ -20,6 +20,12 @@ Route::get('/error', function (Request $request) {
     return view('error',['code'=>$code,'msg'=>$msg]);
 })->name('error');
 
+Route::get('/success', function (Request $request) {
+    $msg = $request->get('msg','操作成功');
+    $code = $request->get('code','200');
+    return view('success',['code'=>$code,'msg'=>$msg]);
+})->name('success');
+
 Route::get("/", function () {
     return redirect(route("admin.index"));
 });

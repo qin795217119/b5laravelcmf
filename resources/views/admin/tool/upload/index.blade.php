@@ -1,6 +1,7 @@
 @extends('admin.layout.layout')
 
 @include('widget.asset.viewer')
+@include('widget.asset.fixed-columns')
 
 @section('content')
     <div class="col-sm-12 search-collapse">
@@ -26,8 +27,12 @@
         <a class="btn btn-primary single disabled" onclick="toolEdit()"><i class="fa fa-edit"></i> 修改</a>
         <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll(this)"><i class="fa fa-trash"></i> 批量删除</a>
     </div>
-    <div class="col-sm-12 select-table table-striped">
-        <table id="bootstrap-table"></table>
+
+{{--    冻结列引入fixed-columns插件 --}}
+{{--    text-nowrap 表格不换行 --}}
+    <div class="col-sm-12 select-table table-striped text-nowrap">
+        {{--    给table增加 class="table-bordered"  可以显示表格边框  --}}
+        <table id="bootstrap-table" class="table-bordered"></table>
     </div>
 @stop
 
@@ -38,6 +43,9 @@
                 modalName: "上传",
                 sortName:'id',
                 sortOrder: "desc",
+                fixedColumns: true,                 // 是否启用冻结列（左侧）
+                fixedNumber: 2,                   // 列冻结的个数（左侧）
+                fixedRightNumber: 1,              // 列冻结的个数（右侧）
                 columns: [
                     {checkbox: true},
                     {field: 'id', title: 'ID',  sortable: true,visible:false},
@@ -46,6 +54,14 @@
                         align: "center",
                         formatter: function (value, row, index) {
                             return $.table.serialNumber(index);
+                        }
+                    },
+                    {
+                        field: 'img',
+                        title: '测试文本',
+                        class: 'w-min-md text-wrap',//默认是不换行，当需要换行时指定最小宽度和设置换行
+                        formatter: function (value, row, index) {
+                            return "测试文本测试文本测试文本测试文本测试文本测试文本";
                         }
                     },
                     {

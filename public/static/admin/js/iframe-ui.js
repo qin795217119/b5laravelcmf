@@ -46,6 +46,7 @@ var table = {
                     clearCacheUrl: bootUrl.clearCacheUrl,
                     method: 'post',
                     height: undefined,
+                    classes:"table table-hover",
                     sidePagination: "server",
                     sortName: 'id',
                     sortOrder: "asc",
@@ -99,6 +100,7 @@ var table = {
                     contentType: "application/x-www-form-urlencoded",   // 编码类型
                     method: options.method,                             // 请求方式（*）
                     cache: false,                                       // 是否使用缓存
+                    classes: options.classes,
                     height: options.height,                             // 表格的高度
                     striped: options.striped,                           // 是否显示行间隔色
                     sortable: true,                                     // 是否启用排序
@@ -893,6 +895,9 @@ var table = {
                     var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
                     var _width = $.common.isEmpty(options.width) ? "800" : options.width;
                     var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
+                    if(_width.indexOf('%') === -1){
+                        _width = _width + 'px'
+                    }
                     var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
                     if ($.common.isEmpty(options.yes)) {
                         options.yes = function(index, layero) {
@@ -914,7 +919,7 @@ var table = {
                         shade: 0.3,
                         title: _title,
                         fix: false,
-                        area: [_width + 'px', _height + 'px'],
+                        area: [_width , _height + 'px'],
                         content: _url,
                         shadeClose: $.common.isEmpty(options.shadeClose) ? true : options.shadeClose,
                         skin: options.skin,
@@ -1251,9 +1256,25 @@ var table = {
                 }
             },
             // 修改信息，以tab页展现
-            editTab: function(id) {
+            editTab: function(id,obj) {
                 table.set();
-                $.modal.openTab("修改" + table.options.modalName, $.operate.editUrl(id));
+                if($.common.isEmpty(id) && obj){
+                    var dataid=$(obj).data('id');
+                    if($.common.isNotEmpty(dataid)){
+                        id=dataid;
+                    }
+                }
+                if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+                    var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                    if ($.common.isEmpty(row)) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    var url = table.options.updateUrl.replace("%id%", row[table.options.uniqueId]);
+                    $.modal.openTab("修改" + table.options.modalName, url);
+                } else {
+                    $.modal.openTab("修改" + table.options.modalName, $.operate.editUrl(id));
+                }
             },
             // 修改信息 全屏
             editFull: function(id,obj) {
@@ -1290,12 +1311,12 @@ var table = {
                 if ($.common.isNotEmpty(id)) {
                     url = table.options.updateUrl.replace("%id%", id);
                 } else {
-                    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
-                    if (id.length == 0) {
+                    var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                    if (rows.length == 0) {
                         $.modal.alertWarning("请至少选择一条记录");
                         return;
                     }
-                    url = table.options.updateUrl.replace("%id%", id);
+                    url = table.options.updateUrl.replace("%id%", rows[0]);
                 }
                 return url;
             },

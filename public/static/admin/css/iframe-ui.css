@@ -3,6 +3,12 @@
  */
 
 /** 基础通用 **/
+.text-wrap{white-space: pre-wrap;word-break: break-all;}
+.w-min-min{min-width: 50px;}
+.w-min-xs{min-width: 80px;}
+.w-min-sm{min-width: 120px;}
+.w-min-md{min-width: 160px;}
+.w-min-lg{min-width: 200px;}
 .pt0 {
     padding-top: 0;
 }
@@ -178,6 +184,11 @@
 
 .select2-container--bootstrap .select2-selection{font-size: 13px;}
 .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field{padding: 3px 3px 4px}
+
+/* bootstrap-table 冻结列后 卡片视图 */
+.has-card-view .fixed-columns,.has-card-view .fixed-columns-right{
+    display: none;
+}
 /* 导航页签 */
 .nav-tabs-custom {
 	margin-bottom: 20px;
@@ -901,7 +912,6 @@ label {
 .table-striped table>thead>tr>th, .table-striped table>tbody>tr>th, .table-striped table>tfoot>tr>th, .table-striped table>thead>tr>td, .table-striped table>tbody>tr>td, .table-striped table>tfoot>tr>td {
 	border-bottom: 1px solid #e7eaec!important;
 	background-color: transparent;
-	border: 0px;
 }
 
 .table-bordered table>thead>tr>th:first-child, .table-bordered table>tbody>tr>td:first-child {

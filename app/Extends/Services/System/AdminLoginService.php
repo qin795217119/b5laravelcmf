@@ -53,8 +53,13 @@ class AdminLoginService
             Loginlog::logAdd($data['username']??'',0,$this->message);
             return Result::error($this->message);
         }
+        $cookie = null;
+        if ($this->cookie) {
+            $cookie = Cookie::make(config('b5net.admin_login_cookie'), $user['id'], 24 * 60 * 10);
+        }
+
         Loginlog::logAdd($data['username']??'',1,'登录成功');
-        return Result::success('登录成功');
+        return Result::success('登录成功',['cookie'=>$cookie]);
     }
 
     /**
@@ -129,10 +134,6 @@ class AdminLoginService
         ];
         session()->flush();
         session()->put(config('b5net.admin_login_session'), $sessionData);
-        if ($this->cookie) {
-            Cookie::queue(config('b5net.admin_login_cookie'), $user['id'], 24 * 3600 * 2);
-        }
-
         return true;
     }
 

@@ -12,6 +12,7 @@ use App\Extends\Helpers\Admin\LoginAuth;
 use App\Extends\Helpers\Functions;
 use App\Models\System\Menu;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class IndexController extends Backend
@@ -25,6 +26,11 @@ class IndexController extends Backend
     {
         //是否开启横向菜单
         $topNav = false;
+        $style = $this->request->cookies->get("nav-style","left");
+        if($style == 'top'){
+            $topNav = true;
+        }
+
         $userInfo = LoginAuth::adminLoginInfo();
         $menuList = $this->getMenuListByLogin();
         if($topNav){
@@ -43,6 +49,25 @@ class IndexController extends Backend
        return $this->render();
     }
 
+    /**
+     * 主题
+     * @return View
+     */
+    public function skin(): View
+    {
+        return $this->render();
+    }
+
+    /**
+     * 菜单样式
+     * @return View|\Illuminate\Http\JsonResponse
+     */
+    public function navStyle(): View|\Illuminate\Http\JsonResponse
+    {
+        $type = trim($this->request->get("type",'left'));
+        $cookie = Cookie::make('nav-style', $type, 24 * 60 * 10);
+        return $this->success('切换成功',['cookie'=>$cookie]);
+    }
 
     public function download()
     {

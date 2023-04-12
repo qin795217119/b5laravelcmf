@@ -87,6 +87,34 @@ class BaseController extends Controller
     }
 
     /**
+     * 简化toError
+     * @param string $msg
+     * @param int $code
+     * @return View|JsonResponse
+     */
+    public function error(string $msg = '发生错误了', int $code = 400): View|JsonResponse
+    {
+        return $this->toError($msg,$code);
+    }
+
+    /**
+     * 成功或者成功页
+     * @param string $msg
+     * @param array $data
+     * @param array $extend
+     * @return View|JsonResponse
+     */
+    public function success(string $msg = '操作成功', array $data = [], array $extend = []): View|JsonResponse
+    {
+        if($this->request->isMethod('POST') || $this->request->ajax()){
+            return Result::success($msg,$data,$extend);
+        }else{
+            $data = ['msg' => $msg, 'code' => 200];
+            return $this->render('/success', $data);
+        }
+    }
+
+    /**
      * 快捷视图
      * @param string $view
      * @param array $data

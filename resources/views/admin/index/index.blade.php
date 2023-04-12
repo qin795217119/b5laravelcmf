@@ -110,6 +110,13 @@
                             <li>
                                 <a href="javascript:rePass();"><i class="fa fa-key"></i> 修改密码</a>
                             </li>
+                            <li>
+                                <a onclick="switchSkin()"><i class="fa fa-dashboard"></i> 切换主题</a>
+                            </li>
+                            <li>
+                                <a onclick="toggleMenu()">
+                                    <i class="fa fa-toggle-off"></i> 横向菜单</a>
+                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="{{route('admin.logout')}}"><i class="fa fa-sign-out"></i> 退出登录</a>
@@ -202,6 +209,36 @@
 
     function clearCacheAll() {
         $.operate.b5get("{{route('admin.cacheclear')}}");
+    }
+
+    // 皮肤缓存
+    var skin = storage.get("skin");
+    // 本地主题优先，未设置取系统配置
+    if($.common.isNotEmpty(skin)){
+        $("body").addClass(skin.split('|')[0]);
+        $("body").addClass(skin.split('|')[1]);
+    } else {
+        $("body").addClass("theme-dark");
+        $("body").addClass("skin-blue");
+    }
+    /* 切换主题 */
+    function switchSkin() {
+        layer.open({
+            type : 2,
+            shadeClose : true,
+            title : "切换主题",
+            area : ["530px", "386px"],
+            content : ["{{route('admin.skin')}}", 'no']
+        })
+    }
+
+    /* 切换菜单 */
+    function toggleMenu() {
+        $.modal.confirm("确认要切换成横向菜单吗？", function() {
+            $.get("{{route('admin.nav-style',['type'=>'top'])}}", function(result) {
+                window.location.reload();
+            });
+        })
     }
 </script>
 </body>
