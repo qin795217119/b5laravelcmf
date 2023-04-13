@@ -1156,8 +1156,22 @@ var table = {
                 $.operate.submit(url, "post");
             },
             // 删除信息
-            remove: function(id) {
+            remove: function(id,obj) {
                 table.set();
+                if($.common.isEmpty(id) && obj){
+                    var data_id=$(obj).data('id');
+                    if($.common.isNotEmpty(data_id)){
+                        id=data_id;
+                    }
+                    if($.common.isEmpty(id)){
+                        var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                        if (rows.length !== 1) {
+                            $.modal.alertWarning("请选择一条记录");
+                            return;
+                        }
+                        id=rows[0];
+                    }
+                }
                 $.modal.confirm("确定删除该条" + table.options.modalName + "信息吗？", function() {
                     var url = table.options.removeUrl;
                     var data = { "id": id };
